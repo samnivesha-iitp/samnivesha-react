@@ -10,8 +10,9 @@
     "webpack": "webpack -wd",
     "build-webpack": "webpack -p",
     "build-node": "babel src -d build --copy-files",
-    "build": "NODE_ENV=production NODE_PATH=./build pm2 start build/server/server.js -i max --name appProd",
-    "heroku-postbuild":"yarn run build-webpack && yarn run build-node"
+    "start-prod": "NODE_ENV=production NODE_PATH=./build pm2 start build/server/server.js -i max --name appProd",
+    "heroku-postbuild":"yarn run build-webpack && yarn run build-node",
+    "build":"yarn run build-webpack && yarn run build-node && yarn run start-prod"
   },
   "dependencies": {
     "@babel/cli": "^7.6.0",
