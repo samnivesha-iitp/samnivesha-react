@@ -2,6 +2,7 @@ import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import App from "../components/App";
+import config from './config'
 
 const app = express();
 app.use(express.static("public"));
@@ -14,4 +15,4 @@ app.get("/", (req, res) => {
   res.render("index", { initialMarkup });
 });
 
-app.listen(4242, () => console.log("Server is running..."));
+app.listen(config.port, () => console.log(`Server is ... on PORT ${config.port}`));
