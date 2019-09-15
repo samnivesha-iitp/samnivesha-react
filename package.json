@@ -4,14 +4,14 @@
   "main": "src/server/server.js",
   "license": "MIT",
   "scripts": {
-    "start":"NODE_ENV=production NODE_PATH=./build pm2-runtime start ecosystem.config.js --env production",
+    "start":"node build/server/server.js",
     "test": "jest",
     "dev": "NODE_PATH=./src pm2 start --interpreter babel-node src/server/server.js ",
     "webpack": "webpack -wd",
     "build-webpack": "webpack -p",
     "build-node": "babel src -d build --copy-files",
     "start-prod": "NODE_ENV=production NODE_PATH=./build pm2-runtime start ecosystem.config.js --env production",
-    "heroku-postbuild":"yarn run build-webpack && yarn run build-node"
+    "build":"yarn run build-webpack && yarn run build-node"
   },
   "dependencies": {
     "@babel/cli": "^7.6.0",
