@@ -15,4 +15,4 @@ app.get("/", (req, res) => {
   res.render("index", { initialMarkup });
 });
 
-app.listen(config.port, () => console.log(`Server is ... on PORT ${config.port}`));
+app.listen(config.port, () => console.log(`Server is Running on PORT ${config.port} ....`));
