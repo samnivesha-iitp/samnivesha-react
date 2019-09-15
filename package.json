@@ -4,13 +4,14 @@
   "main": "src/server/server.js",
   "license": "MIT",
   "scripts": {
+    "start":"yarn run build-webpack && yarn run build-node && yarn run start-prod",
     "test": "jest",
     "dev": "NODE_PATH=./src pm2 start --interpreter babel-node src/server/server.js ",
     "webpack": "webpack -wd",
     "build-webpack": "webpack -p",
     "build-node": "babel src -d build --copy-files",
     "start-prod": "NODE_ENV=production NODE_PATH=./build pm2 start build/server/server.js -i max --name appProd",
-    "heroku-postbuild":"yarn run build-webpack && yarn run build-node && yarn run start-prod"
+    "heroku-postbuild":"yarn run build-webpack && yarn run build-node"
   },
   "dependencies": {
     "@babel/cli": "^7.6.0",
