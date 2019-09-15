@@ -4,6 +4,7 @@
   "main": "src/server/server.js",
   "license": "MIT",
   "scripts": {
+    "start": "node build/server/server.js",
     "test": "jest",
     "dev": "NODE_PATH=./src pm2 start --interpreter babel-node src/server/server.js ",
     "webpack": "webpack -wd",
