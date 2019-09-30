@@ -12,7 +12,7 @@
     "build-webpack": "webpack -p",
     "build-node": "babel src -d build --copy-files",
     "start-prod": "NODE_ENV=production NODE_PATH=./build pm2-runtime start ecosystem.config.js --env production",
-    "build": "npm run build-webpack && npm run build-node"
+    "build": "yarn run build-webpack && yarn run build-node"
   },
   "dependencies": {
     "@babel/cli": "^7.6.0",
