@@ -4,6 +4,7 @@
   "main": "build/server/server.js",
   "license": "MIT",
   "scripts": {
+    "now-start":"node build/server/server.js",
     "start": "node build/server/server",
     "test": "jest",
     "dev": "NODE_PATH=./src pm2 start --interpreter babel-node src/server/server.js ",
