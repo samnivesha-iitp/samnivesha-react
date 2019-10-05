@@ -1,8 +1,8 @@
-import React from 'react';
-export default function App() {
-  return (
-    <section className="hero is-fullheight is-light" >
-			<div className="hero-head">
+import React from 'react'
+
+const Header=() =>{
+    return(
+        <div className="hero-head">
 				<nav className="navbar is-transparent is-spaced" role="navigation" aria-label="main navigation">
 					<div className="container">
 						<div className="navbar-brand">
@@ -38,22 +38,6 @@ export default function App() {
 				</div>
 			</nav>
 		</div>
-		<div className="hero-body  p-b-30 ">
-			<div className="container">
-				<h2 className="subtitle">
-					<span className="has-text-centered is-block">
-					Association of Civil engineers of IIT Patna presents
-					</span>
-				</h2>
-				<h1 className="title">
-					<span className="is-size-1  has-text-centered is-block">Samnivesh'20</span>
-				</h1>
-				<div className="has-text-centered">
-					<img className="m-t-50" src="images/property_image.png" alt="Find rentals" />
-				</div>
-			</div>
-		</div>
-
-	</section>
-  );
+    )
 }
+export default Header

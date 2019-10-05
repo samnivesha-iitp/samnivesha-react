@@ -1,10 +1,8 @@
 const path = require("path");
-const webpack = require("webpack");
 module.exports = {
-  mode: "production",
   entry: {
     vendor: ["babel-polyfill", "react", "react-dom"],
-    app: ["./src/index.js"]
+    app: ["./src/browser/index.js"]
   },
   output: {
     path: path.resolve(__dirname, "public"),
@@ -27,30 +25,5 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       }
     ]
-  },
-  optimization: {
-    minimize: true,
-    splitChunks: {
-      chunks: "async",
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: "~",
-      automaticNameMaxLength: 30,
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
   }
 };
