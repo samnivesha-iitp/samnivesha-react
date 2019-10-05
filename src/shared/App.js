@@ -12,7 +12,7 @@ export default function App() {
           </h2>
           <h1 className="title">
             <span className="is-size-1  has-text-centered is-block">
-              Samnivesh'20
+              Samnivesha'20
             </span>
           </h1>
           <div className="has-text-centered">
