@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import {Link} from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -10,14 +11,14 @@ const Header = () => {
       >
         <div className="container">
           <div className="navbar-brand">
-            <a className="navbar-item" href="/">
+            <Link className="navbar-item" to="/">
               <img
                 src="/images/samnivesha.png"
                 alt="Bulma Rent"
                 width="34"
                 height="20"
               />
-            </a>
+            </Link>
 
             <a
               role="button"
@@ -33,23 +34,32 @@ const Header = () => {
           </div>
           <div className="navbar-menu" id="navbarTopMain">
             <div className="navbar-end">
-              <a href="/blog" className="navbar-item has-text-weight-semibold">
+              <Link to="/blog" className="navbar-item has-text-weight-semibold">
                 <span>Blog</span>
                 <span className="tag is-success m-l-5">NEW</span>
-              </a>
-              <a href="/about" className="navbar-item has-text-weight-semibold">
+              </Link>
+              <Link
+                to="/about"
+                className="navbar-item has-text-weight-semibold"
+              >
                 About
-              </a>
-              <a href="/contact" className="navbar-item has-text-weight-semibold">
+              </Link>
+              <Link
+                to="/contact"
+                className="navbar-item has-text-weight-semibold"
+              >
                 Contact Us
-              </a>
-              <a href="/schedule" className="navbar-item has-text-weight-semibold">
+              </Link>
+              <Link
+                to="/schedule"
+                className="navbar-item has-text-weight-semibold"
+              >
                 Schedule
-              </a>
+              </Link>
               <div className="navbar-item">
-                <a href="/login" className="button is-primary">
+                <Link to="/login" className="button is-primary">
                   Sign in
-                </a>
+                </Link>
               </div>
             </div>
           </div>
