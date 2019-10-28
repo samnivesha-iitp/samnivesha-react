@@ -1,8 +1,8 @@
 const path = require("path");
+// const nodeExternals = require("webpack-node-externals");
 module.exports = {
   entry: {
-    vendor: ["babel-polyfill", "react", "react-dom"],
-    app: ["./src/browser/index.js"]
+    app: ["babel-polyfill","./src/browser/index.js"]
   },
   output: {
     path: path.resolve(__dirname, "public"),
@@ -12,7 +12,7 @@ module.exports = {
     rules: [
       {
         test: /\.js/,
-        exclude: "/node_modules/",
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
@@ -21,8 +21,8 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
+        test: /\.css$/,
+        use: ["style-loader", { loader: "css-loader" }]
       }
     ]
   }

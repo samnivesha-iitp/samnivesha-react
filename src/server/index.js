@@ -26,9 +26,13 @@ app.get("*", (req, res) => {
       <App />
     </StaticRouter>
   );
+
   if (context.url) {
     redirect(301, context.url);
   }
+  // if (req.url == "/blog") {
+  //   res.render("blog", { initialMarkup });
+  // }
   res.render("index", { initialMarkup });
 });
 
