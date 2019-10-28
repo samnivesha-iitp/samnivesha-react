@@ -4,7 +4,7 @@ import React from "react";
 import routes from "../shared/routes";
 import { renderToString } from "react-dom/server";
 import App from "../shared/App";
-import { matchPath,StaticRouter } from "react-router-dom";
+import { matchPath, StaticRouter, redirect } from "react-router-dom";
 
 const app = express();
 
@@ -15,17 +15,20 @@ app.use("/css", express.static("node_modules/bulma/css/"));
 app.set("view engine", "ejs");
 
 app.get("*", (req, res) => {
-  const activeRoutes =
-    routes.find(route => {
-      matchPath(req.url, route);
-    }) || {};
+  const context = {};
+  // const activeRoutes =
+  //   routes.find(route => {
+  //     matchPath(req.url, route);
+  //   }) || {};
 
   const initialMarkup = renderToString(
-    <StaticRouter>
+    <StaticRouter location={req.url} context={context}>
       <App />
     </StaticRouter>
   );
-
+  if (context.url) {
+    redirect(301, context.url);
+  }
   res.render("index", { initialMarkup });
 });
 
