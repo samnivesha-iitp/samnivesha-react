@@ -56,7 +56,9 @@ typings/
 .env.development
 
 # gatsby files
-.cache/ public/
+.chunk.json
+.cache/ 
+public/bundles
 build/
 
 # Mac files
