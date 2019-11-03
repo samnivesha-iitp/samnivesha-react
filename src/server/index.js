@@ -1,3 +1,6 @@
+require("@babel/register")({
+  ignore: [/\.scss$/]
+});
 import express from "express";
 import config from "./config";
 import React from "react";

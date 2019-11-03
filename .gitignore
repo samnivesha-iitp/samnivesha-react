@@ -54,9 +54,10 @@ typings/
 # dotenv environment variables file
 .env
 .env.development
+.chunk.json
 
-# gatsby files
-.cache/ public/
+.cache/ 
+public/bundles
 build/
 
 # Mac files
