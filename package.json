@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/server/index",
     "test": "jest",
-    "dev-start": "NODE_ENV=development NODE_PATH=./src nodemon  --exec babel-node  src/server/index.js --ignore .chunk.json /public",
+    "dev-start": "NODE_ENV=development NODE_PATH=./src nodemon  --exec  babel-node  src/server/index.js --ignore .chunk.json /public",
     "dev": "concurrently \" yarn run dev-start \"  \"yarn run webpack\" ",
     "webpack": "webpack -wd",
     "build-webpack": "webpack -p",
@@ -22,8 +22,8 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.6.2",
     "babel-loader": "^8.0.6",
-    "babel-node": "^0.0.1-security",
     "babel-polyfill": "^6.26.0",
     "bulma": "0.7.4",
     "clean-webpack-plugin": "^3.0.0",
@@ -32,6 +32,7 @@
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "html-webpack-plugin": "^3.2.0",
+    "ignore-styles": "^5.0.1",
     "mini-css-extract-plugin": "^0.8.0",
     "morgan": "^1.9.1",
     "node-sass": "^4.13.0",
@@ -43,8 +44,7 @@
     "style-loader": "^1.0.0",
     "webpack": "^4.39.2",
     "webpack-chunk-hash": "^0.6.0",
-    "webpack-cli": "^3.3.6",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-cli": "^3.3.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",

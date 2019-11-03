@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./components/layout";
-// import './blog.css'
+require("./blog.scss");
 
 const Blog = () => {
   return (
