@@ -1,0 +1,25 @@
+article.message {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+     /* -webkit-animation-name: display; */
+     /* -webkit-animation-duration: 3s; */
+     /* animation-name: display; */
+     /* animation-duration: 3s; */
+  }
+  @-webkit-keyframes display {
+    from {
+      display: block;
+    }
+    to {
+      display: none;
+    }
+  }
+  @keyframes display {
+    from {
+      display: block;
+    }
+    to {
+      display: none;
+    }
+  }
