@@ -56,8 +56,8 @@ const Header = props => {
             <img
               src="/images/samnivesha.png"
               alt="Bulma Rent"
-              width="34"
-              height="20"
+              width="20"
+              height="34"
             />
           </Link>
 
@@ -91,23 +91,36 @@ const Header = props => {
               <span>Blog</span>
               <span className="tag is-success m-l-5">NEW</span>
             </Link> */}
-
             <Link
-              to="/events"
+              to="/"
               prefetch={Prefetch}
+              className="navbar-item has-text-weight-semibold"
+              onClick={hideMenu}
+            >
+              Home
+            </Link>
+
+            <a
+              href="#event"
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
               Events
-            </Link>
-            <Link
-              to="/workshop"
-              prefetch={Prefetch}
+            </a>
+            <a
+              href="#guestLecture"
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
               Guest Lecture
-            </Link>
+            </a>
+            <a
+              href="#workshop"
+              className="navbar-item has-text-weight-semibold"
+              onClick={hideMenu}
+            >
+              Workshop
+            </a>
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
@@ -140,14 +153,14 @@ const Header = props => {
             )}
             {!isAuthenticated && (
               <>
-                <Link
+                {/* <Link
                   to="/sponsors"
                   prefetch={Prefetch}
                   className="navbar-item has-text-weight-semibold"
                   onClick={hideMenu}
                 >
                   Sponsors
-                </Link>
+                </Link> */}
                 <Link
                   to="/about"
                   prefetch={Prefetch}

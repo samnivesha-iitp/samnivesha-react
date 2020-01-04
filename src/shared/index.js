@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Layout from "./components/layout";
 import { Helmet } from "react-helmet";
+import './css/events.css'
 
 class Home extends Component {
   render() {
@@ -8,15 +9,15 @@ class Home extends Component {
       <>
         <Helmet>
           <title>Samnivesha | Home</title>
-          <link rel="stylesheet" href="/css/index/pageloader.css"/>
-          <link rel="stylesheet" href="/css/index/core.css"/>
+          <link rel="stylesheet" href="/css/index/pageloader.css" />
+          <link rel="stylesheet" href="/css/index/core.css" />
         </Helmet>
         <Layout>
           <section className="hero is-fullheight is-light">
             <div className="hero-body  p-b-30 ">
               <div className="container">
                 <h2 className="subtitle">
-                  <span className="has-text-centered is-block">
+                  <span className="has-text-centered is-block" style={{paddingBottom:"20px"}}>
                     Association of Civil engineers of IIT Patna presents
                   </span>
                 </h2>
@@ -35,7 +36,7 @@ class Home extends Component {
               </div>
             </div>
           </section>
-          <section className="section section-feature-grey is-fullheight">
+          <section className="section section-feature-grey is-fullheight" id="guestLecture">
             <div className="container">
               <div className="section-title-wrapper has-text-centered">
                 <h2 className="section-title-landing">Guest Lecture</h2>
@@ -44,24 +45,33 @@ class Home extends Component {
 
               <div className="content-wrapper">
                 <div className="columns is-vcentered pb-40 pt-40">
-                  <div className="column is-4 is-offset-1">
+                  <div className="column is-6 is-offset-1">
                     <div className="title quick-feature is-handwritten text-bold">
-                      <div>Powerful search</div>
+                      <div>Dr. Devdas Menon</div>
                     </div>
                     <div className="title-divider is-small"></div>
                     <span className="section-feature-description">
-                      Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu
-                      harum inermis iudicabit. Ex vidit fierent hendrerit eum,
-                      sed stet periculis ut.
+                      Presently a Professor in the Department of Civil
+                      Engineering at IIT Madras, engaged in teaching, research
+                      and consultancy in structural engineering (with a focus on
+                      the design of concrete structures).
                     </span>
                     <div className="pt-10 pb-10">
                       <a
-                        href="#"
+                        href="http://www.devdasmenon.com/"
+                        target="_blank"
                         className="button btn-align btn-more is-link color-primary"
                       >
                         Learn more <i className="sl sl-icon-arrow-right"></i>
                       </a>
                     </div>
+                  </div>
+                  <div className="column is-4 is-offset-1">
+                    <img
+                      className=""
+                      src="/images/index/illustrations/drawings/teamwork.svg"
+                      alt=""
+                    />
                   </div>
                   <div className="column is-6 is-offset-1">
                     <img
@@ -70,12 +80,63 @@ class Home extends Component {
                       alt=""
                     />
                   </div>
+                  <div className="column is-4 is-offset-1">
+                    <div className="title quick-feature is-handwritten text-bold">
+                      <div>Dr. Devdas Menon</div>
+                    </div>
+                    <div className="title-divider is-small"></div>
+                    <span className="section-feature-description">
+                      Presently a Professor in the Department of Civil
+                      Engineering at IIT Madras, engaged in teaching, research
+                      and consultancy in structural engineering (with a focus on
+                      the design of concrete structures).
+                    </span>
+                    <div className="pt-10 pb-10">
+                      <a
+                        href="http://www.devdasmenon.com/"
+                        target="_blank"
+                        className="button btn-align btn-more is-link color-primary"
+                      >
+                        Learn more <i className="sl sl-icon-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="columns is-vcentered pb-40 pt-40">
+                  <div className="column is-4 is-offset-1">
+                    <img
+                      className=""
+                      src="/images/index/illustrations/drawings/teamwork.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div className="column is-6 is-offset-1">
+                    <div className="title quick-feature is-handwritten text-bold">
+                      <div>Dr. Devdas Menon</div>
+                    </div>
+                    <div className="title-divider is-small"></div>
+                    <span className="section-feature-description">
+                      Presently a Professor in the Department of Civil
+                      Engineering at IIT Madras, engaged in teaching, research
+                      and consultancy in structural engineering (with a focus on
+                      the design of concrete structures).
+                    </span>
+                    <div className="pt-10 pb-10">
+                      <a
+                        href="http://www.devdasmenon.com/"
+                        target="_blank"
+                        className="button btn-align btn-more is-link color-primary"
+                      >
+                        Learn more <i className="sl sl-icon-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="section section-feature-grey is-fullheight">
+          <section className="section section-feature-grey is-fullheight" id="workshop">
             <div className="container">
               <div className="section-title-wrapper has-text-centered">
                 <h2 className="section-title-landing">Workshop</h2>
@@ -86,18 +147,22 @@ class Home extends Component {
                 <div className="columns is-vcentered pb-40 pt-40">
                   <div className="column is-4 is-offset-1">
                     <div className="title quick-feature is-handwritten text-bold">
-                      <div>Powerful search</div>
+                      <div>STAAD.Pro</div>
                     </div>
                     <div className="title-divider is-small"></div>
                     <span className="section-feature-description">
-                      Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu
-                      harum inermis iudicabit. Ex vidit fierent hendrerit eum,
-                      sed stet periculis ut.
+                      STAAD. Pro is one of the advanced tools used by the Civil
+                      Engineers for structural analysis of the designs in the
+                      construction and building industry.The industry expects
+                      the candidates to be familiar with the latest skills and
+                      techniques related to structural designing, but somehow
+                      they fail to meet the industry standards.
                     </span>
                     <div className="pt-10 pb-10">
                       <a
-                        href="#"
+                        href="https://www.bentley.com/en/products/product-line/structural-analysis-software/staadpro"
                         className="button btn-align btn-more is-link color-primary"
+                        target="_blank"
                       >
                         Learn more <i className="sl sl-icon-arrow-right"></i>
                       </a>
@@ -114,9 +179,9 @@ class Home extends Component {
               </div>
             </div>
           </section>
-          <section className="section section-feature-grey is-medium">
+          <section className="section section-feature-grey is-medium" id="event">
             <div className="container">
-              <div className="section-title-wrapper has-text-centered">
+              <div className="section-title-wrapper has-text-centered" style={{paddingBottom:"40px"}}>
                 <h2 className="section-title-landing">Events</h2>
                 <h4>
                   Showcase your technical brilliance at unparalleled multitude
@@ -130,8 +195,8 @@ class Home extends Component {
                     <div className="event-card is-wavy">
                       <div className="card-date">
                         <div className="date">
-                          <span className="day">24</span>
-                          <span className="month">Aug</span>
+                          <span className="day">2</span>
+                          <span className="month">Days</span>
                         </div>
                       </div>
                       <div className="img-container">
@@ -144,17 +209,16 @@ class Home extends Component {
                       <div className="card-text">
                         <div className="text text-container">
                           <div className="text text-header">
-                            <h2 className="text text-title">Marbella</h2>
+                            <h2 className="text text-title">Bridge</h2>
                             <p className="text text-subtitle">
-                              Partners training session
+                              Model Bridge Design
                             </p>
                           </div>
                           <div className="text text-details">
                             <p className="text text-description">
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Ea nulla cum impedit et nemo
-                              molestiae, suscipit animi officiis soluta natus,
-                              provident ab laudantium, amet dolorum.
+                              The objective of this event is to design,
+                              construct and test the most efficient bridge built
+                              in accordance with the specifications.
                             </p>
                             <a
                               href="#"
@@ -172,8 +236,8 @@ class Home extends Component {
                     <div className="event-card is-wavy">
                       <div className="card-date">
                         <div className="date">
-                          <span className="day">19</span>
-                          <span className="month">Sep</span>
+                          <span className="day">1</span>
+                          <span className="month">Day</span>
                         </div>
                       </div>
                       <div className="img-container">
@@ -186,17 +250,15 @@ class Home extends Component {
                       <div className="card-text">
                         <div className="text text-container">
                           <div className="text text-header">
-                            <h2 className="text text-title">Prague</h2>
-                            <p className="text text-subtitle">
-                              Release momentum
-                            </p>
+                            <h2 className="text text-title">Treasure hunt</h2>
+                            <p className="text text-subtitle">Rush Event</p>
                           </div>
                           <div className="text text-details">
                             <p className="text text-description">
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Ea nulla cum impedit et nemo
-                              molestiae, suscipit animi officiis soluta natus,
-                              provident ab laudantium, amet dolorum.
+                              The event requires participation in team and it
+                              involves reaching various checkpoints with help of
+                              clues collected during your journey and completing
+                              the tasks allotted.
                             </p>
                             <a
                               href="#"
@@ -214,8 +276,8 @@ class Home extends Component {
                     <div className="event-card is-wavy">
                       <div className="card-date">
                         <div className="date">
-                          <span className="day">05</span>
-                          <span className="month">Dec</span>
+                          <span className="day">2</span>
+                          <span className="month">Hrs</span>
                         </div>
                       </div>
                       <div className="img-container">
@@ -228,15 +290,14 @@ class Home extends Component {
                       <div className="card-text">
                         <div className="text text-container">
                           <div className="text text-header">
-                            <h2 className="text text-title">Chicago</h2>
-                            <p className="text text-subtitle">Node JS Conf</p>
+                            <h2 className="text text-title">House Of Cards</h2>
+                            <p className="text text-subtitle">Fun EVent</p>
                           </div>
                           <div className="text text-details">
                             <p className="text text-description">
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Ea nulla cum impedit et nemo
-                              molestiae, suscipit animi officiis soluta natus,
-                              provident ab laudantium, amet dolorum.
+                              Chance of showing your engineering skills with
+                              cards and passion! So, get innovative and build
+                              your own house with CARDS.
                             </p>
                             <a
                               href="#"
