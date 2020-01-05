@@ -80,10 +80,21 @@ class Contact extends Component {
               <div className="columns is-8 is-variable ">
                 <div className="column is-two-thirds has-text-left">
                   <h1 className="title is-1">Contact Us</h1>
-                  <p className="is-size-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nulla eligendi soluta voluptate facere molestiae
-                    consequatur.
+                  <h2 className="title is-4">
+                    <u>Reach to Us</u>
+                  </h2>
+                  <p className="is-size-5">
+                    <b>Yash Rawal </b>
+                    <span className="span  is-size-6">
+                      : yash.ce17@iitp.ac.in - 9166062338
+                    </span>
+                  </p>
+
+                  <p className="is-size-5">
+                    <b>Rakesh Raushan </b>
+                    <span className="span  is-size-6">
+                      : rakesh.ce17@iitp.ac.in - 7261038443
+                    </span>
                   </p>
                 </div>
                 <div className="column is-one-third has-text-left">
