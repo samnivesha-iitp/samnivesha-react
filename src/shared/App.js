@@ -12,7 +12,7 @@ import Workshop from "./workshop";
 import Sponsors from "./sponsors";
 import Header from "./components/header";
 import Cookies from "js-cookie";
-import Forgotpassword from './forgotpassword'
+import Forgotpassword from "./forgotpassword";
 
 import AuthContext from "./components/authContext";
 import {
@@ -44,8 +44,11 @@ const App = props => {
     if (firstRender) {
       runAtFirstRender();
     }
+    console.log("App Component rendered.");
   });
-  return (
+  return firstRender ? (
+    <></>
+  ) : (
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
     >
@@ -59,7 +62,10 @@ const App = props => {
         <ProtectedProfile path="/profile" component={Profile} />
         <ProtectedSignup path="/signup" component={Signup} />
         <ProtectedLogin path="/login" component={Login} />
-        <ProtectedResetPassword path="/forgotpassword" component={Forgotpassword} />
+        <ProtectedResetPassword
+          path="/forgotpassword"
+          component={Forgotpassword}
+        />
         <Route path="/workshop" component={Workshop} />
         <Route path="/sponsors" component={Sponsors} />
       </Switch>
