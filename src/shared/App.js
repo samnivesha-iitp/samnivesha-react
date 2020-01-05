@@ -13,6 +13,7 @@ import Sponsors from "./sponsors";
 import Header from "./components/header";
 import Cookies from "js-cookie";
 import Forgotpassword from "./forgotpassword";
+import Helmet from "react-helmet";
 
 import AuthContext from "./components/authContext";
 import {
@@ -39,19 +40,30 @@ const App = props => {
           setUser(store[0].userData);
         }
       }
-      setFirstrender(false);
+      function delayloader() {
+        setFirstrender(false);
+        clearTimeout(delayloader);
+      }
+      setTimeout(delayloader, 3000);
     }
     if (firstRender) {
       runAtFirstRender();
     }
-    console.log("App Component rendered.");
   });
-  return firstRender ? (
-    <></>
-  ) : (
+  const loader = firstRender ? "is-active" : "";
+  return (
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
     >
+      {firstRender ? (
+        <>
+          <Helmet>
+            <link rel="stylesheet" href="/css/index/pageloader.css" />
+          </Helmet>
+          <div className={`pageloader ${loader}`}></div>
+          <div className={`infraloader ${loader}`}></div>
+        </>
+      ) : null}
       <Header />
       <Switch>
         <Route exact path="/" render={() => <Home name={props.store} />} />
