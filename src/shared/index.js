@@ -126,7 +126,7 @@ const Home = props => {
             </div>
           </div>
         </section>
-        <section
+        {/* <section
           className="section section-feature-grey is-fullheight"
           id="about"
         >
@@ -153,7 +153,7 @@ const Home = props => {
               </p>
             </div>
           </div>
-        </section>
+        </section> */}
         <section
           className="section section-feature-grey is-fullheight"
           id="guestLecture"
