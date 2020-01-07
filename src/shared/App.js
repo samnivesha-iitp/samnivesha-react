@@ -14,7 +14,7 @@ import Header from "./components/header";
 import Cookies from "js-cookie";
 import Forgotpassword from "./forgotpassword";
 import Helmet from "react-helmet";
-
+const arrayFinder = require("../../utils/findArray");
 import AuthContext from "./components/authContext";
 import {
   ProtectedProfile,
@@ -30,21 +30,17 @@ const App = props => {
   const { store } = props;
   useEffect(() => {
     function runAtFirstRender() {
-      if (store.length > 1) {
-        // User is already logged in
-        if (store[0].userData == !"undefined" && Cookies.get("uid") !== "") {
-          setIsAuthenticated(true);
-          setUser(store[0].userData);
-        } else {
-          setIsAuthenticated(true);
-          setUser(store[0].userData);
-        }
+      const data = arrayFinder("userData", store);
+      if (typeof data !== "undefined") {
+        setIsAuthenticated(true);
+        setUser(data.userData);
       }
-      function delayloader() {
-        setFirstrender(false);
-        clearTimeout(delayloader);
-      }
+
       setTimeout(delayloader, 3000);
+    }
+    function delayloader() {
+      clearTimeout(delayloader);
+      setFirstrender(false);
     }
     if (firstRender) {
       runAtFirstRender();
@@ -53,25 +49,21 @@ const App = props => {
   const loader = firstRender ? "is-active" : "";
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
+      value={{ isAuthenticated, setIsAuthenticated, user, setUser,store }}
     >
-      {firstRender ? (
-        <>
-          <Helmet>
-            <link rel="stylesheet" href="/css/index/pageloader.css" />
-          </Helmet>
-          <div className={`pageloader ${loader}`}></div>
-          <div className={`infraloader ${loader}`}></div>
-        </>
-      ) : null}
+      <Helmet>
+        <link rel="stylesheet" href="/css/index/pageloader.css" />
+      </Helmet>
+      <div className={`pageloader ${loader}`}></div>
+      <div className={`infraloader ${loader}`}></div>
       <Header />
       <Switch>
-        <Route exact path="/" render={() => <Home name={props.store} />} />
+        <Route exact path="/" render={() => <Home data={store} />} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/events" component={Events} />
-        {/* <Route path="/blog" component={Blog} /> */}
-        <ProtectedProfile path="/profile" component={Profile} />
+        <Route path="/blog" component={Blog} />
+        <ProtectedProfile path="/profile" component={Profile} data={store} />
         <ProtectedSignup path="/signup" component={Signup} />
         <ProtectedLogin path="/login" component={Login} />
         <ProtectedResetPassword
@@ -84,5 +76,5 @@ const App = props => {
     </AuthContext.Provider>
   );
 };
-
+App.propTypes = {};
 export default App;

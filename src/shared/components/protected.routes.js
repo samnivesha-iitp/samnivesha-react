@@ -4,9 +4,14 @@ import { Route, Redirect } from "react-router-dom";
 
 export const ProtectedProfile = props => {
   const { isAuthenticated } = useContext(AuthContext);
-  const { path, component } = props;
+  const {  component: Component,data, ...rest } = props;
   return isAuthenticated ? (
-    <Route path={path} component={component} />
+    <Route
+      {...rest}
+      render={() => { 
+        return <Component data={data} />;
+      }}
+    />
   ) : (
     <Redirect to={{ pathname: "/login" }} />
   );
@@ -39,4 +44,3 @@ export const ProtectedResetPassword = props => {
     <Redirect to={{ pathname: "/profile" }} />
   );
 };
-

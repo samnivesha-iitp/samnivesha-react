@@ -1,11 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Layout from "./components/layout";
 import { Helmet } from "react-helmet";
 import "./css/events.css";
+import PropTypes from "prop-types";
+import AuthContext from "./components/authContext";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import { faUserAltSlash } from "@fortawesome/free-solid-svg-icons";
+const arrayFinder = require("../../utils/findArray");
+import axios from "axios";
+const getUserData = require("../../utils/getUserData");
 
-const Home = () => {
+const Home = props => {
+  // const { data } = props;
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    user,
+    setUser,
+    store
+  } = useContext(AuthContext);
+  const [evedata, setEveData] = useState("");
   const [isAtTop, setIsAtTop] = useState(true);
+  const [msg, setMsg] = useState("");
   useEffect(() => {
+    setEveData(arrayFinder("eventData", store));
     window.addEventListener("scroll", scrollhandler);
     return () => {
       window.removeEventListener("scroll", scrollhandler);
@@ -18,16 +37,69 @@ const Home = () => {
       setIsAtTop(true);
     }
   };
+  const registerHandler = e => {
+    e.preventDefault();
+    // console.log(e.target.href);
+    const id = e.target.href.match(/http:\/\/localhost:3000\/event\/(\d+)/);
+    // console.log(id[1]);
+    const eventId = id[1];
+    if (!isAuthenticated) {
+      props.history.push("/login");
+    }
+    const { events } = user;
+    if (events.length > 0) {
+      for (let i = 0; i < events.length; i++) {
+        if (events[i]._id == eventId) {
+          setMsg({ message: "Already Registered." });
+          break;
+        }
+      }
+    }
+    for (let i = 0; i < evedata.length; i++) {
+      if (evedata[i]._id == eventId) {
+        const isgroupallowed = evedata[i].isgroupallowed;
+        if (isgroupallowed) {
+          props.history.push("/profile");
+        } else {
+          axios
+            .post(`/${eventId}/${user._id}`)
+            .then(res => {
+              if (res.status == 200) {
+                setMsg({ status: true, msg: "success" });
+                getUserData(user._id)
+                  .then(user => {
+                    setUser(user);
+                  })
+                  .catch(() => {
+                    setMsg({ message: "Error Detected." });
+                  });
+              }
+            })
+            .catch(() => {
+              setMsg({ status: false, msg: "Failed" });
+            });
+        }
+        break;
+      }
+    }
+  };
+  // const event2 = event.splice(0, 2);
   const backtotop = isAtTop ? "" : "visible";
   return (
     <>
       <Helmet>
         <title>Samnivesha | Home</title>
         <link rel="stylesheet" preload href="/css/index/core.css" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
       </Helmet>
       <Layout>
-        <section className="hero is-fullheight is-light">
+        <section
+          className="hero is-fullheight is-light"
+          style={{ backgroundColor: "#edf5e1" }}
+        >
           <div className="hero-body  p-b-30 ">
             <div className="container">
               <h2 className="subtitle">
@@ -43,6 +115,7 @@ const Home = () => {
                   Samnivesha'20
                 </span>
               </h1>
+
               <div className="has-text-centered">
                 <img
                   className="m-t-50"
@@ -55,15 +128,47 @@ const Home = () => {
         </section>
         <section
           className="section section-feature-grey is-fullheight"
+          id="about"
+        >
+          <div className="container">
+            <div className="section-title-wrapper has-text-centered">
+              <h2 className="section-title-landing">About Us</h2>
+              <p className="is-1">Association of Civil Engineers</p>
+              <p className="is-2">
+                Samnivesha is the annual technical fest of the Department of
+                Civil and Environmental Engineering (DCEE) with a myriad of
+                events revolving around the exciting areas of Civil and
+                Environmental engineering. India needs better engineers for its
+                infrastructural and economic growth. With this vision in our
+                mind the DCEE annually conducts its very own technical fest to
+                attract engineers from all over the country and provide them
+                plethora of events to compete for and win exciting rewards.
+                <br />
+                <br /> Now ACE is back with another edition of Samnivesha.
+                <br /> <br /> We envisage this edition of Samnivesha to be a
+                grand success in not only Bihar but also the Eastern India. It
+                will restore the glory of Bihar as the greatest centre of
+                education for which it was once known for and ultimately serve
+                the purpose of producing better engineers for a better tomorrow.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section
+          className="section section-feature-grey is-fullheight"
           id="guestLecture"
         >
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">Guest Lecture</h2>
-              <h4>Take away the motivation from esteemed lectures.</h4>
+              <h4>
+                Take away the motivation from esteemed lectures.
+                <br />
+                <strong>(Coming Soon ! )</strong>
+              </h4>
             </div>
 
-            <div className="content-wrapper">
+            {/* <div className="content-wrapper">
               <div className="columns is-vcentered pb-40 pt-40">
                 <div className="column is-6 is-offset-1">
                   <div className="title quick-feature is-handwritten text-bold">
@@ -89,14 +194,14 @@ const Home = () => {
                 <div className="column is-4 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.svg"
+                    src="/images/index/illustrations/drawings/teamwork.png"
                     alt=""
                   />
                 </div>
                 <div className="column is-6 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.svg"
+                    src="/images/index/illustrations/drawings/teamwork.png"
                     alt=""
                   />
                 </div>
@@ -126,7 +231,7 @@ const Home = () => {
                 <div className="column is-4 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.svg"
+                    src="/images/index/illustrations/drawings/teamwork.png"
                     alt=""
                   />
                 </div>
@@ -152,7 +257,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -163,10 +268,14 @@ const Home = () => {
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">Workshop</h2>
-              <h4>Ignite the spirit with interactive workshops</h4>
+              <h4>
+                Ignite the spirit with interactive workshops
+                <br />
+                <strong>(Coming Soon !)</strong>
+              </h4>
             </div>
 
-            <div className="content-wrapper">
+            {/* <div className="content-wrapper">
               <div className="columns is-vcentered pb-40 pt-40">
                 <div className="column is-4 is-offset-1">
                   <div className="title quick-feature is-handwritten text-bold">
@@ -194,12 +303,12 @@ const Home = () => {
                 <div className="column is-6 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.svg"
+                    src="/images/index/illustrations/drawings/teamwork.png"
                     alt=""
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
         <section className="section section-feature-grey is-medium" id="event">
@@ -219,17 +328,11 @@ const Home = () => {
               <div className="columns">
                 <div className="column is-4">
                   <div className="event-card is-wavy">
-                    <div className="card-date">
-                      <div className="date">
-                        <span className="day">2</span>
-                        <span className="month">Days</span>
-                      </div>
-                    </div>
                     <div className="img-container">
                       <img
-                        src="/images/index/kit/event1.jpg"
+                        src="/images/b.png"
                         alt=""
-                        data-demo-src="/images/index/kit/event1.jpg"
+                        data-demo-src="/images/b.png"
                       />
                     </div>
                     <div className="card-text">
@@ -248,11 +351,19 @@ const Home = () => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className="button btn-align btn-more is-link color-accent mt-10 mb-10 "
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/123"
+                            className="button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -260,24 +371,26 @@ const Home = () => {
                 </div>
                 <div className="column is-4">
                   <div className="event-card is-wavy">
-                    <div className="card-date">
+                    {/* <div className="card-date">
                       <div className="date">
                         <span className="day">1</span>
                         <span className="month">Day</span>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/index/kit/event2.jpg"
+                        src="/images/g.png"
                         alt=""
-                        data-demo-src="/images/index/kit/event2.jpg"
+                        data-demo-src="/images/g.png"
                       />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
                         <div className="text text-header">
-                          <h2 className="text text-title">Treasure hunt</h2>
-                          <p className="text text-subtitle">Rush Event</p>
+                          <h2 className="text text-title">Geo-manji</h2>
+                          <p className="text text-subtitle">
+                            Treasure Hunt Event
+                          </p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
@@ -300,17 +413,11 @@ const Home = () => {
                 </div>
                 <div className="column is-4">
                   <div className="event-card is-wavy">
-                    <div className="card-date">
-                      <div className="date">
-                        <span className="day">2</span>
-                        <span className="month">Hrs</span>
-                      </div>
-                    </div>
                     <div className="img-container">
                       <img
-                        src="/images/index/kit/event3.svg"
+                        src="/images/h.png"
                         alt=""
-                        data-demo-src="/images/index/kit/event3.svg"
+                        data-demo-src="/images/h.png"
                       />
                     </div>
                     <div className="card-text">
@@ -338,6 +445,129 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              <div className="columns">
+                <div className="column is-4">
+                  <div className="event-card is-wavy">
+                    {/* <div className="card-date">
+                      <div className="date">
+                        <span className="day">2</span>
+                        <span className="month">Days</span>
+                      </div>
+                    </div> */}
+                    <div className="img-container">
+                      <img
+                        src="/images/e.png"
+                        alt=""
+                        data-demo-src="/images/e.png"
+                      />
+                    </div>
+                    <div className="card-text">
+                      <div className="text text-container">
+                        <div className="text text-header">
+                          <h2 className="text text-title">
+                            Engineers Conclave
+                          </h2>
+                          <p className="text text-subtitle">
+                            Present Your Research
+                          </p>
+                        </div>
+                        <div className="text text-details">
+                          <p className="text text-description">
+                            The conclave will act as a platform for aspiring
+                            engineers and researchers to present their research
+                            prospects which will be reviewed.
+                          </p>
+                          <a
+                            href="#"
+                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                          >
+                            Event details
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="column is-4">
+                  <div className="event-card is-wavy">
+                    {/* <div className="card-date">
+                      <div className="date">
+                        <span className="day">1</span>
+                        <span className="month">Day</span>
+                      </div>
+                    </div> */}
+                    <div className="img-container">
+                      <img
+                        src="/images/c.png"
+                        alt=""
+                        data-demo-src="/images/c.png"
+                      />
+                    </div>
+                    <div className="card-text">
+                      <div className="text text-container">
+                        <div className="text text-header">
+                          <h2 className="text text-title">CiviQ</h2>
+                          <p className="text text-subtitle">Quizzing Event</p>
+                        </div>
+                        <div className="text text-details">
+                          <p className="text text-description">
+                            CiviQ is a quizzing event which will provide you
+                            with an opportunity to test your technical knowledge
+                            and acumen of Civil Engineering.
+                          </p>
+                          <a
+                            href="#"
+                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                          >
+                            Event details
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="column is-4">
+                  <div className="event-card is-wavy">
+                    {/* <div className="card-date">
+                      <div className="date">
+                        <span className="day">2</span>
+                        <span className="month">Hrs</span>
+                      </div>
+                    </div> */}
+                    <div className="img-container">
+                      <img
+                        src="/images/l.png"
+                        alt=""
+                        data-demo-src="/images/l.png"
+                      />
+                    </div>
+                    <div className="card-text">
+                      <div className="text text-container">
+                        <div className="text text-header">
+                          <h2 className="text text-title">Lensart</h2>
+                          <p className="text text-subtitle">Fun EVent</p>
+                        </div>
+                        <div className="text text-details">
+                          <p className="text text-description">
+                            Photography is a tool by which we can freeze the
+                            time and have a look back in the past. ACE brings
+                            you a chance of showing your photography skills!
+                          </p>
+                          <a
+                            href="#"
+                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                          >
+                            Event details
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -349,4 +579,38 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+const Card = props => {
+  const { eventName, tagline, description, poster, _id } = props.event;
+  return (
+    <div className="column is-4">
+      <div className="event-card is-wavy">
+        <div className="img-container">
+          <img src={`${poster}`} alt="" data-demo-src={`${poster}`} />
+        </div>
+        <div className="card-text">
+          <div className="text text-container">
+            <div className="text text-header">
+              <h2 className="text text-title">{eventName}</h2>
+              <p className="text text-subtitle">{tagline}</p>
+            </div>
+            <div className="text text-details">
+              <p className="text text-description">{description}</p>
+              <a
+                href="#"
+                className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+              >
+                Event details
+                <i className="sl sl-icon-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+Home.propTypes = {
+  data: PropTypes.array
+};
+export default withRouter(Home);

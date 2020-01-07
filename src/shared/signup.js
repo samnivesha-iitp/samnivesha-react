@@ -15,7 +15,6 @@ const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
 };
 
-
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,8 @@ class Signup extends Component {
       isEmailExists: null,
       successMsg: "",
       errorMsg: "",
-      innerWidth: ""
+      innerWidth: "",
+      mobileNumber: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -39,6 +39,7 @@ class Signup extends Component {
     this.handlePassword = this.handlePassword.bind(this);
     this.handleCollege = this.handleCollege.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
+    this.handleMobileNumber = this.handleMobileNumber.bind(this);
   }
   generateId() {
     return "ACE" + Math.floor(Math.random() * 10000);
@@ -106,8 +107,11 @@ class Signup extends Component {
   componentDidUpdate() {
     this.handleUsername();
   }
+  handleMobileNumber(e) {
+    this.setState({ mobileNumber: e.target.value });
+  }
   render() {
-    const Prefetch = config.environment?"false":"true";
+    const Prefetch = config.environment ? "false" : "true";
 
     return (
       <Layout title="Signup Here">
@@ -157,6 +161,7 @@ class Signup extends Component {
                               type="text"
                               placeholder="first name"
                               name="firstName"
+                              required
                               onChange={this.handleFirstName}
                               value={this.state.firstName}
                             />
@@ -203,6 +208,7 @@ class Signup extends Component {
                               placeholder="Email"
                               value={this.state.email}
                               name="email"
+                              required
                               onChange={this.handleEmail}
                             />
                             <span className="icon is-small is-left">
@@ -232,6 +238,7 @@ class Signup extends Component {
                               type="text"
                               placeholder="College"
                               name="college"
+                              required
                               value={this.state.college}
                               onChange={this.handleCollege}
                             />
@@ -249,17 +256,26 @@ class Signup extends Component {
                               type="password"
                               placeholder="Password"
                               name="password"
+                              required
                               value={this.state.password}
                               onChange={this.handlePassword}
                             />
                           </div>
-                          {/* <progress
-                        class="progress is-primary is-small"
-                        value="15"
-                        max="100"
-                      >
-                        15%
-                      </progress> */}
+                        </div>
+                        <div className="field">
+                          <label className="label">Mobile </label>
+                          <div className="control">
+                            <input
+                              className="input"
+                              type="number"
+                              placeholder="Mobile Number"
+                              name="mobileNumber"
+                              required
+                              value={this.state.mobileNumber}
+                              onChange={this.handleMobileNumber}
+                              
+                            />
+                          </div>
                         </div>
 
                         <div className="field is-grouped">

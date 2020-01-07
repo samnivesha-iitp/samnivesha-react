@@ -82,7 +82,7 @@ const Header = props => {
         </div>
         <div className={`navbar-menu ${isMobile}`} id="navbarTopMain">
           <div className="navbar-end">
-            {/* <Link
+            <Link
               to="/blog"
               prefetch={Prefetch}
               className="navbar-item has-text-weight-semibold"
@@ -90,7 +90,7 @@ const Header = props => {
             >
               <span>Blog</span>
               <span className="tag is-success m-l-5">NEW</span>
-            </Link> */}
+            </Link>
             <Link
               to="/"
               prefetch={Prefetch}
@@ -139,7 +139,7 @@ const Header = props => {
                   <Link
                     to="/logout"
                     prefetch={Prefetch}
-                    className="button is-info"
+                    className="button is-warning"
                     onClick={e => {
                       e.preventDefault();
                       hideMenu();

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const userSchema = new Schema(
   {
@@ -38,7 +39,9 @@ const userSchema = new Schema(
       required: true
     },
     resePasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    mobileNumber:{type:Number,required:true},
+    events: [{ type: ObjectId, ref: "Event" }]
   },
   {
     timestamps: true

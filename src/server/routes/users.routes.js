@@ -4,9 +4,15 @@ const bcrypt = require("bcryptjs");
 const Users = require("../models/user.model");
 
 router.route("/").get((req, res) => {
-  Users.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json("Error" + err));
+  Users.find({})
+    .populate({path:'events',select:'eventName contact timing place '})
+    .exec((err, docs) => {
+      if (err) {
+        res.json({ message: "Error Ocurred" });
+      } else {
+        res.json(docs);
+      }
+    });
 });
 router.route("/add").post((req, res) => {
   const { username, firstName, lastName, email, password, college } = req.body;
@@ -39,8 +45,14 @@ router.route("/add").post((req, res) => {
 });
 router.route("/:id").get((req, res) => {
   Users.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json("Error" + err));
+    .populate({path:'events',select:'eventName contact timing place'})
+    .exec((err, docs) => {
+      if (err) {
+        res.json({ message: "Error" + err });
+      } else {
+        res.json(docs);
+      }
+    });
 });
 router.route("/findByUsername").post((req, res) => {
   const { username } = req.body;

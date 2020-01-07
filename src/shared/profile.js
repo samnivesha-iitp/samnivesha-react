@@ -19,7 +19,10 @@ class Profile extends Component {
       confPass: "",
       groupLeader: "",
       groupMembers: [],
-      currentMember: ""
+      currentMember: "",
+      eventRegistered: "",
+      radioChecked: true,
+      currentSelectedEvent: ""
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -30,15 +33,24 @@ class Profile extends Component {
     this.handleGroupMembers = this.handleGroupMembers.bind(this);
     this.addGroupMembers = this.addGroupMembers.bind(this);
     this.removeGroupMembers = this.removeGroupMembers.bind(this);
+    this.selectedEventHandler = this.selectedEventHandler.bind(this);
   }
   componentDidMount() {
-    const { username, firstName, lastName, college, email } = this.context.user;
+    const {
+      username,
+      firstName,
+      lastName,
+      college,
+      email,
+      events
+    } = this.context.user;
     this.setState({
       username,
       fullName: firstName + " " + lastName,
       college,
       email,
-      groupLeader: username
+      groupLeader: username,
+      eventRegistered: events
     });
     // console.log("window", window.__APP_USER_PROFILE__);
   }
@@ -75,6 +87,9 @@ class Profile extends Component {
     });
     this.setState({ groupMembers: newMember });
   }
+  selectedEventHandler(e) {
+    this.setState({ currentSelectedEvent: e.target.value });
+  }
   static contextType = AuthContext;
   render() {
     const modalClass = this.state.isModal ? "is-active" : null;
@@ -88,7 +103,7 @@ class Profile extends Component {
                   <div className="column">
                     <h1 className="title is-4">Hi, {this.state.fullName}</h1>
                     <h2 className="title is-5">
-                      Samnivesha Id : {this.state.username}
+                      ACE Id : {this.state.username}
                     </h2>
                     <h2 className="title is-5">
                       College : {this.state.college}
@@ -114,20 +129,28 @@ class Profile extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th>1</th>
-                          <th>Samnivesh Eve</th>
-                          <th>10th Jan 2020</th>
-                          <th>Tutorial Block</th>
-                          <th>99999999</th>
-                        </tr>
-                        <tr>
-                          <th>2</th>
-                          <th>Samnivesh Eve1</th>
-                          <th>10th Jan 2021</th>
-                          <th>Tutorial Block</th>
-                          <th>999998980</th>
-                        </tr>
+                        {this.state.eventRegistered !== ""
+                          ? this.state.eventRegistered.map((event, index) => {
+                              if (event.place == null) {
+                                event.place == "Tutorial Block";
+                              }
+                              if (event.timing == null) {
+                                event.timing == "NA";
+                              }
+                              if (event.contact == null) {
+                                event.contact == "NA";
+                              }
+                              return (
+                                <tr key={event._id}>
+                                  <th>{index + 1}</th>
+                                  <th>{event.eventName}</th>
+                                  <th>{event.timing}</th>
+                                  <th>{event.place}</th>
+                                  <th>{event.contact}</th>
+                                </tr>
+                              );
+                            })
+                          : null}
                       </tbody>
                     </table>
                   </div>
@@ -149,10 +172,13 @@ class Profile extends Component {
                             <div className="field ">
                               <div className="control">
                                 <div className="select is-fullwidth">
-                                  <select>
-                                    <option>event1</option>
-                                    <option>event2</option>
-                                    <option>event3</option>
+                                  <select
+                                    onChange={this.selectedEventHandler}
+                                    value={this.state.currentSelectedEvent}
+                                  >
+                                    <option value="event1">event1</option>
+                                    <option value="event2">event2</option>
+                                    <option value="event3">event3</option>
                                   </select>
                                 </div>
                               </div>
@@ -223,11 +249,25 @@ class Profile extends Component {
                             <div className="field">
                               <div className="control ">
                                 <label className="radio">
-                                  <input type="radio" name="answer" />
+                                  <input
+                                    type="radio"
+                                    name="answer"
+                                    checked={this.state.radioChecked}
+                                    onChange={() => {
+                                      this.setState({ radioChecked: true });
+                                    }}
+                                  />
                                   Yes
                                 </label>
                                 <label className="radio">
-                                  <input type="radio" name="answer" />
+                                  <input
+                                    type="radio"
+                                    name="answer"
+                                    value="no"
+                                    onClick={() => {
+                                      this.setState({ radioChecked: false });
+                                    }}
+                                  />
                                   No
                                 </label>
                               </div>
@@ -239,7 +279,10 @@ class Profile extends Component {
                           <div className="field-body">
                             <div className="field">
                               <div className="control ">
-                                <button className="button is-link">
+                                <button
+                                  className="button is-link"
+                                  disabled={!this.state.radioChecked}
+                                >
                                   Submit
                                 </button>
                               </div>
