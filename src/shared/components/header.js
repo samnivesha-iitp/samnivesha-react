@@ -162,14 +162,7 @@ const Header = props => {
                 >
                   Sponsors
                 </Link> */}
-                <Link
-                  to="/about"
-                  prefetch={Prefetch}
-                  className="navbar-item has-text-weight-semibold"
-                  onClick={hideMenu}
-                >
-                  About
-                </Link>
+                
                 <Link
                   to="/contact"
                   prefetch={Prefetch}

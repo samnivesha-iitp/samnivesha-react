@@ -10,6 +10,7 @@ import { faUserAltSlash } from "@fortawesome/free-solid-svg-icons";
 const arrayFinder = require("../../utils/findArray");
 import axios from "axios";
 const getUserData = require("../../utils/getUserData");
+import Notification from "./components/notification";
 
 const Home = props => {
   // const { data } = props;
@@ -22,74 +23,102 @@ const Home = props => {
   } = useContext(AuthContext);
   const [evedata, setEveData] = useState("");
   const [isAtTop, setIsAtTop] = useState(true);
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState({ message: "", status: "" });
+  const [isLoading, setIsLoading] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
   useEffect(() => {
-    setEveData(arrayFinder("eventData", store));
     window.addEventListener("scroll", scrollhandler);
     return () => {
+      clearTimeout(removeMsg);
       window.removeEventListener("scroll", scrollhandler);
     };
   });
+  useEffect(() => {
+    setEveData(arrayFinder("eventData", store));
+  }, []);
   const scrollhandler = () => {
+    setScrollTop(window.scrollY);
     if (window.scrollY >= 100) {
       setIsAtTop(false);
     } else {
       setIsAtTop(true);
     }
   };
+  const removeMsg = () => {
+    setMsg({ message: "", status: "" });
+  };
   const registerHandler = e => {
     e.preventDefault();
-    // console.log(e.target.href);
-    const id = e.target.href.match(/http:\/\/localhost:3000\/event\/(\d+)/);
-    // console.log(id[1]);
+    const id = e.target.href.match(/http:\/\/localhost:3000\/event\/(\w+)/);
     const eventId = id[1];
     if (!isAuthenticated) {
       props.history.push("/login");
-    }
-    const { events } = user;
-    if (events.length > 0) {
-      for (let i = 0; i < events.length; i++) {
-        if (events[i]._id == eventId) {
-          setMsg({ message: "Already Registered." });
-          break;
+    } else {
+      const { events } = user;
+      let currEventUser = 0;
+      // check if user has already registered
+      if (events.length > 0) {
+        for (let i = 0; i < events.length; i++) {
+          if (events[i]._id == eventId) {
+            setMsg({ message: "Already Registered." });
+            currEventUser++;
+            setTimeout(removeMsg, 3000);
+            break;
+          }
         }
       }
-    }
-    for (let i = 0; i < evedata.length; i++) {
-      if (evedata[i]._id == eventId) {
-        const isgroupallowed = evedata[i].isgroupallowed;
-        if (isgroupallowed) {
-          props.history.push("/profile");
-        } else {
-          axios
-            .post(`/${eventId}/${user._id}`)
-            .then(res => {
-              if (res.status == 200) {
-                setMsg({ status: true, msg: "success" });
-                getUserData(user._id)
-                  .then(user => {
-                    setUser(user);
-                  })
-                  .catch(() => {
-                    setMsg({ message: "Error Detected." });
-                  });
-              }
-            })
-            .catch(() => {
-              setMsg({ status: false, msg: "Failed" });
-            });
+      if (currEventUser !== 1) {
+        const { eventData } = evedata;
+        for (let i = 0; i < eventData.length; i++) {
+          if (eventData[i]._id == eventId) {
+            const isgroupallowed = eventData[i].isgroupallowed;
+            if (isgroupallowed) {
+              props.history.push("/profile#groupregister");
+            } else {
+              axios
+                .post(`/event/${eventId}/${user._id}`)
+                .then(res => {
+                  if (res.status == 200) {
+                    setMsg({ status: true, message: "You are registered." });
+                    getUserData(user._id)
+                      .then(user => {
+                        setUser(user.userData);
+                        setTimeout(removeMsg, 3000);
+                      })
+                      .catch(() => {
+                        setMsg({ message: "Error Detected." });
+                        setTimeout(removeMsg, 3000);
+                      });
+                  }
+                })
+                .catch(() => {
+                  setMsg({ status: false, msg: "Failed" });
+                  setTimeout(removeMsg, 3000);
+                });
+            }
+            break;
+          }
         }
-        break;
       }
     }
   };
   // const event2 = event.splice(0, 2);
   const backtotop = isAtTop ? "" : "visible";
+  const status = msg.status
+    ? "is-success"
+    : msg.status !== ""
+    ? "is-warning"
+    : "is-hidden";
+  const successMsg = msg.status ? msg.message : null;
+  const errMsg = !msg.status ? msg.message : null;
+  const loadingStatus = isLoading ? "is-loading" : "";
+
   return (
     <>
       <Helmet>
         <title>Samnivesha | Home</title>
         <link rel="stylesheet" preload href="/css/index/core.css" />
+        <link rel="stylesheet" preload href="/css/Main.css" />
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -97,44 +126,27 @@ const Home = props => {
       </Helmet>
       <Layout>
         <section
-          className="hero is-fullheight is-light"
+          className="hero1 is-fullheight1 is-light"
           style={{ backgroundColor: "#edf5e1" }}
         >
-          <div className="hero-body  p-b-30 ">
-            <div className="container">
-              <h2 className="subtitle">
-                <span
-                  className="has-text-centered is-block"
-                  style={{ paddingBottom: "20px" }}
-                >
-                  Association of Civil engineers of IIT Patna presents
-                </span>
-              </h2>
-              <h1 className="title">
-                <span className="is-size-1  has-text-centered is-block">
-                  Samnivesha'20
-                </span>
-              </h1>
-
-              <div className="has-text-centered">
-                <img
-                  className="m-t-50"
-                  src="/images/property_image.png"
-                  alt="Find rentals"
-                />
-              </div>
+          <div id="main">
+            <div
+              id="logo"
+              style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}
+            >
+              <img src="/images/Mountain.png" width="100%" />
             </div>
           </div>
         </section>
-        {/* <section
+        <section
           className="section section-feature-grey is-fullheight"
           id="about"
         >
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">About Us</h2>
-              <p className="is-1">Association of Civil Engineers</p>
-              <p className="is-2">
+              {/* <p className="is-1">Association of Civil Engineers</p> */}
+              <p className="is-2" style={{ fontSize: "19px" }}>
                 Samnivesha is the annual technical fest of the Department of
                 Civil and Environmental Engineering (DCEE) with a myriad of
                 events revolving around the exciting areas of Civil and
@@ -153,7 +165,7 @@ const Home = props => {
               </p>
             </div>
           </div>
-        </section> */}
+        </section>
         <section
           className="section section-feature-grey is-fullheight"
           id="guestLecture"
@@ -194,14 +206,14 @@ const Home = props => {
                 <div className="column is-4 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.png"
+                    src="/images/index/illustrations/drawings/teamwork.jpg"
                     alt=""
                   />
                 </div>
                 <div className="column is-6 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.png"
+                    src="/images/index/illustrations/drawings/teamwork.jpg"
                     alt=""
                   />
                 </div>
@@ -231,7 +243,7 @@ const Home = props => {
                 <div className="column is-4 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.png"
+                    src="/images/index/illustrations/drawings/teamwork.jpg"
                     alt=""
                   />
                 </div>
@@ -303,7 +315,7 @@ const Home = props => {
                 <div className="column is-6 is-offset-1">
                   <img
                     className=""
-                    src="/images/index/illustrations/drawings/teamwork.png"
+                    src="/images/index/illustrations/drawings/teamwork.jpg"
                     alt=""
                   />
                 </div>
@@ -330,9 +342,9 @@ const Home = props => {
                   <div className="event-card is-wavy">
                     <div className="img-container">
                       <img
-                        src="/images/b.png"
+                        src="/images/b.jpg"
                         alt=""
-                        data-demo-src="/images/b.png"
+                        data-demo-src="/images/b.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -351,15 +363,15 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10`}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
                           <Link
                             onClick={registerHandler}
-                            to="/event/123"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            to="/event/5e132645cd322b2f833da6ff"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
                           >
                             Register
                             <i className="sl sl-icon-arrow-right"></i>
@@ -379,9 +391,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/g.png"
+                        src="/images/g.jpg"
                         alt=""
-                        data-demo-src="/images/g.png"
+                        data-demo-src="/images/g.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -401,7 +413,7 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -415,9 +427,9 @@ const Home = props => {
                   <div className="event-card is-wavy">
                     <div className="img-container">
                       <img
-                        src="/images/h.png"
+                        src="/images/h.jpg"
                         alt=""
-                        data-demo-src="/images/h.png"
+                        data-demo-src="/images/h.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -434,11 +446,19 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/5e1345800b683e47d58588d5"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -456,9 +476,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/e.png"
+                        src="/images/e.jpg"
                         alt=""
-                        data-demo-src="/images/e.png"
+                        data-demo-src="/images/e.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -479,7 +499,7 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -499,9 +519,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/c.png"
+                        src="/images/c.jpg"
                         alt=""
-                        data-demo-src="/images/c.png"
+                        data-demo-src="/images/c.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -518,7 +538,7 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -538,9 +558,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/l.png"
+                        src="/images/l.jpg"
                         alt=""
-                        data-demo-src="/images/l.png"
+                        data-demo-src="/images/l.jpg"
                       />
                     </div>
                     <div className="card-text">
@@ -557,7 +577,7 @@ const Home = props => {
                           </p>
                           <a
                             href="#"
-                            className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -576,6 +596,7 @@ const Home = props => {
           <a href="#"></a>
         </div>
       </Layout>
+      <Notification status={status} successMsg={successMsg} errorMsg={errMsg} />
     </>
   );
 };
@@ -597,7 +618,7 @@ const Card = props => {
               <p className="text text-description">{description}</p>
               <a
                 href="#"
-                className="button btn-align btn-more is-link color-accent mt-10 mb-10"
+                className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
               >
                 Event details
                 <i className="sl sl-icon-arrow-right"></i>

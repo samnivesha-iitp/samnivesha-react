@@ -8,6 +8,7 @@ import { backgroundImage } from "../../archieve/collections";
 import AuthContext from "./components/authContext";
 import Cookies from "js-cookie";
 const getUserData = require("../../utils/getUserData");
+import Helmet from 'react-helmet'
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -72,6 +73,7 @@ class Login extends Component {
     const Prefetch = config.environment ? "false" : "true";
     return (
       <Layout title="Login Here">
+        <Helmet><title>Samnivesha | Login </title></Helmet>
         <main className="main">
           <section
             className="hero is-fullheight background-image"

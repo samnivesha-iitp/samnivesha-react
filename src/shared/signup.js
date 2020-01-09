@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { backgroundImage } from "../../archieve/collections";
+import Helmet from 'react-helmet'
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -30,7 +31,8 @@ class Signup extends Component {
       successMsg: "",
       errorMsg: "",
       innerWidth: "",
-      mobileNumber: ""
+      mobileNumber: "",
+      isLoading: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -87,17 +89,20 @@ class Signup extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ isLoading: true });
     axios
       .post("/users/add", this.state)
       .then(res => {
         if (res.status == 200) {
           this.setState({
-            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`
+            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
+            isLoading: false
           });
         }
       })
       .catch(err => {
-        this.setState({ errorMsg: "An error occured" }), console.log(err);
+        this.setState({ errorMsg: "An error occured", isLoading: false }),
+          console.log(err);
       });
   }
   componentDidMount() {
@@ -112,9 +117,12 @@ class Signup extends Component {
   }
   render() {
     const Prefetch = config.environment ? "false" : "true";
-
+    const loadingcss = this.state.isLoading ? "is-loading" : null;
     return (
       <Layout title="Signup Here">
+        <Helmet>
+          <title>Signup Here</title>
+        </Helmet>
         <main className="main">
           <section
             className="hero is-fullheight background-image"
@@ -273,7 +281,6 @@ class Signup extends Component {
                               required
                               value={this.state.mobileNumber}
                               onChange={this.handleMobileNumber}
-                              
                             />
                           </div>
                         </div>
@@ -281,7 +288,7 @@ class Signup extends Component {
                         <div className="field is-grouped">
                           <div className="control">
                             <button
-                              className="button is-link"
+                              className={`button is-link ${loadingcss}`}
                               disabled={
                                 this.state.isUserExists ||
                                 this.state.isEmailExists

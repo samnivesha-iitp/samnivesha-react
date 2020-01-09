@@ -16,6 +16,7 @@ import Forgotpassword from "./forgotpassword";
 import Helmet from "react-helmet";
 const arrayFinder = require("../../utils/findArray");
 import AuthContext from "./components/authContext";
+import ResetPassword from "./resetPassword";
 import {
   ProtectedProfile,
   ProtectedLogin,
@@ -29,27 +30,22 @@ const App = props => {
   const [firstRender, setFirstrender] = useState(true);
   const { store } = props;
   useEffect(() => {
-    function runAtFirstRender() {
-      const data = arrayFinder("userData", store);
-      if (typeof data !== "undefined") {
-        setIsAuthenticated(true);
-        setUser(data.userData);
-      }
-
-      setTimeout(delayloader, 3000);
+    const data = arrayFinder("userData", store);
+    if (typeof data !== "undefined") {
+      setIsAuthenticated(true);
+      setUser(data.userData);
     }
-    function delayloader() {
-      clearTimeout(delayloader);
+    const timer = setTimeout(() => {
       setFirstrender(false);
-    }
-    if (firstRender) {
-      runAtFirstRender();
-    }
-  });
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
   const loader = firstRender ? "is-active" : "";
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, user, setUser,store }}
+      value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
     >
       <Helmet>
         <link rel="stylesheet" href="/css/index/pageloader.css" />
@@ -63,6 +59,7 @@ const App = props => {
         <Route path="/contact" component={Contact} />
         <Route path="/events" component={Events} />
         <Route path="/blog" component={Blog} />
+        <Route path="/reset/:resetToken" component={ResetPassword} />
         <ProtectedProfile path="/profile" component={Profile} data={store} />
         <ProtectedSignup path="/signup" component={Signup} />
         <ProtectedLogin path="/login" component={Login} />

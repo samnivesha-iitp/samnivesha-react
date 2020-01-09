@@ -1,0 +1,54 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    height: 200%;
+    background-color:#0A2B3E;
+}
+#main{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(#66FFFD,#FFF);
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+#logo{
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    top: 5%;
+    text-align: center;
+}
+
+.hero1.is-fullheight1 {
+    min-height: 100vh;
+}
+
+.hero1 {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width:762px){
+    
+.hero1.is-fullheight1 {
+    min-height: 35vh;
+}
+    #main{
+    width: 100vw;
+    height: 50vh;
+    background: linear-gradient(#66FFFD,#FFF); 
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    position: absolute;
+    top: 150px;
+}
+
+}
+
+
+

@@ -2,6 +2,7 @@ article.message {
     position: fixed;
     left: 20px;
     bottom: 20px;
+    z-index: 999;
      /* -webkit-animation-name: display; */
      /* -webkit-animation-duration: 3s; */
      /* animation-name: display; */

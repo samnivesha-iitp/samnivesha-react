@@ -38,7 +38,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    resePasswordToken: String,
+    resetPasswordToken: String,
     resetPasswordExpires: Date,
     mobileNumber:{type:Number,required:true},
     events: [{ type: ObjectId, ref: "Event" }]
