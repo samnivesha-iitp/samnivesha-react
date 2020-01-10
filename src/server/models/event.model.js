@@ -8,9 +8,7 @@ const eventSchema = new Schema(
       type: String,
       required: true
     },
-    organiser: {
-      type: String
-    },
+    organiser: [{ type: String }],
     place: {
       type: String,
       default: "Tutorial Block"
@@ -23,7 +21,7 @@ const eventSchema = new Schema(
     timing: { type: String, default: "NA" },
     rulebook: String,
     isgroupallowed: { type: Boolean, default: false },
-    poster: {type:String,default:'/images/Lensart_.png'},
+    poster: { type: String, default: "/images/Lensart_.png" },
     tagline: String,
     description: String,
     groups: [{ type: ObjectId, ref: "Group", default: [] }],
