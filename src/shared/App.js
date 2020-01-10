@@ -47,19 +47,11 @@ const App = props => {
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
     >
-<<<<<<< HEAD
-          <Helmet>
-            <link rel="stylesheet" href="/css/index/pageloader.css" />
-          </Helmet>
-          <div className={`pageloader ${loader}`}></div>
-          <div className={`infraloader ${loader}`}></div>
-=======
       <Helmet>
         <link rel="stylesheet" href="/css/index/pageloader.css" />
       </Helmet>
       <div className={`pageloader ${loader}`}></div>
       <div className={`infraloader ${loader}`}></div>
->>>>>>> 9ebe23743a6b8bc8df1ef0c575ae93ec5da9cc27
       <Header />
       <Switch>
         <Route exact path="/" render={() => <Home data={store} />} />

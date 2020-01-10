@@ -49,7 +49,9 @@ const Home = props => {
   };
   const registerHandler = e => {
     e.preventDefault();
-    const id = e.target.href.match(/http:\/\/localhost:3000\/event\/(\w+)/);
+    const id = e.target.href.match(
+      /https:\/\/samnivesha.iitp.ac.in\/event\/(\w+)/
+    );
     const eventId = id[1];
     if (!isAuthenticated) {
       props.history.push("/login");
@@ -350,7 +352,7 @@ const Home = props => {
                     <div className="card-text">
                       <div className="text text-container">
                         <div className="text text-header">
-                          <h2 className="text text-title">Bridge</h2>
+                          <h2 className="text text-title">Bridge it</h2>
                           <p className="text text-subtitle">
                             Model Bridge Design
                           </p>
@@ -370,7 +372,7 @@ const Home = props => {
                           </a>
                           <Link
                             onClick={registerHandler}
-                            to="/event/5e132645cd322b2f833da6ff"
+                            to="/event/5e18407e437ee11f063db0ca"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
                           >
                             Register
@@ -418,6 +420,14 @@ const Home = props => {
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/5e1840f4437ee11f063db0cb"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -453,7 +463,7 @@ const Home = props => {
                           </a>
                           <Link
                             onClick={registerHandler}
-                            to="/event/5e1345800b683e47d58588d5"
+                            to="/event/5e18412e437ee11f063db0cc"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
                           >
                             Register
@@ -504,6 +514,14 @@ const Home = props => {
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/5e184176437ee11f063db0cd"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -543,6 +561,14 @@ const Home = props => {
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/5e1841ad437ee11f063db0ce"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -582,6 +608,14 @@ const Home = props => {
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
                           </a>
+                          <Link
+                            onClick={registerHandler}
+                            to="/event/5e1841e2437ee11f063db0cf"
+                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
+                          >
+                            Register
+                            <i className="sl sl-icon-arrow-right"></i>
+                          </Link>
                         </div>
                       </div>
                     </div>
