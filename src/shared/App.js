@@ -14,8 +14,9 @@ import Header from "./components/header";
 import Cookies from "js-cookie";
 import Forgotpassword from "./forgotpassword";
 import Helmet from "react-helmet";
-
+const arrayFinder = require("../../utils/findArray");
 import AuthContext from "./components/authContext";
+import ResetPassword from "./resetPassword";
 import {
   ProtectedProfile,
   ProtectedLogin,
@@ -29,45 +30,45 @@ const App = props => {
   const [firstRender, setFirstrender] = useState(true);
   const { store } = props;
   useEffect(() => {
-    function runAtFirstRender() {
-      if (store.length > 1) {
-        // User is already logged in
-        if (store[0].userData == !"undefined" && Cookies.get("uid") !== "") {
-          setIsAuthenticated(true);
-          setUser(store[0].userData);
-        } else {
-          setIsAuthenticated(true);
-          setUser(store[0].userData);
-        }
-      }
-      function delayloader() {
-        setFirstrender(false);
-        clearTimeout(delayloader);
-      }
-      setTimeout(delayloader, 3000);
+    const data = arrayFinder("userData", store);
+    if (typeof data !== "undefined") {
+      setIsAuthenticated(true);
+      setUser(data.userData);
     }
-    if (firstRender) {
-      runAtFirstRender();
-    }
-  });
+    const timer = setTimeout(() => {
+      setFirstrender(false);
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
   const loader = firstRender ? "is-active" : "";
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
+      value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
     >
+<<<<<<< HEAD
           <Helmet>
             <link rel="stylesheet" href="/css/index/pageloader.css" />
           </Helmet>
           <div className={`pageloader ${loader}`}></div>
           <div className={`infraloader ${loader}`}></div>
+=======
+      <Helmet>
+        <link rel="stylesheet" href="/css/index/pageloader.css" />
+      </Helmet>
+      <div className={`pageloader ${loader}`}></div>
+      <div className={`infraloader ${loader}`}></div>
+>>>>>>> 9ebe23743a6b8bc8df1ef0c575ae93ec5da9cc27
       <Header />
       <Switch>
-        <Route exact path="/" render={() => <Home name={props.store} />} />
+        <Route exact path="/" render={() => <Home data={store} />} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/events" component={Events} />
-        {/* <Route path="/blog" component={Blog} /> */}
-        <ProtectedProfile path="/profile" component={Profile} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/reset/:resetToken" component={ResetPassword} />
+        <ProtectedProfile path="/profile" component={Profile} data={store} />
         <ProtectedSignup path="/signup" component={Signup} />
         <ProtectedLogin path="/login" component={Login} />
         <ProtectedResetPassword
@@ -80,5 +81,5 @@ const App = props => {
     </AuthContext.Provider>
   );
 };
-
+App.propTypes = {};
 export default App;

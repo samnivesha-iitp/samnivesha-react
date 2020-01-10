@@ -34,8 +34,7 @@ class About extends Component {
                     fest to attract engineers from all over the country and
                     provide them plethora of events to compete for and win
                     exciting rewards.
-                    <br />
-                    <br /> The technical extravaganza is conducted by the
+                    {/* <br /> The technical extravaganza is conducted by the
                     Association of Civil Engineers (ACE), the official
                     departmental Club of DCEE. Samnivesha will be a pioneer, a
                     fest first of its kind in Bihar, a fest completely based on
@@ -43,24 +42,10 @@ class About extends Component {
                     minds encouraging them to engage technically and develop
                     skills in civil applications. Samnivesha includes various
                     events, right from developing plans, testing minds on
-                    knowledge and application in the constructionWorld!
-                    <br /> <br /> The first edition of Samnivesha was a huge
-                    success, comprising of exciting events, workshops and guest
-                    lectures. The whole idea behind the fest is to provide
-                    exposure to various industrial and research topics in Civil
-                    engineering. Students from colleges across Bihar
-                    participated with great zeal and enthusiasm. The total
-                    footfall is estimated to be around 2000! Prof Devdas Menon
-                    (IIT Madras) gave a very informative guest lecture. Several
-                    events like Richter 9.0 related to earthquake resistibility,
-                    BluePrint to showcase your designing skills, CiviQ to test
-                    your knowledge in this field, House of cards attracted huge
-                    participation from various colleges of Bihar. A workshop on
-                    STAAD PRO, software widely used in structural engineering
-                    was also conducted by none other than Bentley itself.
+                    knowledge and application in the constructionWorld! */}
                     <br />
                     <br /> Now ACE is back with another edition of Samnivesha.
-                    <br /> <br /> We envisage this edition of Samniveshato be a
+                    <br /> <br /> We envisage this edition of Samnivesha to be a
                     grand success in not only Bihar but also the Eastern India.
                     It will restore the glory of Bihar as the greatest centre of
                     education for which it was once known for and ultimately

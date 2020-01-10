@@ -19,7 +19,11 @@ class Contact extends Component {
     this.handleEmail = this.handleEmail.bind(this);
     this.handleMsg = this.handleMsg.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeMsg = this.removeMsg.bind(this)
   }
+  removeMsg = () => {
+    this.setState({ successMsg: null, errorMsg: null });
+  };
   handleName(e) {
     this.setState({ name: e.target.value });
   }
@@ -29,6 +33,9 @@ class Contact extends Component {
   handleMsg(e) {
     this.setState({ msg: e.target.value });
   }
+  componentWillUnmount(){
+    clearTimeout(this.removeMsg);
+  }
   handleSubmit() {
     const sendTo = "samniveshaiitp@gmail.com";
     const subject = `Contact Form submission by ${this.state.name}`;
@@ -36,10 +43,7 @@ class Contact extends Component {
     Email: ${this.state.email}
     Message Body: ${this.state.msg} `;
     this.setState({ isloading: true });
-    const removeMsg = () => {
-      this.setState({ successMsg: null, errorMsg: null });
-      clearTimeout(removeMsg);
-    };
+    
     axios
       .post("/mail", { sendTo, subject, body })
       .then(res => {
@@ -51,7 +55,7 @@ class Contact extends Component {
             email: "",
             msg: ""
           });
-          setTimeout(removeMsg, 5000);
+          setTimeout(this.removeMsg, 5000);
         }
       })
       .catch(err => {
@@ -62,7 +66,7 @@ class Contact extends Component {
           msg: "",
           isloading: false
         });
-        setTimeout(removeMsg, 5000);
+        setTimeout(this.removeMsg, 5000);
       });
   }
   render() {

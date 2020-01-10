@@ -23,6 +23,7 @@ const eventRouter = require("./routes/event.routes");
 const mailRouter = require("./routes/mail.routes");
 const loginRouter = require("./routes/login.route");
 const passwordForgotRouter = require("./routes/forgot.route");
+const passwordResetRouter = require('./routes/reset.route')
 const config = {
   environment: process.env.NODE_ENV !== "production"
 };
@@ -60,6 +61,7 @@ server
   .use("/auth", loginRouter)
   .use("/mail", mailRouter)
   .use("/forgot", passwordForgotRouter)
+  .use("/resetpassword", passwordResetRouter)
   .post("/logout", (req, res) => {
     req.session.destroy(err => {
       if (err) {

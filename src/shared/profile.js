@@ -4,6 +4,11 @@ require("isomorphic-fetch");
 import Tag from "./components/tag";
 import AuthContext from "./components/authContext";
 import "./css/profile.css";
+const arrayFinder = require("../../utils/findArray");
+import axios from "axios";
+import Notification from "./components/notification";
+const getUserData = require("../../utils/getUserData");
+import Helmet from "react-helmet";
 
 class Profile extends Component {
   constructor(props) {
@@ -14,33 +19,77 @@ class Profile extends Component {
       college: "",
       email: "",
       isModal: false,
-      currPass: "",
       newPass: "",
       confPass: "",
       groupLeader: "",
       groupMembers: [],
-      currentMember: ""
+      currentMember: "",
+      eventRegistered: "",
+      radioChecked: true,
+      currentSelectedEvent: "",
+      groupEventsToRegister: [],
+      eventData: [],
+      successMsg: "",
+      errorMsg: "",
+      maxMembers: 1,
+      addbuttonloading: false,
+      submitbuttonloading: false,
+      passresetbuttonloading: false,
+      _id: "",
+      passLength: 0
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    this.handleCurrPass = this.handleCurrPass.bind(this);
     this.handleNewPass = this.handleNewPass.bind(this);
     this.handleConfPass = this.handleConfPass.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleGroupMembers = this.handleGroupMembers.bind(this);
     this.addGroupMembers = this.addGroupMembers.bind(this);
     this.removeGroupMembers = this.removeGroupMembers.bind(this);
+    this.selectedEventHandler = this.selectedEventHandler.bind(this);
+    this.findEventFromId = this.findEventFromId.bind(this);
+    this.removeMsg = this.removeMsg.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    const { username, firstName, lastName, college, email } = this.context.user;
+    const filterGroupEvent = eventArray => {
+      return eventArray.filter(event => {
+        if (event.isgroupallowed) {
+          return event;
+        }
+      });
+    };
+    const groupEventId = eventArr => {
+      return eventArr.map(eve => {
+        return eve._id;
+      });
+    };
+    const grpEveIdToRegister = (totalEve, userHadRegistered) => {
+      return totalEve.filter(eve => {
+        if (userHadRegistered.indexOf(eve) !== -1) {
+          return null;
+        } else {
+          return eve;
+        }
+      });
+    };
+
+    const { user, setUser, store } = this.context;
+    const { username, firstName, lastName, college, email, events, _id } = user;
+    const { eventData } = arrayFinder("eventData", store);
+    const event = groupEventId(filterGroupEvent(eventData));
+    const userEvent = groupEventId(filterGroupEvent(events));
     this.setState({
       username,
       fullName: firstName + " " + lastName,
       college,
       email,
-      groupLeader: username
+      groupLeader: _id,
+      eventRegistered: events,
+      eventData: eventData,
+      _id,
+      groupEventsToRegister: grpEveIdToRegister(event, userEvent)
     });
-    // console.log("window", window.__APP_USER_PROFILE__);
   }
   showModal() {
     this.setState({ isModal: true });
@@ -48,23 +97,112 @@ class Profile extends Component {
   hideModal() {
     this.setState({ isModal: false });
   }
-  handleCurrPass(e) {
-    this.setState({ currPass: e.target.value });
-  }
   handleNewPass(e) {
-    this.setState({ newPass: e.target.value });
+    this.setState({
+      newPass: e.target.value,
+      passLength: e.target.value.length
+    });
   }
 
   handleConfPass(e) {
     this.setState({ confPass: e.target.value });
   }
   handleChangePassword(e) {
-    e.preventDefault;
+    e.preventDefault();
+    const { newPass, confPass, _id } = this.state;
+    if (newPass == confPass) {
+      this.setState({ passresetbuttonloading: true });
+      axios
+        .post(`/resetpassword/wt/${_id}`, { newPass: newPass })
+        .then(res => {
+          switch (res.status) {
+            case 200:
+              this.setState({ successMsg: "Password has been reset." });
+            case 500:
+              this.setState({ errorMsg: "Internal server Error" });
+            case 503:
+              this.setState({ errorMsg: "Database Error" });
+          }
+          setTimeout(this.removeMsg, 2000);
+          this.setState({
+            newPass: "",
+            confPass: "",
+            passresetbuttonloading: false,
+            isModal:false
+          });
+        })
+        .catch(() => {
+          this.setState({ errorMsg: "Error Occured." });
+          setTimeout(this.removeMsg, 2000);
+          this.setState({
+            newPass: "",
+            confPass: "",
+            passresetbuttonloading: false,
+          });
+        });
+    } else {
+      this.setState({
+        errorMsg: "Password Don't match",
+        passresetbuttonloading: false
+      });
+      setTimeout(this.removeMsg, 2000);
+    }
+  }
+  removeMsg() {
+    this.setState({ errorMsg: "", successMsg: "" });
   }
   handleGroupMembers(curr, prev) {
-    const newMember = [...prev, curr];
-    this.setState({ groupMembers: newMember });
-    this.setState({ currentMember: "" });
+    // check if maximum number of member exist
+    if (this.state.groupMembers.length <= this.state.maxMembers) {
+      this.setState({ addbuttonloading: true });
+      axios
+        .post(
+          `/users/validateuserforevent/${this.state.currentSelectedEvent}`,
+          {
+            username: curr
+          }
+        )
+        .then(res => {
+          if (res.data.message == false) {
+            this.setState({
+              addbuttonloading: false,
+              errorMsg: "Already Registered.",
+              currentMember: ""
+            });
+            setTimeout(this.removeMsg, 1500);
+          }
+          if (res.data.message == "not_exist") {
+            this.setState({
+              addbuttonloading: false,
+              errorMsg: "Invalid Id.",
+              currentMember: ""
+            });
+            setTimeout(this.removeMsg, 1500);
+          }
+          if (res.data.message == true) {
+            const newMember = [...prev, curr];
+            this.setState({
+              addbuttonloading: false,
+              groupMembers: newMember,
+              currentMember: ""
+            });
+          }
+        })
+        .catch(() => {
+          this.setState({
+            addbuttonloading: false,
+            errorMsg: "Internal Server Error",
+            currentMember: ""
+          });
+          setTimeout(this.removeMsg, 1500);
+        });
+    } else {
+      this.setState({ errorMsg: "Maximum Members Reached." });
+      setTimeout(this.removeMsg, 1500);
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this.removeMsg);
   }
   addGroupMembers(e) {
     this.setState({ currentMember: e.target.value });
@@ -75,11 +213,85 @@ class Profile extends Component {
     });
     this.setState({ groupMembers: newMember });
   }
+  selectedEventHandler(e) {
+    this.setState({ currentSelectedEvent: e.target.value });
+    const event = this.findEventFromId(e.target.value)[0];
+    this.setState({ maxMembers: event.maxMembersAllowed });
+  }
+  findEventFromId = eventId => {
+    return this.state.eventData.filter(eve => {
+      if (eve._id == eventId) {
+        return eve;
+      }
+    });
+  };
+  handleSubmit(e) {
+    e.preventDefault();
+    const { groupLeader, groupMembers, currentSelectedEvent } = this.state;
+    this.setState({ submitbuttonloading: true });
+    axios
+      .post(`/event/${currentSelectedEvent}/group/add`, {
+        groupleader: groupLeader,
+        groupmembers: groupMembers
+      })
+      .then(res => {
+        if (res.status == 500) {
+          this.setState({
+            submitbuttonloading: false,
+            errorMsg: res.data.message,
+            groupmembers: []
+          });
+          setTimeout(this.removeMsg, 3000);
+        }
+        if (res.status == 200) {
+          this.setState({
+            submitbuttonloading: false,
+            successMsg: " Group Registered.",
+            groupmembers: []
+          });
+          getUserData(this.state._id)
+            .then(res => {
+              console.log(res.userData);
+              this.context.setUser(res.userData);
+            })
+            .catch(err => {
+              console.log("Error while updating State", err);
+            });
+          setTimeout(this.removeMsg, 3000);
+        }
+      })
+
+      .catch(err => {
+        this.setState({
+          submitbuttonloading: false,
+          errorMsg: "Internal Error",
+          groupmembers: []
+        });
+        setTimeout(this.removeMsg, 3000);
+      });
+  }
   static contextType = AuthContext;
+
   render() {
     const modalClass = this.state.isModal ? "is-active" : null;
+    const status = this.state.successMsg
+      ? "is-success"
+      : this.state.errorMsg
+      ? "is-warning"
+      : "is-hidden";
+    const addButtonCSS = this.state.addbuttonloading ? "is-loading" : null;
+    const submitButtonCSS = this.state.submitbuttonloading
+      ? "is-loading"
+      : null;
+    const passresetcss = this.state.passresetbuttonloading
+      ? "is-loading"
+      : null;
+      const disablebtn = this.state.passLength >= 6?false:true;
     return (
       <Layout>
+        <Helmet>
+          <title>Profile Page</title>
+        </Helmet>
         <main className="main">
           <section className="hero is-medium">
             <div className="hero-body">
@@ -88,7 +300,7 @@ class Profile extends Component {
                   <div className="column">
                     <h1 className="title is-4">Hi, {this.state.fullName}</h1>
                     <h2 className="title is-5">
-                      Samnivesha Id : {this.state.username}
+                      ACE Id : {this.state.username}
                     </h2>
                     <h2 className="title is-5">
                       College : {this.state.college}
@@ -114,26 +326,34 @@ class Profile extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th>1</th>
-                          <th>Samnivesh Eve</th>
-                          <th>10th Jan 2020</th>
-                          <th>Tutorial Block</th>
-                          <th>99999999</th>
-                        </tr>
-                        <tr>
-                          <th>2</th>
-                          <th>Samnivesh Eve1</th>
-                          <th>10th Jan 2021</th>
-                          <th>Tutorial Block</th>
-                          <th>999998980</th>
-                        </tr>
+                        {this.state.eventRegistered !== ""
+                          ? this.state.eventRegistered.map((event, index) => {
+                              if (event.place == null) {
+                                event.place == "Tutorial Block";
+                              }
+                              if (event.timing == null) {
+                                event.timing == "NA";
+                              }
+                              if (event.contact == null) {
+                                event.contact == "NA";
+                              }
+                              return (
+                                <tr key={event._id}>
+                                  <th>{index + 1}</th>
+                                  <th>{event.eventName}</th>
+                                  <th>{event.timing}</th>
+                                  <th>{event.place}</th>
+                                  <th>{event.contact}</th>
+                                </tr>
+                              );
+                            })
+                          : null}
                       </tbody>
                     </table>
                   </div>
-                  <div className="column">
+                  <div className="column" id="groupregister">
                     <div className="box">
-                      <form method="post">
+                      <form method="post" onSubmit={this.handleSubmit}>
                         <h3 className="title  is-4 has-text-black has-text-centered">
                           Group Registration
                         </h3>
@@ -149,10 +369,23 @@ class Profile extends Component {
                             <div className="field ">
                               <div className="control">
                                 <div className="select is-fullwidth">
-                                  <select>
-                                    <option>event1</option>
-                                    <option>event2</option>
-                                    <option>event3</option>
+                                  <select
+                                    onChange={this.selectedEventHandler}
+                                    value={this.state.currentSelectedEvent}
+                                    required
+                                  >
+                                    {this.state.groupEventsToRegister.map(
+                                      eve => {
+                                        return (
+                                          <option value={eve} key={eve}>
+                                            {
+                                              this.findEventFromId(eve)[0]
+                                                .eventName
+                                            }
+                                          </option>
+                                        );
+                                      }
+                                    )}
                                   </select>
                                 </div>
                               </div>
@@ -190,14 +423,13 @@ class Profile extends Component {
                                   type="text"
                                   value={this.state.currentMember}
                                   onChange={this.addGroupMembers}
-                                  required
                                 />
                               </div>
                             </div>
                             <div className="field">
                               <div className="control">
                                 <a
-                                  className="button is-info"
+                                  className={`button is-info ${addButtonCSS}`}
                                   onClick={() => {
                                     this.handleGroupMembers(
                                       this.state.currentMember,
@@ -223,11 +455,25 @@ class Profile extends Component {
                             <div className="field">
                               <div className="control ">
                                 <label className="radio">
-                                  <input type="radio" name="answer" />
+                                  <input
+                                    type="radio"
+                                    name="answer"
+                                    checked={this.state.radioChecked}
+                                    onChange={() => {
+                                      this.setState({ radioChecked: true });
+                                    }}
+                                  />
                                   Yes
                                 </label>
                                 <label className="radio">
-                                  <input type="radio" name="answer" />
+                                  <input
+                                    type="radio"
+                                    name="answer"
+                                    value="no"
+                                    onClick={() => {
+                                      this.setState({ radioChecked: false });
+                                    }}
+                                  />
                                   No
                                 </label>
                               </div>
@@ -239,7 +485,10 @@ class Profile extends Component {
                           <div className="field-body">
                             <div className="field">
                               <div className="control ">
-                                <button className="button is-link">
+                                <button
+                                  className={`button is-link ${submitButtonCSS}`}
+                                  disabled={!this.state.radioChecked}
+                                >
                                   Submit
                                 </button>
                               </div>
@@ -258,12 +507,8 @@ class Profile extends Component {
           <div className="modal-background"></div>
           <div className="modal-content" style={{ maxHeight: "unset" }}>
             <div className="box">
-              <form
-                action=""
-                method="post"
-                onSubmit={this.handleChangePassword}
-              >
-                <div className="field">
+              <form onSubmit={this.handleChangePassword}>
+                {/* <div className="field">
                   <div className="control">
                     <label className="label">current password</label>
                     <input
@@ -274,7 +519,7 @@ class Profile extends Component {
                       required
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="field">
                   <div className="control">
                     <label className="label">New password</label>
@@ -301,7 +546,9 @@ class Profile extends Component {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button className="button is-info">Submit</button>
+                    <button className={`button is-info ${passresetcss}`} disabled={disablebtn}>
+                      Submit
+                    </button>
                   </div>
                 </div>
               </form>
@@ -313,6 +560,11 @@ class Profile extends Component {
             onClick={this.hideModal}
           ></button>
         </div>
+        <Notification
+          successMsg={this.state.successMsg}
+          errorMsg={this.state.errorMsg}
+          status={status}
+        />
       </Layout>
     );
   }

@@ -10,11 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { backgroundImage } from "../../archieve/collections";
+import Helmet from 'react-helmet'
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
 };
-
 
 class Signup extends Component {
   constructor(props) {
@@ -30,7 +30,9 @@ class Signup extends Component {
       isEmailExists: null,
       successMsg: "",
       errorMsg: "",
-      innerWidth: ""
+      innerWidth: "",
+      mobileNumber: "",
+      isLoading: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -39,6 +41,7 @@ class Signup extends Component {
     this.handlePassword = this.handlePassword.bind(this);
     this.handleCollege = this.handleCollege.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
+    this.handleMobileNumber = this.handleMobileNumber.bind(this);
   }
   generateId() {
     return "ACE" + Math.floor(Math.random() * 10000);
@@ -86,17 +89,20 @@ class Signup extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ isLoading: true });
     axios
       .post("/users/add", this.state)
       .then(res => {
         if (res.status == 200) {
           this.setState({
-            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`
+            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
+            isLoading: false
           });
         }
       })
       .catch(err => {
-        this.setState({ errorMsg: "An error occured" }), console.log(err);
+        this.setState({ errorMsg: "An error occured", isLoading: false }),
+          console.log(err);
       });
   }
   componentDidMount() {
@@ -106,11 +112,17 @@ class Signup extends Component {
   componentDidUpdate() {
     this.handleUsername();
   }
+  handleMobileNumber(e) {
+    this.setState({ mobileNumber: e.target.value });
+  }
   render() {
-    const Prefetch = config.environment?"false":"true";
-
+    const Prefetch = config.environment ? "false" : "true";
+    const loadingcss = this.state.isLoading ? "is-loading" : null;
     return (
       <Layout title="Signup Here">
+        <Helmet>
+          <title>Signup Here</title>
+        </Helmet>
         <main className="main">
           <section
             className="hero is-fullheight background-image"
@@ -157,6 +169,7 @@ class Signup extends Component {
                               type="text"
                               placeholder="first name"
                               name="firstName"
+                              required
                               onChange={this.handleFirstName}
                               value={this.state.firstName}
                             />
@@ -203,6 +216,7 @@ class Signup extends Component {
                               placeholder="Email"
                               value={this.state.email}
                               name="email"
+                              required
                               onChange={this.handleEmail}
                             />
                             <span className="icon is-small is-left">
@@ -232,6 +246,7 @@ class Signup extends Component {
                               type="text"
                               placeholder="College"
                               name="college"
+                              required
                               value={this.state.college}
                               onChange={this.handleCollege}
                             />
@@ -249,23 +264,31 @@ class Signup extends Component {
                               type="password"
                               placeholder="Password"
                               name="password"
+                              required
                               value={this.state.password}
                               onChange={this.handlePassword}
                             />
                           </div>
-                          {/* <progress
-                        class="progress is-primary is-small"
-                        value="15"
-                        max="100"
-                      >
-                        15%
-                      </progress> */}
+                        </div>
+                        <div className="field">
+                          <label className="label">Mobile </label>
+                          <div className="control">
+                            <input
+                              className="input"
+                              type="number"
+                              placeholder="Mobile Number"
+                              name="mobileNumber"
+                              required
+                              value={this.state.mobileNumber}
+                              onChange={this.handleMobileNumber}
+                            />
+                          </div>
                         </div>
 
                         <div className="field is-grouped">
                           <div className="control">
                             <button
-                              className="button is-link"
+                              className={`button is-link ${loadingcss}`}
                               disabled={
                                 this.state.isUserExists ||
                                 this.state.isEmailExists

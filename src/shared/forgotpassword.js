@@ -5,6 +5,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "./css/forgot.css";
 const axios = require("axios");
 import Notification from "./components/notification";
+import Helmet from "react-helmet";
 
 const Forgotpassword = props => {
   const [email, setEmail] = useState("");
@@ -14,8 +15,12 @@ const Forgotpassword = props => {
   const removeMsg = () => {
     setErrorMsg("");
     setSuccessMsg("");
-    clearTimeout(removeMsg);
   };
+  useEffect(() => {
+    return () => {
+      clearTimeout(removeMsg);
+    };
+  });
   const handleSubmit = e => {
     e.preventDefault();
     setIsLoading(true);
@@ -35,7 +40,7 @@ const Forgotpassword = props => {
       })
       .catch(err => {
         if (err) {
-          setErrorMsg("An Error Occurred");
+          setErrorMsg("Invalid Email");
         }
         setIsLoading(false);
         setEmail("");
@@ -46,11 +51,14 @@ const Forgotpassword = props => {
   const status = successMsg
     ? "is-success"
     : errorMsg
-    ? "is-danger"
+    ? "is-warning"
     : "is-hidden";
   return (
     <Layout>
       <main className="main">
+        <Helmet>
+          <title>Forgot Password</title>
+        </Helmet>
         <section className="hero is-fullheight">
           <div className="hero-body">
             <div className="container has-text-centered">

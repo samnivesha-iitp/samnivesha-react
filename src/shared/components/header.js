@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import AuthContext from "./authContext";
 const axios = require("axios");
+import { HashLink } from "react-router-hash-link";
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -82,15 +83,6 @@ const Header = props => {
         </div>
         <div className={`navbar-menu ${isMobile}`} id="navbarTopMain">
           <div className="navbar-end">
-            {/* <Link
-              to="/blog"
-              prefetch={Prefetch}
-              className="navbar-item has-text-weight-semibold"
-              onClick={hideMenu}
-            >
-              <span>Blog</span>
-              <span className="tag is-success m-l-5">NEW</span>
-            </Link> */}
             <Link
               to="/"
               prefetch={Prefetch}
@@ -99,28 +91,37 @@ const Header = props => {
             >
               Home
             </Link>
+            <Link
+              to="/blog"
+              prefetch={Prefetch}
+              className="navbar-item has-text-weight-semibold"
+              onClick={hideMenu}
+            >
+              <span>Blog</span>
+              <span className="tag is-success m-l-5">NEW</span>
+            </Link>
 
-            <a
-              href="#event"
+            <HashLink
+              to={"/#event"}
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
               Events
-            </a>
-            <a
-              href="#guestLecture"
+            </HashLink>
+            <HashLink
+              to={"/#guestLecture"}
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
               Guest Lecture
-            </a>
-            <a
-              href="#workshop"
+            </HashLink>
+            <HashLink
+              to={"/#workshop"}
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
               Workshop
-            </a>
+            </HashLink>
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
@@ -139,7 +140,7 @@ const Header = props => {
                   <Link
                     to="/logout"
                     prefetch={Prefetch}
-                    className="button is-info"
+                    className="button is-warning"
                     onClick={e => {
                       e.preventDefault();
                       hideMenu();
@@ -161,14 +162,7 @@ const Header = props => {
                 >
                   Sponsors
                 </Link> */}
-                <Link
-                  to="/about"
-                  prefetch={Prefetch}
-                  className="navbar-item has-text-weight-semibold"
-                  onClick={hideMenu}
-                >
-                  About
-                </Link>
+                
                 <Link
                   to="/contact"
                   prefetch={Prefetch}

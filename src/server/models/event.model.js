@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-
+var ObjectId = mongoose.Schema.Types.ObjectId;
 const eventSchema = new Schema(
   {
     eventName: {
@@ -9,18 +9,26 @@ const eventSchema = new Schema(
       required: true
     },
     organiser: {
-      type: String,
-      required: true
+      type: String
     },
     place: {
       type: String,
-      required: true
+      default: "Tutorial Block"
     },
     date: {
       type: Date,
       default: Date.now,
       required: false
-    }
+    },
+    timing: { type: String, default: "NA" },
+    rulebook: String,
+    isgroupallowed: { type: Boolean, default: false },
+    poster: {type:String,default:'/images/Lensart_.png'},
+    tagline: String,
+    description: String,
+    groups: [{ type: ObjectId, ref: "Group", default: [] }],
+    maxMembersAllowed: Number,
+    contact: { type: Number, default: 9999999999 }
   },
   { timestamps: true }
 );
