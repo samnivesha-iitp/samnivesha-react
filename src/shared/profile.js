@@ -128,7 +128,7 @@ class Profile extends Component {
             newPass: "",
             confPass: "",
             passresetbuttonloading: false,
-            isModal:false
+            isModal: false
           });
         })
         .catch(() => {
@@ -137,7 +137,7 @@ class Profile extends Component {
           this.setState({
             newPass: "",
             confPass: "",
-            passresetbuttonloading: false,
+            passresetbuttonloading: false
           });
         });
     } else {
@@ -153,51 +153,56 @@ class Profile extends Component {
   }
   handleGroupMembers(curr, prev) {
     // check if maximum number of member exist
-    if (this.state.groupMembers.length <= this.state.maxMembers) {
-      this.setState({ addbuttonloading: true });
-      axios
-        .post(
-          `/users/validateuserforevent/${this.state.currentSelectedEvent}`,
-          {
-            username: curr
-          }
-        )
-        .then(res => {
-          if (res.data.message == false) {
+    if (prev.indexOf(curr) == -1) {
+      if (this.state.groupMembers.length <= this.state.maxMembers) {
+        this.setState({ addbuttonloading: true });
+        axios
+          .post(
+            `/users/validateuserforevent/${this.state.currentSelectedEvent}`,
+            {
+              username: curr
+            }
+          )
+          .then(res => {
+            if (res.data.message == false) {
+              this.setState({
+                addbuttonloading: false,
+                errorMsg: "Already Registered.",
+                currentMember: ""
+              });
+              setTimeout(this.removeMsg, 1500);
+            }
+            if (res.data.message == "not_exist") {
+              this.setState({
+                addbuttonloading: false,
+                errorMsg: "Invalid Id.",
+                currentMember: ""
+              });
+              setTimeout(this.removeMsg, 1500);
+            }
+            if (res.data.message == true) {
+              const newMember = [...prev, curr];
+              this.setState({
+                addbuttonloading: false,
+                groupMembers: newMember,
+                currentMember: ""
+              });
+            }
+          })
+          .catch(() => {
             this.setState({
               addbuttonloading: false,
-              errorMsg: "Already Registered.",
+              errorMsg: "Internal Server Error",
               currentMember: ""
             });
             setTimeout(this.removeMsg, 1500);
-          }
-          if (res.data.message == "not_exist") {
-            this.setState({
-              addbuttonloading: false,
-              errorMsg: "Invalid Id.",
-              currentMember: ""
-            });
-            setTimeout(this.removeMsg, 1500);
-          }
-          if (res.data.message == true) {
-            const newMember = [...prev, curr];
-            this.setState({
-              addbuttonloading: false,
-              groupMembers: newMember,
-              currentMember: ""
-            });
-          }
-        })
-        .catch(() => {
-          this.setState({
-            addbuttonloading: false,
-            errorMsg: "Internal Server Error",
-            currentMember: ""
           });
-          setTimeout(this.removeMsg, 1500);
-        });
+      } else {
+        this.setState({ errorMsg: "Maximum Members Reached." });
+        setTimeout(this.removeMsg, 1500);
+      }
     } else {
-      this.setState({ errorMsg: "Maximum Members Reached." });
+      this.setState({ errorMsg: "Already Added to list", currentMember: "" });
       setTimeout(this.removeMsg, 1500);
     }
   }
@@ -286,7 +291,7 @@ class Profile extends Component {
     const passresetcss = this.state.passresetbuttonloading
       ? "is-loading"
       : null;
-      const disablebtn = this.state.passLength >= 6?false:true;
+    const disablebtn = this.state.passLength >= 6 ? false : true;
     return (
       <Layout>
         <Helmet>
@@ -546,7 +551,10 @@ class Profile extends Component {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button className={`button is-info ${passresetcss}`} disabled={disablebtn}>
+                    <button
+                      className={`button is-info ${passresetcss}`}
+                      disabled={disablebtn}
+                    >
                       Submit
                     </button>
                   </div>

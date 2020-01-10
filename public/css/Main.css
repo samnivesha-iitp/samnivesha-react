@@ -32,17 +32,17 @@ body{
     flex-direction: column;
     justify-content: space-between;
 }
-
-@media only screen and (max-width:762px){
+@media only screen and (max-width:1024px){
     
 .hero1.is-fullheight1 {
-    min-height: 35vh;
+    min-height: 100vh;
+    background: linear-gradient(#66FFFD,#FFF);
 }
     #main{
     width: 100vw;
-    height: 50vh;
-    background: linear-gradient(#66FFFD,#FFF); 
-    transform: translate(-50%,-50%);
+    height: 100vh;
+    background: transparent;
+    transform: translate(-50%,-12%);
     overflow: hidden;
     position: absolute;
     top: 150px;

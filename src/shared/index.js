@@ -134,7 +134,11 @@ const Home = props => {
               id="logo"
               style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}
             >
-              <img src="/images/Mountain.png" width="100%" />
+              <img
+                src="/images/small.png"
+                srcSet="/images/small.png 1000w, /images/Mountain.png 1300w, "
+                width="100%"
+              />
             </div>
           </div>
         </section>

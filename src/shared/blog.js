@@ -41,14 +41,13 @@ const Blog = () => {
               </div>
               <div className="tile is-parent is-shady">
                 <article className="tile is-child notification is-white">
-                  <p className="title">Third column</p>
-                  <p className="subtitle">With some content</p>
                   <div className="content">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Proin ornare magna eros, eu pellentesque tortor vestibulum
-                      ut. Maecenas non massa sem. Etiam finibus odio quis
-                      feugiat facilisis.
+                      Samnivesha 2019 kicked off with our esteemed Director Dr.
+                      Pushpak Bhattacharya and our Chief Guest , Dr. Devdas
+                      Menon leading the proceedings. What followed, was a two
+                      day spectacle that astounded everyone with the variety of
+                      events, workshops and lectures.
                     </p>
                   </div>
                 </article>
@@ -109,14 +108,14 @@ const Blog = () => {
             <div className="tile is-ancestor">
               <div className="tile is-parent is-shady">
                 <article className="tile is-child notification is-white">
-                  <p className="title">Third column</p>
-                  <p className="subtitle">With some content</p>
                   <div className="content">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Proin ornare magna eros, eu pellentesque tortor vestibulum
-                      ut. Maecenas non massa sem. Etiam finibus odio quis
-                      feugiat facilisis.
+                      And thus, the incredibly successful maiden event of
+                      Samnivesha concluded. Congratulations to all the winners
+                      and participants, and our deepest gratuity for our
+                      sponsors without whom this would not have been possible.
+                      We are certainly looking forward to bringing back
+                      Samnivesha with even more grandeur in the coming years.
                     </p>
                   </div>
                 </article>

@@ -15,7 +15,12 @@ router.post("/", (req, res) => {
         .save()
         .then(() => {
           const sendTo = email;
-          const host = req.get("Host");
+          let host;
+          if (req.protocol == "https") {
+            host = "samnivesha.iitp.ac.in";
+          } else {
+            host = req.get("Host");
+          }
           const link = `${req.protocol}://${host}/reset/${token}`;
           const subject = "Password Reset link";
           const body = `Please click on this link ${link} to reset your password.`;
@@ -26,8 +31,8 @@ router.post("/", (req, res) => {
                 res.status(200).json({ message: "Reset Mail sent." });
               }
             })
-            .catch((err) => {
-              res.status(404).json('Mail Error');
+            .catch(err => {
+              res.status(404).json("Mail Error");
             });
         })
         .catch(() => {
