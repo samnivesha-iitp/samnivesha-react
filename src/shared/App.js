@@ -55,15 +55,11 @@ const App = props => {
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
     >
-      {firstRender ? (
-        <>
           <Helmet>
             <link rel="stylesheet" href="/css/index/pageloader.css" />
           </Helmet>
           <div className={`pageloader ${loader}`}></div>
           <div className={`infraloader ${loader}`}></div>
-        </>
-      ) : null}
       <Header />
       <Switch>
         <Route exact path="/" render={() => <Home name={props.store} />} />
