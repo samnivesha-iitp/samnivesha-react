@@ -8,7 +8,7 @@ import { backgroundImage } from "../../archieve/collections";
 import AuthContext from "./components/authContext";
 import Cookies from "js-cookie";
 const getUserData = require("../../utils/getUserData");
-import Helmet from 'react-helmet'
+import Helmet from "react-helmet";
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -48,22 +48,31 @@ class Login extends Component {
   handleSubmit(e) {
     const { setIsAuthenticated, setUser } = this.context;
     e.preventDefault();
-    axios.post("/auth", this.state).then(res => {
-      if (res.status == 200) {
-        // setIsAuthenticated(true);
-        const uid = Cookies.get("uid");
-        getUserData(uid)
-          .then(res => {
-            setUser(res.userData);
-            setIsAuthenticated(true);
-            this.props.history.push("/profile");
-            // console.log(this.context)
-          })
-          .catch(err => console.log(err));
-      } else {
-        this.setState({ msg: "incorrect email or password." });
-      }
-    });
+    axios
+      .post("/auth", this.state)
+      .then(res => {
+        if (res.status == 200) {
+          // setIsAuthenticated(true);
+          const uid = Cookies.get("uid");
+          getUserData(uid)
+            .then(res => {
+              setUser(res.userData);
+              setIsAuthenticated(true);
+              this.props.history.push("/profile");
+              // console.log(this.context)
+            })
+            .catch(err => console.log(err));
+        } else {
+          this.setState({ msg: "incorrect email or password.", password: "" });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          msg:
+            "That email/username and password combination didn't work. Try again.",
+          password: ""
+        });
+      });
   }
   componentDidMount() {
     this.setState({ innerWidth: window.innerWidth });
@@ -73,7 +82,9 @@ class Login extends Component {
     const Prefetch = config.environment ? "false" : "true";
     return (
       <Layout title="Login Here">
-        <Helmet><title>Samnivesha | Login </title></Helmet>
+        <Helmet>
+          <title>Samnivesha | Login </title>
+        </Helmet>
         <main className="main">
           <section
             className="hero is-fullheight background-image"
@@ -91,11 +102,7 @@ class Login extends Component {
                   </p>
                   <div className="box">
                     {this.state.msg && (
-                      <div className="notification is-danger">
-                        <button
-                          className="delete"
-                          onClick={() => this.setState({ msg: "" })}
-                        ></button>
+                      <div className="notification is-warning is-paddingless">
                         <strong>{this.state.msg}</strong>
                       </div>
                     )}

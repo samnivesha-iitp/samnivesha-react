@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { backgroundImage } from "../../archieve/collections";
-import Helmet from 'react-helmet'
+import Helmet from "react-helmet";
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -142,11 +142,7 @@ class Signup extends Component {
                     </h3>
                     <div className="box">
                       {this.state.successMsg && (
-                        <div className="notification is-success">
-                          <button
-                            className="delete"
-                            onClick={() => this.setState({ successMsg: "" })}
-                          ></button>
+                        <div className="notification is-success is-padidngless">
                           <strong>{this.state.successMsg}</strong>
                         </div>
                       )}

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const groupSchema = new Schema(
   {
-    groupleader: { type: ObjectId, ref: "User", unique: true },
+    groupleader: { type: ObjectId, ref: "User" },
     groupmembers: [{ type: String }],
     event: { type: ObjectId, ref: "Event" }
   },

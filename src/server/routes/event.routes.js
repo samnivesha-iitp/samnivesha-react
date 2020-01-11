@@ -131,45 +131,33 @@ router.route("/:id/group/add").post((req, res) => {
         if (count == 0) {
           // new group register
           const newGroup = new Group({
-            _id: mongoose.Types.ObjectId(),
+            event: id,
             groupleader,
-            groupmembers,
-            event: id
+            groupmembers
           });
-          Group.create(newGroup, (err, group) => {
-            if (err) {
-              res.json({ message: err });
-            }
-            Users.find(
-              {
-                $or: [{ _id: groupleader }, { username: { $in: groupmembers } }]
-              },
-              function(err, response) {
-                if (err) {
-                  res.status(500).json("Failed with Error " + err);
-                } else {
-                  let promises = [];
-
-                  response.forEach(user => {
-                    user.events.push(group.event);
-                    promises.push(user.save());
-                  });
-                  // console.log("@@@@outside", group);
-                  Event.find({ _id: group.event }, function(err, response) {
-                    response[0].groups.push(group._id);
-                    promises.push(response[0].save());
-                  });
-                  Promise.all(promises)
-                    .then(data => {
-                      res.status(200).json({ message: "Group Added" });
-                    })
-                    .catch(err => {
-                      res.status(500).json({ message: "Internal Error" + err });
-                    });
-                }
-              }
-            );
-          });
+          newGroup
+            .save()
+            .then(group => {
+              let promises = [];
+              response.forEach(user => {
+                user.events.push(group.event);
+                promises.push(user.save());
+              });
+              Event.find({ _id: group.event }, function(err, eventArray) {
+                eventArray[0].groups.push(group._id);
+                promises.push(eventArray[0].save());
+              });
+              Promise.all(promises)
+                .then(() => {
+                  res.status(200).json({ message: "Group Added" });
+                })
+                .catch(() => {
+                  res.status(500).json({ message: "Internal Error" + err });
+                });
+            })
+            .catch(err => {
+              res.json({ message: "Error while saving " + err });
+            });
         }
       }
     }

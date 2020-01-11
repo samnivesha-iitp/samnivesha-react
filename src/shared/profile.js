@@ -31,13 +31,14 @@ class Profile extends Component {
       eventData: [],
       successMsg: "",
       errorMsg: "",
-      maxMembers: 1,
+      maxMembers: 0,
       addbuttonloading: false,
       submitbuttonloading: false,
       passresetbuttonloading: false,
       _id: "",
       passLength: 0
     };
+    this.optionRef = React.createRef();
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleNewPass = this.handleNewPass.bind(this);
@@ -73,12 +74,25 @@ class Profile extends Component {
         }
       });
     };
-
+    const findCurrentDetails = (id, data) => {
+      return data.map(eve => {
+        if (eve._id == id) {
+          return eve;
+        }
+      });
+    };
     const { user, setUser, store } = this.context;
     const { username, firstName, lastName, college, email, events, _id } = user;
     const { eventData } = arrayFinder("eventData", store);
     const event = groupEventId(filterGroupEvent(eventData));
     const userEvent = groupEventId(filterGroupEvent(events));
+    const groupEventsToRegister = grpEveIdToRegister(event, userEvent);
+    const grpEvent = grpEveIdToRegister(event, userEvent).length > 0 && {
+      groupEventsToRegister,
+      currentSelectedEvent: groupEventsToRegister[0],
+      maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
+        .maxMembersAllowed
+    };
     this.setState({
       username,
       fullName: firstName + " " + lastName,
@@ -88,8 +102,68 @@ class Profile extends Component {
       eventRegistered: events,
       eventData: eventData,
       _id,
-      groupEventsToRegister: grpEveIdToRegister(event, userEvent)
+      ...grpEvent
     });
+  }
+  componentDidUpdate() {
+    const filterGroupEvent = eventArray => {
+      return eventArray.filter(event => {
+        if (event.isgroupallowed) {
+          return event;
+        }
+      });
+    };
+    const groupEventId = eventArr => {
+      return eventArr.map(eve => {
+        return eve._id;
+      });
+    };
+    const grpEveIdToRegister = (totalEve, userHadRegistered) => {
+      return totalEve.filter(eve => {
+        if (userHadRegistered.indexOf(eve) !== -1) {
+          return null;
+        } else {
+          return eve;
+        }
+      });
+    };
+
+    const { user } = this.context;
+    const { events } = user;
+    const event = groupEventId(filterGroupEvent(this.state.eventData));
+    const userEvent = groupEventId(filterGroupEvent(events));
+    const groupEventsToRegister = grpEveIdToRegister(event, userEvent);
+    // const currMember =
+    //   this.state.groupEventsToRegister.length > 0
+    //     ? this.findEventFromId(groupEventsToRegister[0])[0].maxMembersAllowed
+    //     : 0;
+    // const prevMember = this.state.maxMembers;
+    if (
+      this.state.groupEventsToRegister.length !== groupEventsToRegister.length
+    ) {
+      const grpEvent =
+        grpEveIdToRegister(event, userEvent).length == 1
+          ? {
+              groupEventsToRegister,
+              currentSelectedEvent: groupEventsToRegister[0],
+              maxMembers: this.findEventFromId(groupEventsToRegister[0])[0]
+                .maxMembersAllowed
+            }
+          : grpEveIdToRegister(event, userEvent).length == 0
+          ? {
+              groupEventsToRegister:[],
+              currentSelectedEvent: "",
+              maxMembers: 0
+            }
+          : null;
+      if (grpEvent !== null) {
+        this.setState({
+          ...grpEvent
+        });
+      } else {
+        this.setState({ groupEventsToRegister });
+      }
+    }
   }
   showModal() {
     this.setState({ isModal: true });
@@ -154,7 +228,7 @@ class Profile extends Component {
   handleGroupMembers(curr, prev) {
     // check if maximum number of member exist
     if (prev.indexOf(curr) == -1) {
-      if (this.state.groupMembers.length <= this.state.maxMembers) {
+      if (this.state.groupMembers.length + 1 < this.state.maxMembers) {
         this.setState({ addbuttonloading: true });
         axios
           .post(
@@ -198,7 +272,10 @@ class Profile extends Component {
             setTimeout(this.removeMsg, 1500);
           });
       } else {
-        this.setState({ errorMsg: "Maximum Members Reached." });
+        this.setState({
+          errorMsg: "Maximum Members Reached.",
+          currentMember: ""
+        });
         setTimeout(this.removeMsg, 1500);
       }
     } else {
@@ -221,7 +298,11 @@ class Profile extends Component {
   selectedEventHandler(e) {
     this.setState({ currentSelectedEvent: e.target.value });
     const event = this.findEventFromId(e.target.value)[0];
-    this.setState({ maxMembers: event.maxMembersAllowed });
+    this.setState({
+      maxMembers: event.maxMembersAllowed,
+      groupMembers: [],
+      currentMember: ""
+    });
   }
   findEventFromId = eventId => {
     return this.state.eventData.filter(eve => {
@@ -232,6 +313,7 @@ class Profile extends Component {
   };
   handleSubmit(e) {
     e.preventDefault();
+    const { setUser } = this.context;
     const { groupLeader, groupMembers, currentSelectedEvent } = this.state;
     this.setState({ submitbuttonloading: true });
     axios
@@ -244,7 +326,7 @@ class Profile extends Component {
           this.setState({
             submitbuttonloading: false,
             errorMsg: res.data.message,
-            groupmembers: []
+            groupMembers: []
           });
           setTimeout(this.removeMsg, 3000);
         }
@@ -252,12 +334,12 @@ class Profile extends Component {
           this.setState({
             submitbuttonloading: false,
             successMsg: " Group Registered.",
-            groupmembers: []
+            groupMembers: []
           });
           getUserData(this.state._id)
-            .then(res => {
-              console.log(res.userData);
-              this.context.setUser(res.userData);
+            .then(response => {
+              setUser(response.userData);
+              this.setState({ eventRegistered: response.userData.events });
             })
             .catch(err => {
               console.log("Error while updating State", err);
@@ -270,7 +352,7 @@ class Profile extends Component {
         this.setState({
           submitbuttonloading: false,
           errorMsg: "Internal Error",
-          groupmembers: []
+          groupMembers: []
         });
         setTimeout(this.removeMsg, 3000);
       });
@@ -378,6 +460,7 @@ class Profile extends Component {
                                     onChange={this.selectedEventHandler}
                                     value={this.state.currentSelectedEvent}
                                     required
+                                    ref={this.optionRef}
                                   >
                                     {this.state.groupEventsToRegister.map(
                                       eve => {
@@ -428,6 +511,7 @@ class Profile extends Component {
                                   type="text"
                                   value={this.state.currentMember}
                                   onChange={this.addGroupMembers}
+                                  placeholder="ACEXXXX"
                                 />
                               </div>
                             </div>
