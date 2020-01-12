@@ -18,7 +18,7 @@ const eventSchema = new Schema(
       default: Date.now,
       required: false
     },
-    timing: { type: String, default: "NA" },
+    timing: { type: String, default: "will be updated" },
     rulebook: String,
     isgroupallowed: { type: Boolean, default: false },
     poster: { type: String, default: "/images/Lensart_.png" },
@@ -26,7 +26,7 @@ const eventSchema = new Schema(
     description: String,
     groups: [{ type: ObjectId, ref: "Group", default: [] }],
     maxMembersAllowed: Number,
-    contact: { type: Number, default: 9999999999 }
+    contact: { type: Number, default: 8090206021 }
   },
   { timestamps: true }
 );

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const Users = require("../models/user.model");
-
+require("dotenv").config();
 router.route("/").get((req, res) => {
   Users.find({})
     .populate({ path: "events", select: "eventName contact timing place " })
@@ -57,11 +57,14 @@ router.route("/add").post((req, res) => {
           </body>
           </html>`;
           axios
-            .post("https://samnivesha.iitp.ac.in/mail/extended", {
-              sendTo,
-              subject,
-              html
-            })
+            .post(
+              `http://${process.env.HOST}:${process.env.PORT}/mail/extended`,
+              {
+                sendTo,
+                subject,
+                html
+              }
+            )
             .then(response => {
               if (response.status == 200) {
                 res.status(200).json("User Added");

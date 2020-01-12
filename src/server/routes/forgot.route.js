@@ -16,16 +16,21 @@ router.post("/", (req, res) => {
         .then(() => {
           const sendTo = email;
           let host;
-          if (req.protocol == "https") {
-            host = "samnivesha.iitp.ac.in";
-          } else {
-            host = req.get("Host");
-          }
-          const link = `${req.protocol}://${host}/reset/${token}`;
+          host = "https://samnivesha.iitp.ac.in";
+          // if (req.protocol == "https") {
+          //   host = "samnivesha.iitp.ac.in";
+          // } else {
+          //   host = req.get("Host");
+          // }
+          const link = `${host}/reset/${token}`;
           const subject = "Password Reset link";
           const body = `Please click on this link ${link} to reset your password.`;
           axios
-            .post("http://localhost:3000/mail", { sendTo, subject, body })
+            .post(`http://${process.env.HOST}:${process.env.PORT}/mail`, {
+              sendTo,
+              subject,
+              body
+            })
             .then(response => {
               if (response.status == 200) {
                 res.status(200).json({ message: "Reset Mail sent." });
