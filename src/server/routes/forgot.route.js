@@ -25,7 +25,11 @@ router.post("/", (req, res) => {
           const subject = "Password Reset link";
           const body = `Please click on this link ${link} to reset your password.`;
           axios
-            .post("http://localhost:3000/mail", { sendTo, subject, body })
+            .post(`http://${process.env.HOST}:${process.env.PORT}/mail`, {
+              sendTo,
+              subject,
+              body
+            })
             .then(response => {
               if (response.status == 200) {
                 res.status(200).json({ message: "Reset Mail sent." });

@@ -1,5 +1,3 @@
-const env = require("dotenv");
-env.config();
 const options = {
   user: process.env.email,
   pass: process.env.pass

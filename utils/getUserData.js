@@ -1,4 +1,5 @@
 const fetch = require("isomorphic-fetch");
+const { runtimeconfig } = require("../src/server/config");
 
 async function getUserData(uid) {
   if (typeof window !== "undefined") {
@@ -6,9 +7,14 @@ async function getUserData(uid) {
     const data = await response.json();
     return { userData: data };
   } else {
-    const response = await fetch(`http://localhost:3000/users/${uid}`);
+    const response = await fetch(
+      `http://${process.env.HOST}:${process.env.PORT}/users/${uid}`
+    );
     const data = await response.json();
     return { userData: data };
   }
+  // const response = await fetch(`${runtimeconfig.URL}/users/${uid}`);
+  // const data = await response.json();
+  // return { userData: data };
 }
 module.exports = getUserData;
