@@ -32,7 +32,8 @@ class Signup extends Component {
       errorMsg: "",
       innerWidth: "",
       mobileNumber: "",
-      isLoading: false
+      isLoading: false,
+      referralId: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -42,6 +43,7 @@ class Signup extends Component {
     this.handleCollege = this.handleCollege.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handleMobileNumber = this.handleMobileNumber.bind(this);
+    this.handleReferralId = this.handleReferralId.bind(this);
   }
   generateId() {
     return "ACE" + Math.floor(Math.random() * 10000);
@@ -83,37 +85,73 @@ class Signup extends Component {
       .post("/users/findByUsername", { username: this.state.username })
       .then(res => {
         if (res.status == 200 && res.data == true) {
-          this.setState({ username: this.generateId() });
+          this.setState({ username: this.generateId(), isUserExists: true });
+        } else {
+          this.setState({ isUserExists: false });
         }
       });
   }
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ isLoading: true });
-    axios
-      .post("/users/add", this.state)
-      .then(res => {
-        if (res.status == 200) {
-          this.setState({
-            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
-            isLoading: false
-          });
-        }
-      })
-      .catch(err => {
-        this.setState({ errorMsg: "An error occured", isLoading: false }),
-          console.log(err);
-      });
+    if (this.state.referralId !== "") {
+      axios
+        .post("/users/findByUsername", { username: this.state.referralId })
+        .then(res => {
+          if (res.status == 200 && res.data == true) {
+            axios
+              .post("/users/add", this.state)
+              .then(res => {
+                if (res.status == 200) {
+                  this.setState({
+                    successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
+                    isLoading: false
+                  });
+                }
+              })
+              .catch(err => {
+                this.setState({
+                  errorMsg: "An error occured",
+                  isLoading: false
+                }),
+                  console.log(err);
+              });
+          } else {
+            this.setState({
+              errorMsg: "Invalid Referral Id",
+              isLoading: false
+            });
+          }
+        });
+    } else {
+      axios
+        .post("/users/add", this.state)
+        .then(res => {
+          if (res.status == 200) {
+            this.setState({
+              successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
+              isLoading: false
+            });
+          }
+        })
+        .catch(err => {
+          this.setState({ errorMsg: "An error occured", isLoading: false }),
+            console.log(err);
+        });
+    }
   }
   componentDidMount() {
     this.setState({ innerWidth: window.innerWidth });
     this.handleUsername();
   }
   componentDidUpdate() {
-    this.handleUsername();
+    this.state.isUserExists && this.handleUsername();
   }
   handleMobileNumber(e) {
     this.setState({ mobileNumber: e.target.value });
+  }
+  handleReferralId(e) {
+    this.setState({ referralId: e.target.value });
   }
   render() {
     const Prefetch = config.environment ? "false" : "true";
@@ -280,7 +318,19 @@ class Signup extends Component {
                             />
                           </div>
                         </div>
-
+                        <div className="field">
+                          <label className="label">Referral Id </label>
+                          <div className="control">
+                            <input
+                              className="input"
+                              type="text"
+                              placeholder="Optional"
+                              name="referralId"
+                              value={this.state.referralId}
+                              onChange={this.handleReferralId}
+                            />
+                          </div>
+                        </div>
                         <div className="field is-grouped">
                           <div className="control">
                             <button

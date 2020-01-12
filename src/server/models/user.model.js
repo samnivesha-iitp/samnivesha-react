@@ -38,6 +38,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    referralId:String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     mobileNumber:{type:Number,required:true},

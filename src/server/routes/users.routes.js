@@ -22,7 +22,8 @@ router.route("/add").post((req, res) => {
     email,
     password,
     college,
-    mobileNumber
+    mobileNumber,
+    referralId
   } = req.body;
   const BCRYPT_SALT_ROUND = 12;
 
@@ -36,7 +37,8 @@ router.route("/add").post((req, res) => {
         email,
         college,
         password: hashedPassword,
-        mobileNumber
+        mobileNumber,
+        referralId
       });
       newUser
         .save()
@@ -55,7 +57,7 @@ router.route("/add").post((req, res) => {
           </body>
           </html>`;
           axios
-            .post("http://localhost:3000/mail/extended", {
+            .post("https://samnivesha.iitp.ac.in/mail/extended", {
               sendTo,
               subject,
               html
