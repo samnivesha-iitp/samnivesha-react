@@ -110,5 +110,14 @@
   z-index: 999997;
 }
 .pageloader {
-  background: linear-gradient(to top, #edf5e1, #cafafe) !important
+  background: linear-gradient(to top, #edf5e1, #cafafe) !important;
+}
+@media screen and (min-width: 769px) {
+  .modal-card,
+  .modal-content {
+    width: 400px;
+  }
+}
+.image.is-4by3 {
+  padding-top: 141%;
 }

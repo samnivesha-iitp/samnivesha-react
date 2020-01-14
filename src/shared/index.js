@@ -26,6 +26,7 @@ const Home = props => {
   const [msg, setMsg] = useState({ message: "", status: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const [isModal, setIsModal] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", scrollhandler);
     return () => {
@@ -35,6 +36,12 @@ const Home = props => {
   });
   useEffect(() => {
     setEveData(arrayFinder("eventData", store));
+    const modalTimer = setTimeout(() => {
+      setIsModal(true);
+    }, 5000);
+    return () => {
+      clearTimeout(modalTimer);
+    };
   }, []);
   const scrollhandler = () => {
     setScrollTop(window.scrollY);
@@ -114,7 +121,7 @@ const Home = props => {
   const successMsg = msg.status ? msg.message : null;
   const errMsg = !msg.status ? msg.message : null;
   const loadingStatus = isLoading ? "is-loading" : "";
-
+  const currentEventModalCSS = isModal ? "is-active" : null;
   return (
     <>
       <Helmet>
@@ -634,6 +641,35 @@ const Home = props => {
           <a href="#"></a>
         </div>
       </Layout>
+      <div
+        id="single-image-modal"
+        className={`image-modal modal ${currentEventModalCSS}`}
+      >
+        <div className="modal-background scaleInCircle"></div>
+        <div className="modal-content scaleIn">
+          <div className="image-grid">
+            <figure className="image is-4by3 cornered">
+              <img
+                src="/images/Lensart.jpg"
+                alt=""
+                data-demo-src="/images/Lensart.jpg"
+              />
+              <figcaption>
+                <h2>Lensart</h2>
+                <p>Current Going On Event</p>
+                <a href="/pdf/l.pdf">View more</a>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={() => {
+            setIsModal(false);
+          }}
+        ></button>
+      </div>
       <Notification status={status} successMsg={successMsg} errorMsg={errMsg} />
     </>
   );
