@@ -606,7 +606,7 @@ const Home = props => {
                             you a chance of showing your photography skills!
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/l.pdf"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
