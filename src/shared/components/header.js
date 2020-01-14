@@ -122,6 +122,7 @@ const Header = props => {
             >
               Workshop
             </HashLink>
+            
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
@@ -162,7 +163,7 @@ const Header = props => {
                 >
                   Sponsors
                 </Link> */}
-                
+
                 <Link
                   to="/contact"
                   prefetch={Prefetch}
