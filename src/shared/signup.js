@@ -11,6 +11,8 @@ import {
 import { Link } from "react-router-dom";
 import { backgroundImage } from "../../archieve/collections";
 import Helmet from "react-helmet";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const config = {
   environment: Boolean(process.env.NODE_ENV !== "production")
@@ -33,7 +35,8 @@ class Signup extends Component {
       innerWidth: "",
       mobileNumber: "",
       isLoading: false,
-      referralId: ""
+      referralId: "",
+      open: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -44,6 +47,7 @@ class Signup extends Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handleMobileNumber = this.handleMobileNumber.bind(this);
     this.handleReferralId = this.handleReferralId.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   generateId() {
     return "ACE" + Math.floor(Math.random() * 10000);
@@ -130,7 +134,7 @@ class Signup extends Component {
           if (res.status == 200) {
             this.setState({
               successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
-              isLoading: false
+              isLoading: false,
             });
           }
         })
@@ -152,6 +156,12 @@ class Signup extends Component {
   }
   handleReferralId(e) {
     this.setState({ referralId: e.target.value });
+  }
+  handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
   }
   render() {
     const Prefetch = config.environment ? "false" : "true";
@@ -361,8 +371,21 @@ class Signup extends Component {
             </div>
           </section>
         </main>
+        <Snackbar
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            This is a success message!
+          </Alert>
+        </Snackbar>
       </Layout>
     );
   }
+}
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 export default Signup;

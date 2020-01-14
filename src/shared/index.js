@@ -450,7 +450,7 @@ const Home = props => {
                       <div className="text text-container">
                         <div className="text text-header">
                           <h2 className="text text-title">House Of Cards</h2>
-                          <p className="text text-subtitle">Fun EVent</p>
+                          <p className="text text-subtitle">Fun Event</p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
@@ -597,7 +597,7 @@ const Home = props => {
                       <div className="text text-container">
                         <div className="text text-header">
                           <h2 className="text text-title">Lensart</h2>
-                          <p className="text text-subtitle">Fun EVent</p>
+                          <p className="text text-subtitle">Fun Event</p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
@@ -606,7 +606,7 @@ const Home = props => {
                             you a chance of showing your photography skills!
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/l.pdf"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
