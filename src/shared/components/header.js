@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "../css/header.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import AuthContext from "./authContext";
+import {AuthContext} from "./authContext";
 const axios = require("axios");
 import { HashLink } from "react-router-hash-link";
 

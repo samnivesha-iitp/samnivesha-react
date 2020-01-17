@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Layout from "./components/layout";
 require("isomorphic-fetch");
 import Tag from "./components/tag";
-import AuthContext from "./components/authContext";
+import {AuthContext} from "./components/authContext";
 import "./css/profile.css";
 const arrayFinder = require("../../utils/findArray");
 import axios from "axios";
