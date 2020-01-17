@@ -3,7 +3,7 @@ import Layout from "./components/layout";
 import { Helmet } from "react-helmet";
 import "./css/events.css";
 import PropTypes from "prop-types";
-import AuthContext from "./components/authContext";
+import {AuthContext} from "./components/authContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { faUserAltSlash } from "@fortawesome/free-solid-svg-icons";

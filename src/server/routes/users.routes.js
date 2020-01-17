@@ -5,7 +5,7 @@ const Users = require("../models/user.model");
 require("dotenv").config();
 router.route("/").get((req, res) => {
   Users.find({})
-    .populate({ path: "events", select: "eventName contact timing place " })
+    .populate({ path: "events", select: "eventName" })
     .exec((err, docs) => {
       if (err) {
         res.json({ message: "Error Ocurred" });

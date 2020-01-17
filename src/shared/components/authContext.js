@@ -1,4 +1,4 @@
 import React from 'react'
 
-const AuthContext = React.createContext()
-export default AuthContext
+export const AuthContext = React.createContext()
+export const AdminContext = React.createContext()

@@ -5,7 +5,7 @@ import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Layout from "./components/layout";
 import { backgroundImage } from "../../archieve/collections";
-import AuthContext from "./components/authContext";
+import {AuthContext} from "./components/authContext";
 import Cookies from "js-cookie";
 const getUserData = require("../../utils/getUserData");
 import Helmet from "react-helmet";
