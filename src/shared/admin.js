@@ -27,6 +27,7 @@ const Admin = props => {
           delete user.resetPasswordExpires;
           delete user.resetPasswordToken;
           delete user.__v;
+          delete user.email;
           if (user.events.length > 0) {
             user.event = "";
             for (let i = 0; i < user.events.length; i++) {
@@ -53,7 +54,7 @@ const Admin = props => {
   return (
     <>
       <Helmet>
-        <title>Admin Login</title>
+        <title>Admin</title>
       </Helmet>
       <nav className="navbar is-white">
         <div className="container">
@@ -165,7 +166,6 @@ const Admin = props => {
                       <th>Contact No.</th>
                       <th>College</th>
                       <th>Referral Id</th>
-                      <th>Email</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -180,7 +180,6 @@ const Admin = props => {
                             <td>{data.mobileNumber}</td>
                             <td>{data.college}</td>
                             <td>{data.referralId}</td>
-                            <td>{data.email}</td>
                           </tr>
                         );
                       })}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Layout from "./components/layout";
 require("isomorphic-fetch");
 import Tag from "./components/tag";
-import {AuthContext} from "./components/authContext";
+import { AuthContext } from "./components/authContext";
 import "./css/profile.css";
 const arrayFinder = require("../../utils/findArray");
 import axios from "axios";
@@ -89,9 +89,9 @@ class Profile extends Component {
     const groupEventsToRegister = grpEveIdToRegister(event, userEvent);
     const grpEvent = grpEveIdToRegister(event, userEvent).length > 0 && {
       groupEventsToRegister,
-      currentSelectedEvent: groupEventsToRegister[0],
-      maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
-        .maxMembersAllowed
+      currentSelectedEvent: groupEventsToRegister[0]
+      // maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
+      //   .maxMembersAllowed
     };
     this.setState({
       username,
@@ -151,7 +151,7 @@ class Profile extends Component {
             }
           : grpEveIdToRegister(event, userEvent).length == 0
           ? {
-              groupEventsToRegister:[],
+              groupEventsToRegister: [],
               currentSelectedEvent: "",
               maxMembers: 0
             }
