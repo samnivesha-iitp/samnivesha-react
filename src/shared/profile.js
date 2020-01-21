@@ -68,14 +68,13 @@ class Profile extends Component {
     const grpEveIdToRegister = (totalEve, userHadRegistered) => {
       return totalEve.filter(eve => {
         if (userHadRegistered.indexOf(eve) !== -1) {
-          return null;
         } else {
           return eve;
         }
       });
     };
     const findCurrentDetails = (id, data) => {
-      return data.map(eve => {
+      return data.filter(eve => {
         if (eve._id == id) {
           return eve;
         }

@@ -3,7 +3,7 @@ import Layout from "./components/layout";
 import { Helmet } from "react-helmet";
 import "./css/events.css";
 import PropTypes from "prop-types";
-import {AuthContext} from "./components/authContext";
+import { AuthContext } from "./components/authContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { faUserAltSlash } from "@fortawesome/free-solid-svg-icons";
@@ -82,7 +82,7 @@ const Home = props => {
           if (eventData[i]._id == eventId) {
             const isgroupallowed = eventData[i].isgroupallowed;
             if (isgroupallowed) {
-              props.history.push("/profile#groupregister");
+              props.history.push("/profile");
             } else {
               axios
                 .post(`/event/${eventId}/${user._id}`)
