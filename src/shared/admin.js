@@ -4,8 +4,9 @@ import Helmet from "react-helmet";
 import Axios from "axios";
 import Popupbar from "./components/popupbar";
 import { AdminContext } from "./components/authContext";
-import Cookies from "js-cookie";
+import AuthAdmin from "../../utils/adminApi";
 
+const admin = new AuthAdmin();
 const Admin = props => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
   const [isMobile, setIsMobile] = useState(false);
@@ -82,9 +83,10 @@ const Admin = props => {
                 className="navbar-item"
                 href="#"
                 onClick={() => {
-                  Cookies.remove("admin", { path: "/admin" });
-                  setIsAdmin(false);
-                  props.history.push("/admin/login");
+                  if (admin.logout()) {
+                    setIsAdmin(false);
+                    props.history.push("/admin/login");
+                  }
                 }}
               >
                 Logout

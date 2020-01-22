@@ -114,7 +114,7 @@ server
       </head>
       <body ${helmet.bodyAttributes.toString()}>
           <div id="root">${markup}</div>
-          <script>window.__INITIAL_STATE__=${serialize(state)}</script>
+          <script>window.__INITIAL_STATE__=${serialize(state)}</script>          
       </body>
   </html>`
         );

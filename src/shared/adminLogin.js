@@ -4,10 +4,10 @@ import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
 import { AdminContext } from "./components/authContext";
 import Helmet from "react-helmet";
 import Popupbar from "./components/popupbar";
-import Cookies from "js-cookie";
-const bcryptjs = require("bcryptjs");
+import AuthAdmin from "../../utils/adminApi";
 
 const AdminLogin = props => {
+  const admin = new AuthAdmin();
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
@@ -16,21 +16,24 @@ const AdminLogin = props => {
   const [password, setPassword] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
-    if (email == "admin" && password == "heisenberg") {
-      bcryptjs.genSalt(10, (err, salt) => {
-        bcryptjs.hash("everyonehassecret", salt, (err, hash) => {
-          Cookies.set("admin", hash, { expires: 1, path: "" });
+    admin
+      .login(email, password)
+      .then(res => {
+        console.log(res);
+        if (res) {
           setIsAdmin(true);
           props.history.push("/admin");
-        });
+        } else {
+          setMsgType("error");
+          setMsg("Wrong guess");
+          setOpen(true);
+          setEmail("");
+          setPassword("");
+        }
+      })
+      .catch(err => {
+        console.log(err);
       });
-    } else {
-      setMsgType("error");
-      setMsg("Wrong guess");
-      setOpen(true);
-      setEmail("");
-      setPassword("");
-    }
   };
   const handleClose = () => {
     setOpen(false);

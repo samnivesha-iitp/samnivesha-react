@@ -26,19 +26,23 @@ import {
 } from "./components/protected.routes";
 import Admin from "./admin";
 import AdminLogin from "./adminLogin";
-const bcrypt = require("bcryptjs");
+import AuthAdmin from "../../utils/adminApi";
 
 const App = props => {
-  const adminCookie = Cookies.get("admin");
-  bcrypt.compare("everyonehassecret", adminCookie, (err, res) => {
-    setIsAdmin(res);
-  });
+  const admin = new AuthAdmin();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstRender, setFirstrender] = useState(true);
   const { store } = props;
   useEffect(() => {
+    admin
+      .isLogin()
+      .then(res => {
+        setIsAdmin(res);
+      })
+      .catch(() => {});
+    // setIsAdmin(admin.isLogin())
     const data = arrayFinder("userData", store);
     if (typeof data !== "undefined") {
       setIsAuthenticated(true);

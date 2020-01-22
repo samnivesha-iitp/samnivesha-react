@@ -3,13 +3,15 @@ export const runtimeConfig =
     ? {
         // client
         email: window.env.email,
-        URL: `${window.location.protocol}://${window.location.origin}`
+        URL: `${window.location.protocol}://${window.location.origin}`,
+        ADMIN:window.env.ADMIN,
+        ADMIN_PWD:window.env.ADMIN_PWD,
+        ADMIN_SECRET:window.env.ADMIN_SECRET
       }
     : {
         // server
-
-        email: process.env.email,
-        password: process.env.pass,
         URL: `http://${process.env.HOST}:${process.env.PORT}`,
-        environment: process.env.NODE_ENV !== "production"
+        ADMIN:process.env.ADMIN,
+        ADMIN_PWD:process.env.ADMIN_PWD,
+        ADMIN_SECRET:process.env.ADMIN_SECRET
       };

@@ -3,7 +3,7 @@ function session(uid, config, MongoStore, db) {
     name: "sid",
     secret: uid.sync(18),
     cookie: {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 86400 * 1000,
       sameSite: true,
       secure: !config.environment

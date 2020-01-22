@@ -38,6 +38,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    workshop:String,
     referralId:String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
