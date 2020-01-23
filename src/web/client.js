@@ -4,7 +4,7 @@ import React from "react";
 import { hydrate } from "react-dom";
 
 const state = JSON.parse(window.__INITIAL_STATE__);
-
+delete window.__INITIAL_STATE__;
 hydrate(
   <BrowserRouter>
     <App store={state} />
