@@ -126,8 +126,22 @@ const Home = props => {
     <>
       <Helmet>
         <title>Samnivesha | Home</title>
-        <link rel="stylesheet" preload href="/css/index/core.css" />
-        <link rel="stylesheet" preload href="/css/Main.css" />
+        <link
+          rel="preload"
+          href="/css/index/core.css"
+          as="style"
+          onLoad="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>
+          {`<link rel="stylesheet" href="/css/index/core.css" />`}
+        </noscript>
+        <link
+          rel="preload"
+          href="/css/Main.css"
+          as="style"
+          onLoad="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>{`<link rel="stylesheet" href="/css/Main.css" />`}</noscript>
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
