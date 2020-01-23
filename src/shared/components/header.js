@@ -82,7 +82,7 @@ const Header = props => {
           </a>
         </div>
         <div className={`navbar-menu ${isMobile}`} id="navbarTopMain">
-          <div className="navbar-end">
+          <div className="navbar-start">
             <Link
               to="/"
               prefetch={Prefetch}
@@ -130,33 +130,6 @@ const Header = props => {
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
-
-            {isAuthenticated && (
-              <>
-                <Link
-                  to="/profile"
-                  prefetch={Prefetch}
-                  className="navbar-item has-text-weight-semibold"
-                  onClick={hideMenu}
-                >
-                  Profile
-                </Link>
-                <div className="navbar-item">
-                  <Link
-                    to="/logout"
-                    prefetch={Prefetch}
-                    className="button is-warning"
-                    onClick={e => {
-                      e.preventDefault();
-                      hideMenu();
-                      logout();
-                    }}
-                  >
-                    Logout
-                  </Link>
-                </div>
-              </>
-            )}
             {!isAuthenticated && (
               <>
                 {/* <Link
@@ -176,19 +149,58 @@ const Header = props => {
                 >
                   Contact Us
                 </Link>
-                <div className="navbar-item">
+              </>
+            )}
+          </div>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to="/profile"
+                prefetch={Prefetch}
+                className="navbar-item has-text-weight-semibold"
+                onClick={hideMenu}
+              >
+                Profile
+              </Link>
+              <div className="navbar-item">
+                <Link
+                  to="/logout"
+                  prefetch={Prefetch}
+                  className="button is-warning"
+                  onClick={e => {
+                    e.preventDefault();
+                    hideMenu();
+                    logout();
+                  }}
+                >
+                  Logout
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="navbar-end">
+              <div className="navbar-item">
+                <div className="buttons">
                   <Link
                     to="/signup"
                     prefetch={Prefetch}
                     className="button is-primary"
                     onClick={hideMenu}
                   >
-                    Register
+                    Sign up
+                  </Link>
+                  <Link
+                    to="/login"
+                    prefetch={Prefetch}
+                    className="button is-light"
+                    onClick={hideMenu}
+                  >
+                    Log in
                   </Link>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
