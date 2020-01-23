@@ -27,6 +27,7 @@ import {
 import Admin from "./admin";
 import AdminLogin from "./adminLogin";
 import AuthAdmin from "../../utils/adminApi";
+import Misc from "./misc";
 
 const App = props => {
   const admin = new AuthAdmin();
@@ -71,6 +72,7 @@ const App = props => {
           <Route path="/contact" component={Contact} />
           <Route path="/events" component={Events} />
           <Route path="/blog" component={Blog} />
+          <Route path="/misc" component={Misc} />
           <Route path="/reset/:resetToken" component={ResetPassword} />
           <ProtectedProfile path="/profile" component={Profile} data={store} />
           <ProtectedSignup path="/signup" component={Signup} />

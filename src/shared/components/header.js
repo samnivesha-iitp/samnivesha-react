@@ -6,10 +6,6 @@ import { AuthContext } from "./authContext";
 const axios = require("axios");
 import { HashLink } from "react-router-hash-link";
 
-const config = {
-  environment: Boolean(process.env.NODE_ENV !== "production")
-};
-
 const styles = {
   nav: {
     backgroundColor: "unset",
@@ -43,7 +39,7 @@ const Header = props => {
         console.log(err);
       });
   };
-  const Prefetch = config.environment ? "true" : "false";
+  const Prefetch = "true";
   return (
     <nav
       className="navbar is-transparent is-spaced"
@@ -126,7 +122,6 @@ const Header = props => {
                 </HashLink>
               </div>
             </div>
-
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
@@ -151,6 +146,21 @@ const Header = props => {
                 </Link>
               </>
             )}
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLScyCLOB4WXRGooNLU57SOWvWoq-CeVVWS9i346n14CmaJI9dA/viewform"
+              target="_blank"
+              className="navbar-item has-text-weight-semibold"
+            >
+              Payment
+            </a>
+            <Link
+              className="navbar-item has-text-weight-semibold"
+              to="/misc"
+              prefetch={Prefetch}
+              onClick={hideMenu}
+            >
+              Miscellaneous
+            </Link>
           </div>
           {isAuthenticated ? (
             <>
