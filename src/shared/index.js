@@ -144,8 +144,8 @@ const Home = props => {
               style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}
             >
               <img
-                src="/images/small.png"
-                srcSet="/images/small.png 1000w, /images/Mountain.png 1300w, "
+                src="/images/small.webp"
+                srcSet="/images/small.webp 1000w, /images/Mountain.png 1300w, "
                 width="100%"
               />
             </div>
@@ -355,9 +355,9 @@ const Home = props => {
                   <div className="event-card is-wavy">
                     <div className="img-container">
                       <img
-                        src="/images/b.jpg"
+                        src="/images/b.webp"
                         alt=""
-                        data-demo-src="/images/b.jpg"
+                        data-demo-src="/images/b.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -404,9 +404,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/g.jpg"
+                        src="/images/g.webp"
                         alt=""
-                        data-demo-src="/images/g.jpg"
+                        data-demo-src="/images/g.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -425,7 +425,8 @@ const Home = props => {
                             the tasks allotted.
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/g.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
@@ -448,9 +449,9 @@ const Home = props => {
                   <div className="event-card is-wavy">
                     <div className="img-container">
                       <img
-                        src="/images/h.jpg"
+                        src="/images/h.webp"
                         alt=""
-                        data-demo-src="/images/h.jpg"
+                        data-demo-src="/images/h.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -466,7 +467,8 @@ const Home = props => {
                             house with CARDS.
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/h.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
@@ -497,9 +499,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/e.jpg"
+                        src="/images/e.webp"
                         alt=""
-                        data-demo-src="/images/e.jpg"
+                        data-demo-src="/images/e.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -519,7 +521,8 @@ const Home = props => {
                             prospects which will be reviewed.
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/e.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
@@ -548,9 +551,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/c.jpg"
+                        src="/images/c.webp"
                         alt=""
-                        data-demo-src="/images/c.jpg"
+                        data-demo-src="/images/c.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -566,7 +569,8 @@ const Home = props => {
                             and acumen of Civil Engineering.
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/c.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
@@ -595,9 +599,9 @@ const Home = props => {
                     </div> */}
                     <div className="img-container">
                       <img
-                        src="/images/l.jpg"
+                        src="/images/l.webp"
                         alt=""
-                        data-demo-src="/images/l.jpg"
+                        data-demo-src="/images/l.webp"
                       />
                     </div>
                     <div className="card-text">
@@ -614,6 +618,7 @@ const Home = props => {
                           </p>
                           <a
                             href="/pdf/l.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
                           >
                             Event details
@@ -650,9 +655,9 @@ const Home = props => {
           <div className="image-grid">
             <figure className="image is-4by3 cornered">
               <img
-                src="/images/Lensart.jpg"
+                src="/images/Lensart.webp"
                 alt=""
-                data-demo-src="/images/Lensart.jpg"
+                data-demo-src="/images/Lensart.webp"
               />
               <figcaption>
                 <h2>Lensart</h2>
