@@ -23,7 +23,7 @@ const eventRouter = require("./routes/event.routes");
 const mailRouter = require("./routes/mail.routes");
 const loginRouter = require("./routes/login.route");
 const passwordForgotRouter = require("./routes/forgot.route");
-const passwordResetRouter = require('./routes/reset.route')
+const passwordResetRouter = require("./routes/reset.route");
 const config = {
   environment: process.env.NODE_ENV !== "production"
 };
@@ -33,7 +33,6 @@ const sessionConfig = require("../../utils/sessionconfig")(
   MongoStore,
   mongoose.connection
 );
-
 const server = express();
 const uri = "mongodb://localhost:27017/samnivesha";
 const csrfprotection = csurf({ cookie: false });
@@ -114,7 +113,9 @@ server
       </head>
       <body ${helmet.bodyAttributes.toString()}>
           <div id="root">${markup}</div>
-          <script>window.__INITIAL_STATE__=${serialize(state)}</script>          
+          <script>window.__INITIAL_STATE__=${serialize(
+            state
+          )}</script>          
       </body>
   </html>`
         );

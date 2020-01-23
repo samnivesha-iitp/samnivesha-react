@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "../css/header.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import {AuthContext} from "./authContext";
+import { AuthContext } from "./authContext";
 const axios = require("axios");
 import { HashLink } from "react-router-hash-link";
 
@@ -100,29 +100,33 @@ const Header = props => {
               <span>Blog</span>
               <span className="tag is-success m-l-5">NEW</span>
             </Link>
+            <div className="navbar-item has-dropdown is-hoverable">
+              <HashLink
+                to={"/#event"}
+                className="navbar-link has-text-weight-semibold"
+                onClick={hideMenu}
+              >
+                Events
+              </HashLink>
+              <div className="navbar-dropdown is-boxed">
+                <HashLink
+                  to={"/#guestLecture"}
+                  className="navbar-item has-text-weight-semibold "
+                  onClick={hideMenu}
+                >
+                  Guest Lecture
+                </HashLink>
+                <hr className="navbar-divider " />
+                <HashLink
+                  to={"/#workshop"}
+                  className="navbar-item has-text-weight-semibold  "
+                  onClick={hideMenu}
+                >
+                  Workshop
+                </HashLink>
+              </div>
+            </div>
 
-            <HashLink
-              to={"/#event"}
-              className="navbar-item has-text-weight-semibold"
-              onClick={hideMenu}
-            >
-              Events
-            </HashLink>
-            <HashLink
-              to={"/#guestLecture"}
-              className="navbar-item has-text-weight-semibold"
-              onClick={hideMenu}
-            >
-              Guest Lecture
-            </HashLink>
-            <HashLink
-              to={"/#workshop"}
-              className="navbar-item has-text-weight-semibold"
-              onClick={hideMenu}
-            >
-              Workshop
-            </HashLink>
-            
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}

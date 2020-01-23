@@ -42,7 +42,6 @@ const App = props => {
         setIsAdmin(res);
       })
       .catch(() => {});
-    // setIsAdmin(admin.isLogin())
     const data = arrayFinder("userData", store);
     if (typeof data !== "undefined") {
       setIsAuthenticated(true);
