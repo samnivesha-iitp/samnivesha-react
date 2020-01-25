@@ -97,7 +97,7 @@ server
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="google-site-verification" content="y8OYp_WuVVjI-L15MfNf6rRvgYhi_Bqkp_fj-g5PSUU">
+          <meta name="google-site-verification" content=${process.env.GOOGLE_VERIFICATION_LINK}>
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"/>
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
