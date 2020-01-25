@@ -18,7 +18,7 @@ const getUserData = require("../../utils/getUserData");
 const getEventsData = require("../../utils/getEventsData");
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-const userRouter = require("./routes/users.routes");
+import userRouter from "./routes/users.routes";
 const eventRouter = require("./routes/event.routes");
 const mailRouter = require("./routes/mail.routes");
 const loginRouter = require("./routes/login.route");

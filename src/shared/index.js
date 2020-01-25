@@ -111,6 +111,41 @@ const Home = props => {
       }
     }
   };
+  const workshopHandler = async e => {
+    e.preventDefault();
+    const workshopregex = /https:\/\/samnivesha.iitp.ac.in\/add\/workshop\?name=(.*)/;
+    const currworkshop = e.target.href.match(workshopregex)[1];
+    if (!isAuthenticated) {
+      props.history.push("/profile");
+    } else {
+      const { workshop } = user;
+      if (workshop !== "") {
+        setMsg({ message: "Already Registered." });
+        setTimeout(removeMsg, 3000);
+      } else {
+        const response = await axios.post("/users/add/workshop", {
+          userId: user._id,
+          payload: currworkshop
+        });
+        if (response.status == 200) {
+          setMsg({ status: true, message: "You are registered." });
+          getUserData(user._id)
+            .then(user => {
+              setUser(user.userData);
+              setTimeout(removeMsg, 3000);
+            })
+            .catch((err) => {
+              console.log(err)
+              setMsg({ message: "Error Detected." });
+              setTimeout(removeMsg, 3000);
+            });
+        } else {
+          setMsg({ status: false, msg: "Failed" });
+          setTimeout(removeMsg, 3000);
+        }
+      }
+    }
+  };
   // const event2 = event.splice(0, 2);
   const backtotop = isAtTop ? "" : "visible";
   const status = msg.status
@@ -273,12 +308,20 @@ const Home = props => {
                   </span>
                   <div className="pt-10 pb-10">
                     <a
-                      href="https://www.autodesk.com/products/autocad/"
+                      href="http://www.ndsworld.in/"
                       target="_blank"
                       className="button btn-align btn-more is-link color-primary"
                     >
                       Learn more <i className="sl sl-icon-arrow-right"></i>
                     </a>
+                    <Link
+                      onClick={workshopHandler}
+                      to="/add/workshop?name=autocad"
+                      className={`button btn-align btn-more is-link color-primary ${loadingStatus}`}
+                    >
+                      Register
+                      <i className="sl sl-icon-arrow-right"></i>
+                    </Link>
                   </div>
                 </div>
                 <div className="column is-4 is-offset-1">
@@ -301,12 +344,12 @@ const Home = props => {
                     the wide variety of analysis and design options completely
                     integrated across one powerful user interface, SAP2000 has
                     proven to be the most integrated, productive and practical
-                    general purpose structural program on the market
-                    today. Complex Models can be generated and meshed with
-                    powerful built in templates. We'll keep you up with the pace
-                    of industry standards and you will learn along the way how
-                    it's easy to generate complex model in a very
-                    simple,easy and intutive way with the help of SAP2000.
+                    general purpose structural program on the market today.
+                    Complex Models can be generated and meshed with powerful
+                    built in templates. We'll keep you up with the pace of
+                    industry standards and you will learn along the way how it's
+                    easy to generate complex model in a very simple,easy and
+                    intutive way with the help of SAP2000.
                   </span>
                   <div className="pt-10 pb-10">
                     <a
@@ -316,6 +359,14 @@ const Home = props => {
                     >
                       Learn more <i className="sl sl-icon-arrow-right"></i>
                     </a>
+                    <Link
+                      onClick={workshopHandler}
+                      to="/add/workshop?name=sap"
+                      className={`button btn-align btn-more is-link color-primary ${loadingStatus}`}
+                    >
+                      Register
+                      <i className="sl sl-icon-arrow-right"></i>
+                    </Link>
                   </div>
                 </div>
               </div>

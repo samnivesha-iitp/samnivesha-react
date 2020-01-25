@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const Users = require("../models/user.model");
 require("dotenv").config();
+const { workshopRegistration } = require("../extras/user");
+
 router.route("/").get((req, res) => {
   Users.find({})
     .populate({ path: "events", select: "eventName" })
@@ -139,4 +141,19 @@ router.route("/validateuserforevent/:eventId").post((req, res) => {
     }
   });
 });
-module.exports = router;
+router.route("/add/workshop").post(async (req, res) => {
+  const { userId, payload } = req.body;
+  await workshopRegistration(userId, payload)
+    .then(response => {
+      console.log(response)
+      if (response === true) {
+        res.json({ message: "Ok" });
+      } else {
+        res.json({ message: "Failed" });
+      }
+    })
+    .catch(() => {
+      res.json({ message: "Error" });
+    });
+});
+export default router;

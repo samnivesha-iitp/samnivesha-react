@@ -36,7 +36,8 @@ class Profile extends Component {
       submitbuttonloading: false,
       passresetbuttonloading: false,
       _id: "",
-      passLength: 0
+      passLength: 0,
+      workshop: ""
     };
     this.optionRef = React.createRef();
     this.showModal = this.showModal.bind(this);
@@ -81,7 +82,16 @@ class Profile extends Component {
       });
     };
     const { user, setUser, store } = this.context;
-    const { username, firstName, lastName, college, email, events, _id } = user;
+    const {
+      username,
+      firstName,
+      lastName,
+      college,
+      email,
+      events,
+      _id,
+      workshop
+    } = user;
     const { eventData } = arrayFinder("eventData", store);
     const event = groupEventId(filterGroupEvent(eventData));
     const userEvent = groupEventId(filterGroupEvent(events));
@@ -101,6 +111,7 @@ class Profile extends Component {
       eventRegistered: events,
       eventData: eventData,
       _id,
+      workshop,
       ...grpEvent
     });
   }
@@ -390,6 +401,9 @@ class Profile extends Component {
                     </h2>
                     <h2 className="title is-5">
                       College : {this.state.college}
+                    </h2>
+                    <h2 className="title is-5 is-capitalized">
+                      Workshop : {this.state.workshop}
                     </h2>
                     <h2 className="title is-5">Email: {this.state.email}</h2>
                     <button className="button is-info" onClick={this.showModal}>

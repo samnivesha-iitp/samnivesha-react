@@ -38,11 +38,11 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    workshop:String,
-    referralId:String,
+    workshop: { type: String, default: "" },
+    referralId: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    mobileNumber:{type:Number,required:true},
+    mobileNumber: { type: Number, required: true },
     events: [{ type: ObjectId, ref: "Event" }]
   },
   {
