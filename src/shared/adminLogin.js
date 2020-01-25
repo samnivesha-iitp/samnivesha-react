@@ -19,7 +19,6 @@ const AdminLogin = props => {
     admin
       .login(email, password)
       .then(res => {
-        console.log(res);
         if (res) {
           setIsAdmin(true);
           props.history.push("/admin");

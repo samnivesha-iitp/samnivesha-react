@@ -1,17 +1,21 @@
+import generatePayload from "../../utils/generatePayload";
 export const runtimeConfig =
   typeof window == !undefined
     ? {
         // client
-        email: window.env.email,
         URL: `${window.location.protocol}://${window.location.origin}`,
-        ADMIN:window.env.ADMIN,
-        ADMIN_PWD:window.env.ADMIN_PWD,
-        ADMIN_SECRET:window.env.ADMIN_SECRET
+        PAYLOAD: window.env.payload
       }
-    : {
-        // server
-        URL: `http://${process.env.HOST}:${process.env.PORT}`,
-        ADMIN:process.env.ADMIN,
-        ADMIN_PWD:process.env.ADMIN_PWD,
-        ADMIN_SECRET:process.env.ADMIN_SECRET
-      };
+    : // server
+      generatePayload(
+        JSON.stringify({
+          username: process.env.ADMIN,
+          pwd: process.env.ADMIN_PWD,
+          secret: process.env.ADMIN_SECRET
+        })
+      ).then(hash => {
+        return {
+          PAYLOAD: hash,
+          URL: `http://${process.env.HOST}:${process.env.PORT}`
+        };
+      });

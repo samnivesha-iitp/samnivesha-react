@@ -19,6 +19,7 @@ const getEventsData = require("../../utils/getEventsData");
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 import userRouter from "./routes/users.routes";
+import { runtimeConfig } from "./config";
 const eventRouter = require("./routes/event.routes");
 const mailRouter = require("./routes/mail.routes");
 const loginRouter = require("./routes/login.route");
@@ -96,6 +97,7 @@ server
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="google-site-verification" content="y8OYp_WuVVjI-L15MfNf6rRvgYhi_Bqkp_fj-g5PSUU">
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"/>
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
@@ -113,9 +115,8 @@ server
       </head>
       <body ${helmet.bodyAttributes.toString()}>
           <div id="root">${markup}</div>
-          <script>window.__INITIAL_STATE__=${serialize(
-            state
-          )}</script>          
+          <script>window.__INITIAL_STATE__=${serialize(state)}</script>
+          <script>window.env=${serialize(runtimeConfig)}</script>          
       </body>
   </html>`
         );
