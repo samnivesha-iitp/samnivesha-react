@@ -91,6 +91,7 @@ const App = props => {
         <Switch>
           <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
           <ProtectedAdmin path="/admin" component={Admin} />
+          <Route component={NotFound}/>
         </Switch>
       </AdminContext.Provider>
     </>
