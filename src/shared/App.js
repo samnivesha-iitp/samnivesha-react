@@ -28,6 +28,7 @@ import Admin from "./admin";
 import AdminLogin from "./adminLogin";
 import AuthAdmin from "../../utils/adminApi";
 import Misc from "./misc";
+import NotFound from "./notFound";
 
 const App = props => {
   const admin = new AuthAdmin();
@@ -83,6 +84,7 @@ const App = props => {
           />
           <Route path="/workshop" component={Workshop} />
           <Route path="/sponsors" component={Sponsors} />
+          <Route component={NotFound}/>
         </Switch>
       </AuthContext.Provider>
       <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>

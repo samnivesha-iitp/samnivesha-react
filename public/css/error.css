@@ -1,0 +1,136 @@
+.button {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.button.button-cta {
+  padding: 22px 40px !important;
+}
+.button.button-cta.btn-outlined.is-bold {
+  border-width: 2px;
+  font-weight: 600;
+}
+.button.btn-align {
+  padding: 3px 13px 6px 13px;
+}
+.button.rounded {
+  border-radius: 500px;
+}
+.button.raised:hover {
+  -webkit-box-shadow: 0 14px 26px -12px rgba(0, 0, 0, 0.42),
+    0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 14px 26px -12px rgba(0, 0, 0, 0.42),
+    0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
+  opacity: 0.8;
+}
+.button.btn-outlined {
+  background: transparent;
+}
+.button.btn-outlined.is-bold {
+  border-width: 2px;
+  font-weight: 600;
+}
+.button.secondary-btn {
+  outline: none;
+  border-color: #7f00ff;
+  background-color: #7f00ff;
+  color: #fff;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.button.secondary-btn:hover {
+  color: #fff;
+}
+
+.button.secondary-btn.raised:hover {
+  -webkit-box-shadow: 0 14px 26px -12px rgba(103, 58, 183, 0.42),
+    0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(103, 58, 183, 0.2) !important;
+  box-shadow: 0 14px 26px -12px rgba(103, 58, 183, 0.42),
+    0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(103, 58, 183, 0.2) !important;
+  opacity: 0.95;
+}
+.button.secondary-btn.btn-outlined {
+  border-color: #7f00ff;
+  color: #7f00ff;
+  background-color: transparent;
+}
+.button.secondary-btn.btn-outlined:hover {
+  color: #fff;
+  background-color: #7f00ff;
+}
+.error-wrap {
+  position: relative;
+}
+
+.error-wrap.error-centered .bg-404 {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-size: 25rem;
+  font-weight: 700;
+  color: rgba(68, 79, 96, 0.15);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.error-wrap.error-centered img {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  max-width: 660px;
+  z-index: 1;
+}
+
+.error-wrap.error-centered .error-caption h2 {
+  color: #444f60;
+  font-family: "Nexa Bold", sans-serif;
+  font-size: 2rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.error-wrap.error-centered .error-caption p {
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.error-wrap.error-centered .error-caption .button-wrap {
+  margin: 20px 0;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  overflow: hidden !important;
+}
+
+a,
+a:active,
+i,
+i:active,
+div,
+div:active,
+div:focus,
+span:focus,
+span:active {
+  outline: none !important;
+}
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.ml-auto {
+  margin-left: auto !important;
+}
+.is-hidden {
+  display: none !important;
+}
