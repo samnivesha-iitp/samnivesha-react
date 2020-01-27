@@ -29,6 +29,7 @@ import AdminLogin from "./adminLogin";
 import AuthAdmin from "../../utils/adminApi";
 import Misc from "./misc";
 import NotFound from "./notFound";
+import Team from './team'
 
 const App = props => {
   const admin = new AuthAdmin();
@@ -59,39 +60,42 @@ const App = props => {
   const loader = firstRender ? "is-active" : "";
   return (
     <>
-      <AuthContext.Provider
-        value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
-      >
-        <Helmet>
-          <link rel="stylesheet" href="/css/index/pageloader.css" />
-        </Helmet>
-        <div className={`pageloader ${loader}`}></div>
-        <div className={`infraloader ${loader}`}></div>
-        <Switch>
-          <Route exact path="/" render={() => <Home data={store} />} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/events" component={Events} />
-          <Route path="/blog" component={Blog} />
-          <Route path="/misc" component={Misc} />
-          <Route path="/reset/:resetToken" component={ResetPassword} />
-          <ProtectedProfile path="/profile" component={Profile} data={store} />
-          <ProtectedSignup path="/signup" component={Signup} />
-          <ProtectedLogin path="/login" component={Login} />
-          <ProtectedResetPassword
-            path="/forgotpassword"
-            component={Forgotpassword}
-          />
-          <Route path="/workshop" component={Workshop} />
-          <Route path="/sponsors" component={Sponsors} />
-        </Switch>
-      </AuthContext.Provider>
       <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
-        <Switch>
-          <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
-          <ProtectedAdmin path="/admin" component={Admin} />
-          <Route component={NotFound}/>
-        </Switch>
+        <AuthContext.Provider
+          value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
+        >
+          <Helmet>
+            <link rel="stylesheet" href="/css/index/pageloader.css" />
+          </Helmet>
+          <div className={`pageloader ${loader}`}></div>
+          <div className={`infraloader ${loader}`}></div>
+          <Switch>
+            <Route exact path="/" render={() => <Home data={store} />} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/events" component={Events} />
+            <Route path="/blog" component={Blog} />
+            <Route path="/misc" component={Misc} />
+            <Route path="/reset/:resetToken" component={ResetPassword} />
+            <ProtectedProfile
+              path="/profile"
+              component={Profile}
+              data={store}
+            />
+            <ProtectedSignup path="/signup" component={Signup} />
+            <ProtectedLogin path="/login" component={Login} />
+            <ProtectedResetPassword
+              path="/forgotpassword"
+              component={Forgotpassword}
+            />
+            <Route path="/workshop" component={Workshop} />
+            <Route path="/sponsors" component={Sponsors} />
+            <Route path="/team" component={Team}/>
+            <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
+            <ProtectedAdmin path="/admin" component={Admin} />
+            <Route component={NotFound} />
+          </Switch>
+        </AuthContext.Provider>
       </AdminContext.Provider>
     </>
   );

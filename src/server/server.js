@@ -96,9 +96,16 @@ server
       <head>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta charset="utf-8" />
+          <meta name="description" content="Samnivesha is the annual Technical fest of the Department of Civil and Environmental Engineering (DCEE) at IIT Patna.">
+          <meta name="author" content="Samnivesha '19">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="google-site-verification" content=${process.env.GOOGLE_VERIFICATION_LINK}>
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"/>
+          <link rel="icon" href="/favicon.ico">
+          <meta property="og:image" content="/favicon.ico">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+          <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
           ${helmet.link.toString()}

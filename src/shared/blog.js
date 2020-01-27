@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./components/layout";
 import Helmet from "react-helmet";
+import BlogStyle from "./css/hero.style";
 
 const Blog = () => {
   const [firstRender, setFirstRender] = useState(true);
@@ -11,7 +12,6 @@ const Blog = () => {
     <Layout title="Blog Page">
       <Helmet>
         <title>Samnivesha'20</title>
-        <link rel="stylesheet" preload href="/css/hero.css" />
       </Helmet>
       {!firstRender && (
         <section className="container" style={{ paddingTop: "40px" }}>
@@ -127,6 +127,7 @@ const Blog = () => {
           </div>
         </section>
       )}
+      <style jsx>{`${BlogStyle.style}`}</style>
     </Layout>
   );
 };
