@@ -104,7 +104,7 @@ const Team = () => {
           </div>
         </div>
       </div>
-      <style jsx>{`${TeamStyle.style}`}</style>
+      <style>{`${TeamStyle.style}`}</style>
     </>
   );
 };

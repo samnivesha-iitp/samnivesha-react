@@ -127,14 +127,14 @@ const Header = props => {
             </Link> */}
             {!isAuthenticated && (
               <>
-                {/* <Link
+                <Link
                   to="/sponsors"
                   prefetch={Prefetch}
                   className="navbar-item has-text-weight-semibold"
                   onClick={hideMenu}
                 >
                   Sponsors
-                </Link> */}
+                </Link>
 
                 <Link
                   to="/contact"

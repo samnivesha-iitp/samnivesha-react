@@ -127,7 +127,7 @@ const Blog = () => {
           </div>
         </section>
       )}
-      <style jsx>{`${BlogStyle.style}`}</style>
+      <style>{`${BlogStyle.style}`}</style>
     </Layout>
   );
 };
