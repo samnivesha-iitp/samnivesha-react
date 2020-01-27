@@ -134,8 +134,8 @@ const Home = props => {
               setUser(user.userData);
               setTimeout(removeMsg, 3000);
             })
-            .catch((err) => {
-              console.log(err)
+            .catch(err => {
+              console.log(err);
               setMsg({ message: "Error Detected." });
               setTimeout(removeMsg, 3000);
             });
@@ -325,12 +325,12 @@ const Home = props => {
                   </div>
                 </div>
                 <div className="column is-4 is-offset-1">
-                  <img className="" src="/images/autocad.png" alt="" />
+                  <img className="" src="/images/autocad.webp" alt="" />
                 </div>
               </div>
               <div className="columns is-vcentered pb-40 pt-40">
                 <div className="column is-4 is-offset-1">
-                  <img className="" src="/images/sap.png" alt="" />
+                  <img className="" src="/images/sap.webp" alt="" />
                 </div>
                 <div className="column is-6 is-offset-1">
                   <div className="title quick-feature is-handwritten text-bold">
