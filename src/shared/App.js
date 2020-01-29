@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./index";
-import About from "./about";
-import Contact from "./contact";
-import Events from "./events";
-import Blog from "./blog";
 import Profile from "./profile";
-import Login from "./login";
-import Signup from "./signup";
-import Workshop from "./workshop";
-import Sponsors from "./sponsors";
 import Cookies from "js-cookie";
-import Forgotpassword from "./forgotpassword";
 import Helmet from "react-helmet";
 const arrayFinder = require("../../utils/findArray");
 import { AuthContext, AdminContext } from "./components/authContext";
-import ResetPassword from "./resetPassword";
 import {
   ProtectedProfile,
   ProtectedLogin,
@@ -27,9 +17,18 @@ import {
 import Admin from "./admin";
 import AdminLogin from "./adminLogin";
 import AuthAdmin from "../../utils/adminApi";
-import Misc from "./misc";
-import NotFound from "./notFound";
-import Team from './team'
+import loadable from "@loadable/component";
+import Forgotpassword from './forgotpassword'
+
+const Sponsors = loadable(() => import("./sponsors"));
+const NotFound = loadable(() => import("./notFound"));
+const Misc = loadable(() => import("./misc"));
+const ResetPassword = loadable(() => import("./resetPassword"));
+const Team = loadable(() => import("./team"));
+const Blog = loadable(() => import("./blog"));
+const Contact = loadable(() => import("./contact"));
+const Login = loadable(() => import("./login"));
+const Signup = loadable(() => import("./signup"));
 
 const App = props => {
   const admin = new AuthAdmin();
@@ -71,29 +70,58 @@ const App = props => {
           <div className={`infraloader ${loader}`}></div>
           <Switch>
             <Route exact path="/" render={() => <Home data={store} />} />
-            <Route path="/about" component={About} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/events" component={Events} />
-            <Route path="/blog" component={Blog} />
-            <Route path="/misc" component={Misc} />
-            <Route path="/reset/:resetToken" component={ResetPassword} />
+            <Route
+              path="/contact"
+              component={Contact}
+              fallback={<div>loading...</div>}
+            />
+            <Route
+              path="/blog"
+              component={Blog}
+              fallback={<div>loading...</div>}
+            />
+            <Route
+              path="/misc"
+              component={Misc}
+              fallback={<div>loading...</div>}
+            />
+            <Route
+              path="/reset/:resetToken"
+              component={ResetPassword}
+              fallback={<div>loading...</div>}
+            />
             <ProtectedProfile
               path="/profile"
               component={Profile}
               data={store}
             />
-            <ProtectedSignup path="/signup" component={Signup} />
-            <ProtectedLogin path="/login" component={Login} />
+            <ProtectedSignup
+              path="/signup"
+              component={Signup}
+              fallback={<div>loading...</div>}
+            />
+            <ProtectedLogin
+              path="/login"
+              component={Login}
+              fallback={<div>loading...</div>}
+            />
             <ProtectedResetPassword
               path="/forgotpassword"
               component={Forgotpassword}
             />
-            <Route path="/workshop" component={Workshop} />
-            <Route path="/sponsors" component={Sponsors} />
-            <Route path="/team" component={Team}/>
+            <Route
+              path="/sponsors"
+              component={Sponsors}
+              fallback={<div>loading...</div>}
+            />
+            <Route
+              path="/team"
+              component={Team}
+              fallback={<div>loading...</div>}
+            />
             <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
             <ProtectedAdmin path="/admin" component={Admin} />
-            <Route component={NotFound} />
+            <Route component={NotFound} fallback={<div>loading...</div>} />
           </Switch>
         </AuthContext.Provider>
       </AdminContext.Provider>

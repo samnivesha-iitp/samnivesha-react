@@ -16,6 +16,9 @@ const csurf = require("csurf");
 require("dotenv").config();
 const getUserData = require("../../utils/getUserData");
 const getEventsData = require("../../utils/getEventsData");
+import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
+import { html as htmlTemplate, oneLineTrim } from "common-tags";
+const path = require("path");
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 import userRouter from "./routes/users.routes";
@@ -81,17 +84,24 @@ server
     promises.push(getEventsData());
     Promise.all(promises).then(data => {
       state = state.concat(JSON.stringify(data));
+      const extractor = new ChunkExtractor({
+        statsFile: path.resolve("build/loadable-stats.json"),
+        entrypoints: ["client"]
+      });
       const markup = renderToString(
-        <StaticRouter context={context} location={req.url}>
-          <App />
-        </StaticRouter>
+        <ChunkExtractorManager extractor={extractor}>
+          <StaticRouter context={context} location={req.url}>
+            <App />
+          </StaticRouter>
+        </ChunkExtractorManager>
       );
       const helmet = Helmet.renderStatic();
       if (context.url) {
         res.redirect(context.url);
       } else {
         res.status(200).send(
-          `<!doctype html>
+          oneLineTrim(htmlTemplate`
+          <!doctype html>
       <html lang="" ${helmet.htmlAttributes.toString()}>
       <head>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -99,7 +109,9 @@ server
           <meta name="description" content="Samnivesha is the annual Technical fest of the Department of Civil and Environmental Engineering (DCEE) at IIT Patna.">
           <meta name="author" content="Samnivesha '19">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="google-site-verification" content=${process.env.GOOGLE_VERIFICATION_LINK}>
+          <meta name="google-site-verification" content=${
+            process.env.GOOGLE_VERIFICATION_LINK
+          }>
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"/>
           <link rel="icon" href="/favicon.ico">
           <meta property="og:image" content="/favicon.ico">
@@ -119,13 +131,16 @@ server
               ? `<script src="${assets.client.js}" defer></script>`
               : `<script src="${assets.client.js}" defer crossorigin></script>`
           }
+          ${extractor.getLinkTags()}
+          ${extractor.getStyleTags()}
       </head>
       <body ${helmet.bodyAttributes.toString()}>
           <div id="root">${markup}</div>
           <script>window.__INITIAL_STATE__=${serialize(state)}</script>
-          <script>window.env=${serialize(runtimeConfig)}</script>          
+          <script>window.env=${serialize(runtimeConfig)}</script>
+          ${extractor.getScriptTags()}          
       </body>
-  </html>`
+  </html>`)
         );
       }
     });
