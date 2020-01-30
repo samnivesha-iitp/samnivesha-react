@@ -314,6 +314,13 @@ const Home = props => {
                     >
                       Learn more <i className="sl sl-icon-arrow-right"></i>
                     </a>
+                    <a
+                      href="/pdf/autocad.pdf"
+                      target="_blank"
+                      className="button btn-align btn-more is-link color-primary"
+                    >
+                      Prerequisite
+                    </a>
                     <Link
                       onClick={workshopHandler}
                       to="/add/workshop?name=autocad"
@@ -358,6 +365,13 @@ const Home = props => {
                       className="button btn-align btn-more is-link color-primary"
                     >
                       Learn more <i className="sl sl-icon-arrow-right"></i>
+                    </a>
+                    <a
+                      href="/pdf/sap.pdf"
+                      target="_blank"
+                      className="button btn-align btn-more is-link color-primary"
+                    >
+                      Prerequisite
                     </a>
                     <Link
                       onClick={workshopHandler}
