@@ -99,6 +99,19 @@ router.route("/:id").get((req, res) => {
       }
     });
 });
+router.route("/:id/update").post(async (req, res) => {
+  const { firstName, lastName, workshop } = req.body;
+  try {
+    const user = await Users.findById(req.params.id).exec();
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.workshop = workshop;
+    await user.save();
+    res.status(200).json(true);
+  } catch (err) {
+    res.status(200).json(false);
+  }
+});
 router.route("/findByUsername").post((req, res) => {
   const { username } = req.body;
   Users.findOne({ username: username }, function(err, user) {
@@ -145,7 +158,7 @@ router.route("/add/workshop").post(async (req, res) => {
   const { userId, payload } = req.body;
   await workshopRegistration(userId, payload)
     .then(response => {
-      console.log(response)
+      console.log(response);
       if (response === true) {
         res.json({ message: "Ok" });
       } else {

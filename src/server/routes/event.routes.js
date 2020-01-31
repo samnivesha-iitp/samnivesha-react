@@ -95,11 +95,7 @@ router.route("/:id/group").get((req, res) => {
   Group.find({ event: eveId })
     .populate({
       path: "groupleader",
-      select: "firstName lastName username -_id"
-    })
-    .populate({
-      path: "groupmembers",
-      select: "firstName lastName username -_id"
+      select: "firstName lastName username mobileNumber -_id "
     })
     .populate({ path: "event", select: "eventName -_id" })
     .exec(function(err, group) {

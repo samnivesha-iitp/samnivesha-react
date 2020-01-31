@@ -5,6 +5,17 @@ import Axios from "axios";
 import Popupbar from "./components/popupbar";
 import { AdminContext } from "./components/authContext";
 import AuthAdmin from "../../utils/adminApi";
+import { useRouteMatch, Switch, Route } from "react-router";
+import { Link } from "react-router-dom";
+import Dashboard from "./components/admin/dashboard";
+import AddUser from "./components/admin/adduser";
+import RemoveUser from "./components/admin/removeuser";
+import UpdateUser from "./components/admin/updateuser";
+import PaymentStatus from "./components/admin/paymentstatus";
+import Workshop from "./components/admin/workshop";
+import GroupEvent from "./components/admin/grpevent";
+import SoloEvent from "./components/admin/soloevent";
+import AdminDataApi from "../../utils/adminDataApi";
 
 const admin = new AuthAdmin();
 const Admin = props => {
@@ -18,28 +29,7 @@ const Admin = props => {
     Axios.get("/users")
       .then(response => {
         // console.log(response.data);
-        const mockdata = response.data;
-        mockdata.map(user => {
-          user.fullName = user.firstName + " " + user.lastName;
-          delete user.firstName;
-          delete user.lastName;
-          delete user.createdAt;
-          delete user.updatedAt;
-          delete user.resetPasswordExpires;
-          delete user.resetPasswordToken;
-          delete user.__v;
-          delete user.email;
-          if (user.events.length > 0) {
-            user.event = "";
-            for (let i = 0; i < user.events.length; i++) {
-              user.event = user.event + user.events[i].eventName + ",";
-            }
-            delete user.events;
-          } else {
-            user.event = "";
-            delete user.events;
-          }
-        });
+        const mockdata = AdminDataApi(response.data);
         setData(mockdata);
       })
       .catch(() => {
@@ -47,10 +37,11 @@ const Admin = props => {
         setMsgType("error");
         setMsg("Data Retrieving Error");
       });
-  }, []);
+  },[]);
   const handleClose = () => {
     setOpen(false);
   };
+  let match = useRouteMatch();
   const isMobileCSS = isMobile ? "is-active" : null;
   return (
     <>
@@ -103,16 +94,27 @@ const Admin = props => {
               <p className="menu-label">General</p>
               <ul className="menu-list">
                 <li>
-                  <a className="is-active">Dashboard</a>
+                  <Link to={`${match.url}/dashboard`}>Dashboard</Link>
                 </li>
                 <li>
-                  <a className="">Add user</a>
+                  <Link to={`${match.url}/user/add`}>Add User</Link>
                 </li>
                 <li>
-                  <a className="">Remove user</a>
+                  <Link to={`${match.url}/user/remove`}>Remove User</Link>
                 </li>
                 <li>
-                  <a className="">Update user</a>
+                  <Link to={`${match.url}/user/update`}>Update User</Link>
+                </li>
+                <li>
+                  <Link to={`${match.url}/paymentstatus`}>Payment Status</Link>
+                </li>
+                <li>
+                  <Link to={`${match.url}/workshop`}>Workshop</Link>
+                </li><li>
+                  <Link to={`${match.url}/groupevent`}>Group Event</Link>
+                </li>
+                <li>
+                  <Link to={`${match.url}/soloevent`}>Solo Event</Link>
                 </li>
               </ul>
             </aside>
@@ -156,39 +158,16 @@ const Admin = props => {
                 </div>
               </div>
             </section>
-            <div className="columns">
-              <div className="column is-12">
-                <table className="table is-fullwidth is-striped">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Name</th>
-                      <th>Events</th>
-                      <th>ACE Id</th>
-                      <th>Contact No.</th>
-                      <th>College</th>
-                      <th>Referral Id</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data !== "" &&
-                      data.map((data, index) => {
-                        return (
-                          <tr key={data._id}>
-                            <td>{index + 1}</td>
-                            <td>{data.fullName}</td>
-                            <td>{data.event}</td>
-                            <td>{data.username}</td>
-                            <td>{data.mobileNumber}</td>
-                            <td>{data.college}</td>
-                            <td>{data.referralId}</td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <Switch>
+              <Route path={`${match.path}/dashboard`}  render={()=><Dashboard data={data}/>}/>
+              <Route path={`${match.path}/user/add`} render={()=><AddUser dataHandle={setData}/>}/>
+              <Route path={`${match.path}/user/remove`} render={()=><RemoveUser dataHandle={setData}/>}/>
+              <Route path={`${match.path}/user/update`} render={()=><UpdateUser dataHandle={setData}/>}/>
+              <Route path={`${match.path}/paymentstatus`} component={PaymentStatus}/>
+              <Route path={`${match.path}/workshop`} component={Workshop}/>
+              <Route path={`${match.path}/groupevent`} component={GroupEvent}/>
+              <Route path={`${match.path}/soloevent`} component={SoloEvent}/>
+            </Switch>
           </div>
         </div>
       </div>

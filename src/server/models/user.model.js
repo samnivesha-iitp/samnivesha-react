@@ -23,7 +23,6 @@ const userSchema = new Schema(
       minlength: 3
     },
     email: {
-      unique: true,
       type: String,
       required: true,
       minlength: 5
@@ -38,6 +37,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    haspaid: { type: Boolean, default: false },
     workshop: { type: String, default: "" },
     referralId: String,
     resetPasswordToken: String,
