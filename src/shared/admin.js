@@ -6,7 +6,7 @@ import Popupbar from "./components/popupbar";
 import { AdminContext } from "./components/authContext";
 import AuthAdmin from "../../utils/adminApi";
 import { useRouteMatch, Switch, Route } from "react-router";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Dashboard from "./components/admin/dashboard";
 import AddUser from "./components/admin/adduser";
 import RemoveUser from "./components/admin/removeuser";
@@ -37,7 +37,7 @@ const Admin = props => {
         setMsgType("error");
         setMsg("Data Retrieving Error");
       });
-  },[]);
+  }, []);
   const handleClose = () => {
     setOpen(false);
   };
@@ -94,27 +94,30 @@ const Admin = props => {
               <p className="menu-label">General</p>
               <ul className="menu-list">
                 <li>
-                  <Link to={`${match.url}/dashboard`}>Dashboard</Link>
+                  <NavLink to={`${match.url}/dashboard`} activeClassName="is-active" >Dashboard</NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/user/add`}>Add User</Link>
+                  <NavLink to={`${match.url}/user/add`} activeClassName="is-active" >Add User</NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/user/remove`}>Remove User</Link>
+                  <NavLink to={`${match.url}/user/remove`} activeClassName="is-active" >Remove User</NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/user/update`}>Update User</Link>
+                  <NavLink to={`${match.url}/user/update`} activeClassName="is-active" >Update User</NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/paymentstatus`}>Payment Status</Link>
+                  <NavLink to={`${match.url}/paymentstatus`} activeClassName="is-active" >
+                    Payment Status
+                  </NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/workshop`}>Workshop</Link>
-                </li><li>
-                  <Link to={`${match.url}/groupevent`}>Group Event</Link>
+                  <NavLink to={`${match.url}/workshop`} activeClassName="is-active" >Workshop</NavLink>
                 </li>
                 <li>
-                  <Link to={`${match.url}/soloevent`}>Solo Event</Link>
+                  <NavLink to={`${match.url}/groupevent`} activeClassName="is-active" >Group Event</NavLink>
+                </li>
+                <li>
+                  <NavLink to={`${match.url}/soloevent`} activeClassName="is-active" >Solo Event</NavLink>
                 </li>
               </ul>
             </aside>
@@ -159,14 +162,29 @@ const Admin = props => {
               </div>
             </section>
             <Switch>
-              <Route path={`${match.path}/dashboard`}  render={()=><Dashboard data={data}/>}/>
-              <Route path={`${match.path}/user/add`} render={()=><AddUser dataHandle={setData}/>}/>
-              <Route path={`${match.path}/user/remove`} render={()=><RemoveUser dataHandle={setData}/>}/>
-              <Route path={`${match.path}/user/update`} render={()=><UpdateUser dataHandle={setData}/>}/>
-              <Route path={`${match.path}/paymentstatus`} component={PaymentStatus}/>
-              <Route path={`${match.path}/workshop`} component={Workshop}/>
-              <Route path={`${match.path}/groupevent`} component={GroupEvent}/>
-              <Route path={`${match.path}/soloevent`} component={SoloEvent}/>
+              <Route
+                path={`${match.path}/dashboard`}
+                render={() => <Dashboard data={data} />}
+              />
+              <Route
+                path={`${match.path}/user/add`}
+                render={() => <AddUser dataHandle={setData} />}
+              />
+              <Route
+                path={`${match.path}/user/remove`}
+                render={() => <RemoveUser dataHandle={setData} />}
+              />
+              <Route
+                path={`${match.path}/user/update`}
+                render={() => <UpdateUser dataHandle={setData} />}
+              />
+              <Route
+                path={`${match.path}/paymentstatus`}
+                component={PaymentStatus}
+              />
+              <Route path={`${match.path}/workshop`} component={Workshop} />
+              <Route path={`${match.path}/groupevent`} component={GroupEvent} />
+              <Route path={`${match.path}/soloevent`} component={SoloEvent} />
             </Switch>
           </div>
         </div>

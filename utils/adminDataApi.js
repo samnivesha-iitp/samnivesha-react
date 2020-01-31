@@ -39,10 +39,10 @@ export const FilterGroupEvent = data => {
       for (let i = 0; i < user.groupmembers.length; i++) {
         user.groups = user.groups + user.groupmembers[i] + ",";
       }
-      delete user.groups;
+      delete user.groupmembers;
     } else {
       user.groups = "";
-      delete user.groups;
+      delete user.groupmembers;
     }
   });
   return mockData;

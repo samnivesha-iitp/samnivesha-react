@@ -6,7 +6,7 @@ const Workshop = () => {
   return (
     <div className="columns">
       <div className="column is-12">
-        <div className="buttons">
+        <div className="buttons is-centered">
           <Button name="autocad" color="is-primary" clickHandle={setData} />
           <Button name="sap" color="is-link" clickHandle={setData} />
         </div>
@@ -19,7 +19,6 @@ const Workshop = () => {
               <tr>
                 <th>No.</th>
                 <th>Name</th>
-                <th>Events</th>
                 <th>ACE Id</th>
                 <th>Contact No.</th>
                 <th>College</th>
@@ -31,7 +30,6 @@ const Workshop = () => {
                   <tr key={user._id}>
                     <td>{index + 1}</td>
                     <td>{user.fullName}</td>
-                    <td>{user.event}</td>
                     <td>{user.username}</td>
                     <td>{user.mobileNumber}</td>
                     <td>{user.college}</td>

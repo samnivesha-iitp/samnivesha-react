@@ -4,7 +4,6 @@ import Popupbar from "../popupbar";
 import Axios from "axios";
 import AdminDataApi from "../../../../utils/adminDataApi";
 
-
 const RemoveUser = ({ dataHandle }) => {
   const [data, setData] = useState("");
   const [open, setOpen] = useState(false);
@@ -35,37 +34,39 @@ const RemoveUser = ({ dataHandle }) => {
       <div className="columns">
         <div className="column is-12">
           <SearchUser userHandle={setData} />
-          <table className="table is-fullwidth is-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>ACE Id</th>
-                <th>College</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data !== "" && (
-                <tr key={data._id}>
-                  <td>
-                    {data.firstName} {data.lastName}
-                  </td>
-                  <td>{data.username}</td>
-                  <td>{data.college}</td>
-                  <td>
-                    <button
-                      className="button is-danger is-small"
-                      onClick={() => {
-                        deleteUser(data.username);
-                      }}
-                    >
-                      Delete User
-                    </button>
-                  </td>
+          {data !== "" && (
+            <table className="table is-fullwidth is-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>ACE Id</th>
+                  <th>College</th>
+                  <th>Action</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {
+                  <tr key={data._id}>
+                    <td>
+                      {data.firstName} {data.lastName}
+                    </td>
+                    <td>{data.username}</td>
+                    <td>{data.college}</td>
+                    <td>
+                      <button
+                        className="button is-danger is-small"
+                        onClick={() => {
+                          deleteUser(data.username);
+                        }}
+                      >
+                        Delete User
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
       <Popupbar

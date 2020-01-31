@@ -51,91 +51,95 @@ const AddUser = ({ dataHandle }) => {
     <>
       <div className="columns">
         <div className="column is-12">
-          <form onSubmit={submitFormHandle}>
-            <div className="field is-horizontal">
-              <div className="field-body">
-                <div className="field">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="First Name"
-                      onChange={e => {
-                        setFirstName(e.target.value);
-                      }}
-                      value={firstName}
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="Last Name"
-                      onChange={e => {
-                        setLastName(e.target.value);
-                      }}
-                      value={lastName}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="field is-horizontal">
-              <div className="field-body">
-                <div className="field ">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="UserName"
-                      onChange={e => {
-                        setUsername(e.target.value);
-                      }}
-                      value={username}
-                    />
-                  </div>
-                </div>
-                <div className="field ">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="college"
-                      onChange={e => {
-                        setCollege(e.target.value);
-                      }}
-                      value={college}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="box">
+            <form onSubmit={submitFormHandle}>
+              <h3 className="is-3 title has-text-centered">Register Form</h3>
 
-            <div className="field is-horizontal">
-              <div className="field-body">
-                <div className="field">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="number"
-                      placeholder="mobile Number"
-                      onChange={e => {
-                        setMobile(e.target.value);
-                      }}
-                      value={mobile}
-                    />
+              <div className="field is-horizontal">
+                <div className="field-body">
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="First Name"
+                        onChange={e => {
+                          setFirstName(e.target.value);
+                        }}
+                        value={firstName}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="Last Name"
+                        onChange={e => {
+                          setLastName(e.target.value);
+                        }}
+                        value={lastName}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="field ">
-              <div className="control">
-                <button className="button is-link">Submit</button>{" "}
+              <div className="field is-horizontal">
+                <div className="field-body">
+                  <div className="field ">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="UserName"
+                        onChange={e => {
+                          setUsername(e.target.value);
+                        }}
+                        value={username}
+                      />
+                    </div>
+                  </div>
+                  <div className="field ">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="college"
+                        onChange={e => {
+                          setCollege(e.target.value);
+                        }}
+                        value={college}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </form>
+
+              <div className="field is-horizontal">
+                <div className="field-body">
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="number"
+                        placeholder="mobile Number"
+                        onChange={e => {
+                          setMobile(e.target.value);
+                        }}
+                        value={mobile}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="field ">
+                <div className="control">
+                  <button className="button is-link">Submit</button>{" "}
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <Popupbar

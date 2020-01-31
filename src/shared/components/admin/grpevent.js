@@ -6,7 +6,7 @@ const GroupEvent = () => {
   return (
     <div className="columns">
       <div className="column is-12">
-        <div className="buttons">
+        <div className="buttons is-centered">
           <Button name="Bridge it" id="5e18407e437ee11f063db0ca" color="is-primary" clickHandle={setData}/>
           <Button name="Geo-manji" id="5e1840f4437ee11f063db0cb" color="is-link" clickHandle={setData}/>
           <Button name="House Of Cards" id="5e18412e437ee11f063db0cc" color="is-info" clickHandle={setData}/>

@@ -21,7 +21,7 @@ const SearchUser = ({ userHandle }) => {
     fetchData(e.target.value);
   };
   return (
-    <div className="field">
+    <div className="field has-addons">
       <div className="control">
         <input
           type="text"
@@ -30,6 +30,9 @@ const SearchUser = ({ userHandle }) => {
           placeholder="Type ACE ID here"
           onChange={handleUsername}
         />
+      </div>
+      <div className="control">
+        <button className="button is-info">Search</button>
       </div>
     </div>
   );

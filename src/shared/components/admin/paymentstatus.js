@@ -38,35 +38,37 @@ const PaymentStatus = () => {
       <div className="columns">
         <div className="column is-12">
           <SearchUser userHandle={setData} />
-          <table className="table is-fullwidth is-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>ACE Id</th>
-                <th>Payment Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data !== "" && (
-                <tr key={data._id}>
-                  <td>
-                    {data.firstName} {data.lastName}
-                  </td>
-                  <td>{data.username}</td>
-                  <td>
-                    <select
-                      onChange={selectHandler}
-                      value={data.haspaid}
-                      className="select"
-                    >
-                      <option value={true}>Paid</option>
-                      <option value={false}>Unpaid</option>
-                    </select>
-                  </td>
+          {data !== "" && (
+            <table className="table is-fullwidth is-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>ACE Id</th>
+                  <th>Payment Status</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {
+                  <tr key={data._id}>
+                    <td>
+                      {data.firstName} {data.lastName}
+                    </td>
+                    <td>{data.username}</td>
+                    <td>
+                      <select
+                        onChange={selectHandler}
+                        value={data.haspaid}
+                        className="select"
+                      >
+                        <option value={true}>Paid</option>
+                        <option value={false}>Unpaid</option>
+                      </select>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
       <Popupbar

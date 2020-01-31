@@ -6,7 +6,7 @@ const SoloEvent =()=>{
 return(
     <div className="columns">
         <div className="column is-12">
-            <div className="buttons">
+            <div className="buttons is-centered">
                 <Button name="Engineers Conclave" id="5e184176437ee11f063db0cd" color="is-primary" clickHandle={setData}/>
                 <Button name="Lensart" id="5e1841e2437ee11f063db0cf" color="is-link" clickHandle={setData}/>
             </div>
