@@ -16,6 +16,7 @@ import Workshop from "./components/admin/workshop";
 import GroupEvent from "./components/admin/grpevent";
 import SoloEvent from "./components/admin/soloevent";
 import AdminDataApi from "../../utils/adminDataApi";
+import Protected from "./components/admin/protected";
 
 const admin = new AuthAdmin();
 const Admin = props => {
@@ -24,7 +25,9 @@ const Admin = props => {
   const [open, setOpen] = useState(false);
   const [msgType, setMsgType] = useState("");
   const [msg, setMsg] = useState("");
+  const [hasPermissionToWrite, setHasPermissionToWrite] = useState(false);
   const [data, setData] = useState("");
+  const [blocked, setBlocked] = useState(false);
   useEffect(() => {
     Axios.get("/users")
       .then(response => {
@@ -94,30 +97,68 @@ const Admin = props => {
               <p className="menu-label">General</p>
               <ul className="menu-list">
                 <li>
-                  <NavLink to={`${match.url}/dashboard`} activeClassName="is-active" >Dashboard</NavLink>
+                  <NavLink
+                    to={`${match.url}/dashboard`}
+                    activeClassName="is-active"
+                  >
+                    Dashboard
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/user/add`} activeClassName="is-active" >Add User</NavLink>
+                  <NavLink
+                    to={`${match.url}/user/add`}
+                    activeClassName="is-active"
+                  >
+                    Add User
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/user/remove`} activeClassName="is-active" >Remove User</NavLink>
+                  <NavLink
+                    to={`${match.url}/user/remove`}
+                    activeClassName="is-active"
+                  >
+                    Remove User
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/user/update`} activeClassName="is-active" >Update User</NavLink>
+                  <NavLink
+                    to={`${match.url}/user/update`}
+                    activeClassName="is-active"
+                  >
+                    Update User
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/paymentstatus`} activeClassName="is-active" >
+                  <NavLink
+                    to={`${match.url}/paymentstatus`}
+                    activeClassName="is-active"
+                  >
                     Payment Status
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/workshop`} activeClassName="is-active" >Workshop</NavLink>
+                  <NavLink
+                    to={`${match.url}/workshop`}
+                    activeClassName="is-active"
+                  >
+                    Workshop
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/groupevent`} activeClassName="is-active" >Group Event</NavLink>
+                  <NavLink
+                    to={`${match.url}/groupevent`}
+                    activeClassName="is-active"
+                  >
+                    Group Event
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`${match.url}/soloevent`} activeClassName="is-active" >Solo Event</NavLink>
+                  <NavLink
+                    to={`${match.url}/soloevent`}
+                    activeClassName="is-active"
+                  >
+                    Solo Event
+                  </NavLink>
                 </li>
               </ul>
             </aside>
@@ -164,23 +205,65 @@ const Admin = props => {
             <Switch>
               <Route
                 path={`${match.path}/dashboard`}
-                render={() => <Dashboard data={data} />}
+                render={() => {
+                  return <Dashboard data={data} />;
+                }}
               />
               <Route
                 path={`${match.path}/user/add`}
-                render={() => <AddUser dataHandle={setData} />}
+                render={() => {
+                  return hasPermissionToWrite ? (
+                    <AddUser dataHandle={setData} />
+                  ) : (
+                    <Protected
+                      permission={setHasPermissionToWrite}
+                      blocked={setBlocked}
+                      blockstatus={blocked}
+                    />
+                  );
+                }}
               />
               <Route
                 path={`${match.path}/user/remove`}
-                render={() => <RemoveUser dataHandle={setData} />}
+                render={() => {
+                  return hasPermissionToWrite ? (
+                    <RemoveUser dataHandle={setData} />
+                  ) : (
+                    <Protected
+                      permission={setHasPermissionToWrite}
+                      blocked={setBlocked}
+                      blockstatus={blocked}
+                    />
+                  );
+                }}
               />
               <Route
                 path={`${match.path}/user/update`}
-                render={() => <UpdateUser dataHandle={setData} />}
+                render={() => {
+                  return hasPermissionToWrite ? (
+                    <UpdateUser dataHandle={setData} />
+                  ) : (
+                    <Protected
+                      permission={setHasPermissionToWrite}
+                      blocked={setBlocked}
+                      blockstatus={blocked}
+                    />
+                  );
+                }}
               />
               <Route
                 path={`${match.path}/paymentstatus`}
-                component={PaymentStatus}
+                render={() => {
+                  return hasPermissionToWrite ? (
+                    <PaymentStatus />
+                  ) : (
+                    <Protected
+                      permission={setHasPermissionToWrite}
+                      blocked={setBlocked}
+                      blockstatus={blocked}
+                    />
+                  );
+                }}
               />
               <Route path={`${match.path}/workshop`} component={Workshop} />
               <Route path={`${match.path}/groupevent`} component={GroupEvent} />
