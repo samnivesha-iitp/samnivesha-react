@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Loading from "../loading";
+import ReactToPrint from "react-to-print";
 
 const Dashboard = ({ data }) => {
   const [firstRender, setFirstRender] = useState(true);
   useEffect(() => {
     setFirstRender(false);
   }, []);
+  const componentRef = useRef(null);
   return firstRender ? (
     Loading
   ) : (
     <div className="columns">
       <div className="column is-12">
-        <table className="table is-fullwidth is-striped">
+        <ReactToPrint
+          trigger={() => <button className="button is-info">Print</button>}
+          content={() => componentRef.current}
+        />
+        <table className="table is-fullwidth is-striped" ref={componentRef}>
           <thead>
             <tr>
               <th>No.</th>

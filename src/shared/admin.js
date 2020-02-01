@@ -205,13 +205,11 @@ const Admin = props => {
             <Switch>
               <Route
                 path={`${match.path}/dashboard`}
-                render={() => {
-                  return <Dashboard data={data} />;
-                }}
+                render={(routerProps) => <Dashboard data={data} {...routerProps} />}
               />
               <Route
                 path={`${match.path}/user/add`}
-                render={() => {
+                render={() => { 
                   return hasPermissionToWrite ? (
                     <AddUser dataHandle={setData} />
                   ) : (
