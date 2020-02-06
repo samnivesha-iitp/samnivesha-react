@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import Layout from "./components/layout";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faExclamationTriangle,
-  faUser,
-  faCheck
-} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { backgroundImage } from "../../archieve/collections";
 import Helmet from "react-helmet";
@@ -264,13 +258,13 @@ class Signup extends Component {
                               onChange={this.handleEmail}
                             />
                             <span className="icon is-small is-left">
-                              <FontAwesomeIcon icon={faEnvelope} />
+                              <FontAwesomeIcon icon="envelope" />
                             </span>
                             <span className="icon is-small is-right">
                               {this.state.isEmailExists ? (
-                                <FontAwesomeIcon icon={faExclamationTriangle} />
+                                <FontAwesomeIcon icon="exclamation-triangle" />
                               ) : this.state.isEmailExists == null ? null : (
-                                <FontAwesomeIcon icon={faCheck} />
+                                <FontAwesomeIcon icon="check" />
                               )}
                             </span>
                           </div>
