@@ -159,7 +159,7 @@ const Header = props => {
               prefetch={Prefetch}
               onClick={hideMenu}
             >
-              Miscellaneous
+              Instructions
             </Link>
           </div>
           {isAuthenticated ? (
