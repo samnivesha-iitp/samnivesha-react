@@ -144,6 +144,14 @@ const Header = props => {
                 >
                   Contact Us
                 </Link>
+                <Link
+                  to="/team"
+                  prefetch={Prefetch}
+                  className="navbar-item has-text-weight-semibold"
+                  onClick={hideMenu}
+                >
+                  Team
+                </Link>
               </>
             )}
             <a
@@ -159,7 +167,7 @@ const Header = props => {
               prefetch={Prefetch}
               onClick={hideMenu}
             >
-              Miscellaneous
+              Instructions
             </Link>
           </div>
           {isAuthenticated ? (

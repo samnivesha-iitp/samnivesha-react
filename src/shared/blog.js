@@ -68,7 +68,10 @@ const Blog = () => {
                     <article className="tile is-child notification is-white">
                       <p className="title">Engineers Conclave</p>
                       <p className="subtitle">---------------</p>
-                      <figure className="image is-4by3">
+                      <figure
+                        className="image is-4by3"
+                        style={{ paddingTop: "75%" }}
+                      >
                         <img src="/images/5.png" alt="Italian Trulli" />
                       </figure>
                     </article>

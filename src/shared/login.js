@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import axios from "axios";  
 import Layout from "./components/layout";
 import { backgroundImage } from "../../archieve/collections";
 import {AuthContext} from "./components/authContext";
@@ -118,11 +117,11 @@ class Login extends Component {
                             onChange={this.onChangeEmail}
                           />
                           <span className="icon is-small is-left">
-                            <FontAwesomeIcon icon={faEnvelope} />
+                            <FontAwesomeIcon icon="envelope" />
                           </span>
                           <span className="icon is-small is-right">
                             {this.state.isEmailExists ? (
-                              <FontAwesomeIcon icon={faCheck} />
+                              <FontAwesomeIcon icon="check" />
                             ) : null}
                           </span>
                         </p>
@@ -139,7 +138,7 @@ class Login extends Component {
                             value={this.state.password}
                           />
                           <span className="icon is-small is-left">
-                            <FontAwesomeIcon icon={faLock} />
+                            <FontAwesomeIcon icon="lock" />
                           </span>
                         </p>
                       </div>
