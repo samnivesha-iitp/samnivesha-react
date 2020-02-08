@@ -21,7 +21,7 @@ import { html as htmlTemplate, oneLineTrim } from "common-tags";
 const path = require("path");
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-import adminRouter from './routes/admin.route'
+import adminRouter from "./routes/admin.route";
 import userRouter from "./routes/users.routes";
 import { runtimeConfig } from "./config";
 const eventRouter = require("./routes/event.routes");
