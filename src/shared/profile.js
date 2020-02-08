@@ -9,6 +9,12 @@ import axios from "axios";
 import Notification from "./components/notification";
 const getUserData = require("../../utils/getUserData");
 import Helmet from "react-helmet";
+import {
+  filterGroupEvent,
+  findCurrentDetails,
+  groupEventId,
+  grpEveIdToRegister
+} from "../../utils/profileFunction";
 
 class Profile extends Component {
   constructor(props) {
@@ -54,33 +60,6 @@ class Profile extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    const filterGroupEvent = eventArray => {
-      return eventArray.filter(event => {
-        if (event.isgroupallowed) {
-          return event;
-        }
-      });
-    };
-    const groupEventId = eventArr => {
-      return eventArr.map(eve => {
-        return eve._id;
-      });
-    };
-    const grpEveIdToRegister = (totalEve, userHadRegistered) => {
-      return totalEve.filter(eve => {
-        if (userHadRegistered.indexOf(eve) !== -1) {
-        } else {
-          return eve;
-        }
-      });
-    };
-    const findCurrentDetails = (id, data) => {
-      return data.filter(eve => {
-        if (eve._id == id) {
-          return eve;
-        }
-      });
-    };
     const { user, setUser, store } = this.context;
     const {
       username,
@@ -93,15 +72,21 @@ class Profile extends Component {
       workshop
     } = user;
     const { eventData } = arrayFinder("eventData", store);
+    // getting Each group event id
     const event = groupEventId(filterGroupEvent(eventData));
+    // getting group eventId for which user has already registered
     const userEvent = groupEventId(filterGroupEvent(events));
+    // filtering each group EventId for which user have not registered
     const groupEventsToRegister = grpEveIdToRegister(event, userEvent);
-    const grpEvent = grpEveIdToRegister(event, userEvent).length > 0 && {
-      groupEventsToRegister,
-      currentSelectedEvent: groupEventsToRegister[0]
-      // maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
-      //   .maxMembersAllowed
-    };
+    let grpEvent;
+    if (grpEveIdToRegister(event, userEvent).length > 0) {
+      grpEvent = {
+        groupEventsToRegister,
+        currentSelectedEvent: groupEventsToRegister[0],
+        maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
+          .maxMembersAllowed
+      };
+    }
     this.setState({
       username,
       fullName: firstName + " " + lastName,
@@ -116,28 +101,6 @@ class Profile extends Component {
     });
   }
   componentDidUpdate() {
-    const filterGroupEvent = eventArray => {
-      return eventArray.filter(event => {
-        if (event.isgroupallowed) {
-          return event;
-        }
-      });
-    };
-    const groupEventId = eventArr => {
-      return eventArr.map(eve => {
-        return eve._id;
-      });
-    };
-    const grpEveIdToRegister = (totalEve, userHadRegistered) => {
-      return totalEve.filter(eve => {
-        if (userHadRegistered.indexOf(eve) !== -1) {
-          return null;
-        } else {
-          return eve;
-        }
-      });
-    };
-
     const { user } = this.context;
     const { events } = user;
     const event = groupEventId(filterGroupEvent(this.state.eventData));
@@ -451,155 +414,156 @@ class Profile extends Component {
                       </tbody>
                     </table>
                   </div>
-                  <div className="column" id="groupregister">
-                    <div className="box">
-                      <form method="post" onSubmit={this.handleSubmit}>
-                        <h3 className="title  is-4 has-text-black has-text-centered">
-                          Group Registration
-                        </h3>
+                  {this.state.groupEventsToRegister.length > 0 && (
+                    <div className="column" id="groupregister">
+                      <div className="box">
+                        <form method="post" onSubmit={this.handleSubmit}>
+                          <h3 className="title  is-4 has-text-black has-text-centered">
+                            Group Registration
+                          </h3>
 
-                        <div className="field is-horizontal">
-                          <div
-                            className="field-label is-normal"
-                            style={{ textAlign: "left" }}
-                          >
-                            <label className="label">Event</label>
-                          </div>
-                          <div className="field-body">
-                            <div className="field ">
-                              <div className="control">
-                                <div className="select is-fullwidth">
-                                  <select
-                                    onChange={this.selectedEventHandler}
-                                    value={this.state.currentSelectedEvent}
-                                    required
-                                    ref={this.optionRef}
-                                  >
-                                    {this.state.groupEventsToRegister.map(
-                                      eve => {
-                                        return (
-                                          <option value={eve} key={eve}>
-                                            {
-                                              this.findEventFromId(eve)[0]
-                                                .eventName
-                                            }
-                                          </option>
-                                        );
-                                      }
-                                    )}
-                                  </select>
+                          <div className="field is-horizontal">
+                            <div
+                              className="field-label is-normal"
+                              style={{ textAlign: "left" }}
+                            >
+                              <label className="label">Event</label>
+                            </div>
+                            <div className="field-body">
+                              <div className="field ">
+                                <div className="control">
+                                  <div className="select is-fullwidth">
+                                    <select
+                                      onChange={this.selectedEventHandler}
+                                      value={this.state.currentSelectedEvent}
+                                      required
+                                    >
+                                      {this.state.groupEventsToRegister.map(
+                                        eve => {
+                                          return (
+                                            <option value={eve} key={eve}>
+                                              {
+                                                this.findEventFromId(eve)[0]
+                                                  .eventName
+                                              }
+                                            </option>
+                                          );
+                                        }
+                                      )}
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="field is-horizontal">
-                          <div className="field-label"></div>
-                          <div className="field-body">
-                            <div className="field is-grouped is-grouped-multiline">
-                              {this.state.groupMembers.map(member => {
-                                return (
-                                  <Tag
-                                    key={member}
-                                    member={member}
-                                    remove={this.removeGroupMembers}
-                                  />
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="field is-horizontal">
-                          <div
-                            className="field-label is-normal visible"
-                            style={{ textAlign: "left" }}
-                          >
-                            <label className="label">ACE id</label>
-                          </div>
-                          <div className="field-body">
-                            <div className="field">
-                              <div className="control is-expanded">
-                                <input
-                                  className="input"
-                                  type="text"
-                                  value={this.state.currentMember}
-                                  onChange={this.addGroupMembers}
-                                  placeholder="ACEXXXX"
-                                />
-                              </div>
-                            </div>
-                            <div className="field">
-                              <div className="control">
-                                <a
-                                  className={`button is-info ${addButtonCSS}`}
-                                  onClick={() => {
-                                    this.handleGroupMembers(
-                                      this.state.currentMember,
-                                      this.state.groupMembers
-                                    );
-                                  }}
-                                >
-                                  Add
-                                </a>
+                          <div className="field is-horizontal">
+                            <div className="field-label"></div>
+                            <div className="field-body">
+                              <div className="field is-grouped is-grouped-multiline">
+                                {this.state.groupMembers.map(member => {
+                                  return (
+                                    <Tag
+                                      key={member}
+                                      member={member}
+                                      remove={this.removeGroupMembers}
+                                    />
+                                  );
+                                })}
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="field is-horizontal">
-                          <label
-                            className="label"
-                            style={{ paddingRight: "20px" }}
-                          >
-                            Are you group leader?
-                          </label>
-
-                          <div className="field-body">
-                            <div className="field">
-                              <div className="control ">
-                                <label className="radio">
+                          <div className="field is-horizontal">
+                            <div
+                              className="field-label is-normal visible"
+                              style={{ textAlign: "left" }}
+                            >
+                              <label className="label">ACE id</label>
+                            </div>
+                            <div className="field-body">
+                              <div className="field">
+                                <div className="control is-expanded">
                                   <input
-                                    type="radio"
-                                    name="answer"
-                                    checked={this.state.radioChecked}
-                                    onChange={() => {
-                                      this.setState({ radioChecked: true });
-                                    }}
+                                    className="input"
+                                    type="text"
+                                    value={this.state.currentMember}
+                                    onChange={this.addGroupMembers}
+                                    placeholder="ACEXXXX"
                                   />
-                                  Yes
-                                </label>
-                                <label className="radio">
-                                  <input
-                                    type="radio"
-                                    name="answer"
-                                    value="no"
+                                </div>
+                              </div>
+                              <div className="field">
+                                <div className="control">
+                                  <a
+                                    className={`button is-info ${addButtonCSS}`}
                                     onClick={() => {
-                                      this.setState({ radioChecked: false });
+                                      this.handleGroupMembers(
+                                        this.state.currentMember,
+                                        this.state.groupMembers
+                                      );
                                     }}
-                                  />
-                                  No
-                                </label>
+                                  >
+                                    Add
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="field is-horizontal">
-                          <div className="field-label"></div>
-                          <div className="field-body">
-                            <div className="field">
-                              <div className="control ">
-                                <button
-                                  className={`button is-link ${submitButtonCSS}`}
-                                  disabled={!this.state.radioChecked}
-                                >
-                                  Submit
-                                </button>
+                          <div className="field is-horizontal">
+                            <label
+                              className="label"
+                              style={{ paddingRight: "20px" }}
+                            >
+                              Are you group leader?
+                            </label>
+
+                            <div className="field-body">
+                              <div className="field">
+                                <div className="control ">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="answer"
+                                      checked={this.state.radioChecked}
+                                      onChange={() => {
+                                        this.setState({ radioChecked: true });
+                                      }}
+                                    />
+                                    Yes
+                                  </label>
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="answer"
+                                      value="no"
+                                      onClick={() => {
+                                        this.setState({ radioChecked: false });
+                                      }}
+                                    />
+                                    No
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </form>
+                          <div className="field is-horizontal">
+                            <div className="field-label"></div>
+                            <div className="field-body">
+                              <div className="field">
+                                <div className="control ">
+                                  <button
+                                    className={`button is-link ${submitButtonCSS}`}
+                                    disabled={!this.state.radioChecked}
+                                  >
+                                    Submit
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
