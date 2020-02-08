@@ -426,7 +426,7 @@ const Home = props => {
                             accordance with the specifications.
                           </p>
                           <a
-                            href="#"
+                            href="/pdf/b.pdf" target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10`}
                           >
                             Event details

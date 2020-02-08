@@ -19,7 +19,7 @@ const teamMembers = {
     {
       name: { firstName: "Yash", lastName: "Rawal" },
       avatarURL: "/images/team/yash.png",
-      field: "Sponse Head",
+      field: "Sponsorship Head",
       facebookLink: "",
       linkedinLink: "",
       twitterLink: ""
