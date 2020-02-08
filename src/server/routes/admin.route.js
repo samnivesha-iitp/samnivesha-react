@@ -4,7 +4,7 @@ const router = require("express").Router();
 const MongoClient = require("mongodb").MongoClient;
 var db = "samnivesha";
 MongoClient.connect(
-  "mongodb://localhost:27017?useUnifiedTopology=true",
+  process.env.MONGO_URI,
   function(err, client) {
     if (err) throw err;
     db = client.db(db);
