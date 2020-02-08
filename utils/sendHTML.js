@@ -5,18 +5,16 @@ const options = {
 
 const send = require("gmail-send")(options);
 
-function sendEmail(req, res, next) {
-  const { sendTo, subject, html } = req.body;
+async function sendEmail(config) {
+  const { sendTo, subject, html } = config;
   options.to = sendTo;
   options.subject = subject;
   options.html = html;
-  send(options, (err, response, full) => {
-    if (err) {
-      res.json({ err: err });
-    }
-    if (response) {
-      res.status(200).json({ status: "success" });
-    }
-  });
+  try {
+    await send(options);
+    return true;
+  } catch (err) {
+    return false;
+  }
 }
-module.exports = sendEmail;
+export default sendEmail;

@@ -4,19 +4,20 @@ const axios = require("axios");
 const Users = require("../models/user.model");
 require("dotenv").config();
 const { workshopRegistration } = require("../extras/user");
+import { html as htmlTemplate, oneLineTrim } from "common-tags";
+import sendEmail from "../../../utils/sendHTML";
 
-router.route("/").get((req, res) => {
-  Users.find({})
-    .populate({ path: "events", select: "eventName" })
-    .exec((err, docs) => {
-      if (err) {
-        res.json({ message: "Error Ocurred" });
-      } else {
-        res.json(docs);
-      }
-    });
+router.route("/").get(async (req, res) => {
+  try {
+    const docs = await Users.find({})
+      .populate({ path: "events", select: "eventName" })
+      .exec();
+    res.status(200).json(docs);
+  } catch (err) {
+    res.status(200).json({ message: "Error Ocurred." });
+  }
 });
-router.route("/add").post((req, res) => {
+router.route("/add").post(async (req, res) => {
   const {
     username,
     firstName,
@@ -29,61 +30,44 @@ router.route("/add").post((req, res) => {
   } = req.body;
   const BCRYPT_SALT_ROUND = 12;
 
-  bcrypt
-    .hash(password, BCRYPT_SALT_ROUND)
-    .then(function(hashedPassword) {
-      const newUser = new Users({
-        username,
-        firstName,
-        lastName,
-        email,
-        college,
-        password: hashedPassword,
-        mobileNumber,
-        referralId
-      });
-      newUser
-        .save()
-        .then(() => {
-          const sendTo = email;
-          const subject = "Thanks for registering.";
-          const html = `<html>
-          <head>
-          <title>Thanks for registering with Samnivesha</title>
-          </head>
-          <body>
-          <h2>Hi, ${firstName} ${lastName}</h2><br>
-          <h3>Thanks for registering with Samnivesha. Please note your Samnivesha Id </h3><h1>${username}</h1> <h3>for further instructions.</h3><br>
-          <br><br><br>
-          <p>Team Samnivesha</p>
-          </body>
-          </html>`;
-          axios
-            .post(
-              `http://${process.env.HOST}:${process.env.PORT}/mail/extended`,
-              {
-                sendTo,
-                subject,
-                html
-              }
-            )
-            .then(response => {
-              if (response.status == 200) {
-                res.status(200).json("User Added");
-              }
-            })
-            .catch(() => {
-              res.status(404).json("Mail Error");
-            });
-        })
-        .catch(err => {
-          res.status(400).json("Error" + err);
-        });
-    })
-    .catch(err => {
-      console.log("Error saving User...", err);
-      next();
+  try {
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUND);
+    const newUser = new Users({
+      username,
+      firstName,
+      lastName,
+      email,
+      college,
+      password: hashedPassword,
+      mobileNumber,
+      referralId
     });
+    await newUser.save();
+    const sendTo = email;
+    const subject = "Thanks for registering.";
+    const html = oneLineTrim(htmlTemplate`<html>
+  <head>
+  <title>Thanks for registering with Samnivesha</title>
+  </head>
+  <body>
+  <h2>Hi, ${firstName} ${lastName}</h2><br>
+  <h3>Thanks for registering with Samnivesha. Please note your Samnivesha Id </h3><h1>${username}</h1> <h3>for further instructions.</h3><br>
+  <br><br><br>
+  <p>Team Samnivesha</p>
+  </body>
+  </html>)`);
+    const config = {
+      sendTo,
+      subject,
+      html
+    };
+    const response = await sendEmail(config);
+    if (response === true) {
+      res.status(200).json("User Added");
+    }
+  } catch (err) {
+    res.status(200).json("Error Ocurred.");
+  }
 });
 router.route("/:id").get((req, res) => {
   Users.findById(req.params.id)

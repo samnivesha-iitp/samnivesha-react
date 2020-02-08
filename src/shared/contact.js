@@ -19,7 +19,7 @@ class Contact extends Component {
     this.handleEmail = this.handleEmail.bind(this);
     this.handleMsg = this.handleMsg.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.removeMsg = this.removeMsg.bind(this)
+    this.removeMsg = this.removeMsg.bind(this);
   }
   removeMsg = () => {
     this.setState({ successMsg: null, errorMsg: null });
@@ -33,7 +33,7 @@ class Contact extends Component {
   handleMsg(e) {
     this.setState({ msg: e.target.value });
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearTimeout(this.removeMsg);
   }
   handleSubmit() {
@@ -43,17 +43,26 @@ class Contact extends Component {
     Email: ${this.state.email}
     Message Body: ${this.state.msg} `;
     this.setState({ isloading: true });
-    
+
     axios
       .post("/mail", { sendTo, subject, body })
       .then(res => {
-        if (res.status == 200) {
+        if (res.status === 200 && res.data === true) {
           this.setState({
             successMsg: "Successfully submitted",
             isloading: false,
             name: "",
             email: "",
             msg: ""
+          });
+          setTimeout(this.removeMsg, 5000);
+        } else {
+          this.setState({
+            errorMsg: "Failed",
+            name: "",
+            email: "",
+            msg: "",
+            isloading: false
           });
           setTimeout(this.removeMsg, 5000);
         }
