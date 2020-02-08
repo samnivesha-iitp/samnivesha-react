@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Users from "../models/user.model";
+require('dotenv').config()
 const router = require("express").Router();
 const MongoClient = require("mongodb").MongoClient;
 var db = "samnivesha";

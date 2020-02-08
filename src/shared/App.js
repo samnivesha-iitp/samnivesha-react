@@ -14,12 +14,12 @@ import {
   ProtectedAdmin,
   ProtectedAdminLogin
 } from "./components/protected.routes";
-import Admin from "./admin";
-import AdminLogin from "./adminLogin";
-import AuthAdmin from "../../utils/adminApi";
+import AuthAdmin from '../../utils/adminApi'
 import loadable from "@loadable/component";
-import Forgotpassword from './forgotpassword'
+import Forgotpassword from "./forgotpassword";
 
+const Admin = loadable(() => import("./admin"));
+const AdminLogin = loadable(() => import("./adminLogin"));
 const Sponsors = loadable(() => import("./sponsors"));
 const NotFound = loadable(() => import("./notFound"));
 const Misc = loadable(() => import("./misc"));
