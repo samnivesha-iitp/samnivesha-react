@@ -25,7 +25,7 @@ import adminRouter from "./routes/admin.route";
 import userRouter from "./routes/users.routes";
 import { runtimeConfig } from "./config";
 const eventRouter = require("./routes/event.routes");
-const mailRouter = require("./routes/mail.routes");
+import mailRouter  from "./routes/mail.routes";
 const loginRouter = require("./routes/login.route");
 const passwordForgotRouter = require("./routes/forgot.route");
 const passwordResetRouter = require("./routes/reset.route");
