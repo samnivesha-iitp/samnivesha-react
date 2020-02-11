@@ -1,13 +1,18 @@
 import { useEffect } from "react";
 import Users from "../models/user.model";
-require('dotenv').config()
+require("dotenv").config();
 const router = require("express").Router();
 const MongoClient = require("mongodb").MongoClient;
 var db = "samnivesha";
-MongoClient.connect(process.env.MONGO_URI, function(err, client) {
-  if (err) throw err;
-  db = client.db(db);
-});
+MongoClient.connect(
+  process.env.MONGO_URI ||
+    "mongodb://localhost:27017/samnivesha",
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function(err, client) {
+    if (err) throw err;
+    db = client.db(db);
+  }
+);
 router.route("/user/add").post(async (req, res) => {
   const { firstName, lastName, college, username, mobileNumber } = req.body;
   try {

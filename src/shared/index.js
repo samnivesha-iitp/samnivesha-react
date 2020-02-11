@@ -26,7 +26,6 @@ const Home = props => {
   const [msg, setMsg] = useState({ message: "", status: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
-  const [isModal, setIsModal] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", scrollhandler);
     return () => {
@@ -36,9 +35,7 @@ const Home = props => {
   });
   useEffect(() => {
     setEveData(arrayFinder("eventData", store));
-    const modalTimer = setTimeout(() => {
-      setIsModal(true);
-    }, 5000);
+
     return () => {
       clearTimeout(modalTimer);
     };
@@ -156,7 +153,6 @@ const Home = props => {
   const successMsg = msg.status ? msg.message : null;
   const errMsg = !msg.status ? msg.message : null;
   const loadingStatus = isLoading ? "is-loading" : "";
-  const currentEventModalCSS = isModal ? "is-active" : null;
   return (
     <>
       <Helmet>
@@ -238,26 +234,33 @@ const Home = props => {
               <h4>
                 Take away the motivation from esteemed lectures.
                 <br />
-                <strong>(Coming Soon ! )</strong>
               </h4>
             </div>
 
-            {/* <div className="content-wrapper">
+            <div className="content-wrapper">
               <div className="columns is-vcentered pb-40 pt-40">
                 <div className="column is-4 is-offset-1">
+                  <img className="" src="/images/wguest1.webp" alt="" />
+                </div>
+                <div className="column is-6 is-offset-1">
                   <div className="title quick-feature is-handwritten text-bold">
-                    <div>STAAD.Pro</div>
+                    <div>Prof. Deepankar Choudhury</div>
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    STAAD. Pro is one of the advanced tools used by the Civil
-                    Engineers for structural analysis of the designs in the
-                    construction and building industry.The industry expects the
-                    candidates to be familiar with the latest skills and
-                    techniques related to structural designing, but somehow they
-                    fail to meet the industry standards.
+                    Prof. Deepankar Choudhury is Institute Chair Professor of
+                    Civil Engineering department at Indian Institute of
+                    Technology (IIT) Bombay, Mumbai, India and Adjunct Professor
+                    of Academy of Scientific and Innovative Research (AcSIR) of
+                    CSIR laboratories (connected to CSIR-CBRI Roorkee) of India.
+                    <br />
+                    <br />
+                    Prof. Choudhury is the only Geotechnical Engineer of India
+                    who is an elected Fellow (FNASc) of the oldest Science
+                    Academy of India, viz. The National Academy of Sciences,
+                    India.
                   </span>
-                  <div className="pt-10 pb-10">
+                  {/* <div className="pt-10 pb-10">
                     <a
                       href="https://www.bentley.com/en/products/product-line/structural-analysis-software/staadpro"
                       className="button btn-align btn-more is-link color-primary"
@@ -265,17 +268,48 @@ const Home = props => {
                     >
                       Learn more <i className="sl sl-icon-arrow-right"></i>
                     </a>
-                  </div>
-                </div>
-                <div className="column is-6 is-offset-1">
-                  <img
-                    className=""
-                    src="/images/autocad.png"
-                    alt=""
-                  />
+                  </div> */}
                 </div>
               </div>
-            </div> */}
+              <div className="columns is-vcentered pb-40 pt-40">
+                <div className="column is-6 is-offset-1">
+                  <div className="title quick-feature is-handwritten text-bold">
+                    <div>Er. Debasis Chakraborty</div>
+                  </div>
+                  <div className="title-divider is-small"></div>
+                  <span className="section-feature-description">
+                    <br/>
+                    18 years Industrial Experience in Design & Engineering{" "}
+                    <br />
+                    <br />
+                    Presently associated with Tata Steel Ltd. Previously engaged
+                    with Tata Consulting Engineers (TCE), Consulting Engineers
+                    Ltd. & L&T Ramboll Consulting Engineers Ltd.
+                  </span>
+                </div>
+                <div className="column is-4 is-offset-1">
+                  <img className="" src="/images/wguest3.webp" alt="" />
+                </div>
+              </div>
+              <div className="columns is-vcentered pb-40 pt-40">
+                <div className="column is-4 is-offset-1">
+                  <img className="" src="/images/wguest2.webp" alt="" />
+                </div>
+                <div className="column is-6 is-offset-1">
+                  <div className="title quick-feature is-handwritten text-bold">
+                    <div>Er. Sanjib Kumar Das</div>
+                  </div>
+                  <div className="title-divider is-small"></div>
+                  <span className="section-feature-description">
+                    <br/>
+                    15 years Industrial Experience in Design & Engineering
+                    <br />
+                    <br /> Presently associated with Tata Steel Ltd. Previously
+                    engaged with Tata Consulting Engineers (TCE)
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -426,7 +460,8 @@ const Home = props => {
                             accordance with the specifications.
                           </p>
                           <a
-                            href="/pdf/b.pdf" target="_blank"
+                            href="/pdf/b.pdf"
+                            target="_blank"
                             className={`button btn-align btn-more is-link color-accent mt-10 mb-10`}
                           >
                             Event details
@@ -697,7 +732,7 @@ const Home = props => {
           <a href="#"></a>
         </div>
       </Layout>
-      <div
+      {/* <div
         id="single-image-modal"
         className={`image-modal modal ${currentEventModalCSS}`}
       >
@@ -725,7 +760,7 @@ const Home = props => {
             setIsModal(false);
           }}
         ></button>
-      </div>
+      </div> */}
       <Notification status={status} successMsg={successMsg} errorMsg={errMsg} />
     </>
   );

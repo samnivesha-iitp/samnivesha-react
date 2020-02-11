@@ -39,7 +39,7 @@ const sessionConfig = require("../../utils/sessionconfig")(
   mongoose.connection
 );
 const server = express();
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/samnivesha?useUnifiedTopology=true&useNewUrlParser=true';
 const csrfprotection = csurf({ cookie: false });
 mongoose.connect(uri, {
   useNewUrlParser: true,
