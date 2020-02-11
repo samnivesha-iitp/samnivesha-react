@@ -194,7 +194,7 @@ const Home = props => {
             >
               <img
                 src="/images/small.webp"
-                srcSet="/images/small.webp 1000w, /images/Mountain.png 1300w, "
+                srcSet="/images/small.webp 1000w, /images/bg.webp 1300w, "
                 width="100%"
               />
             </div>

@@ -52,7 +52,7 @@ const Sponsors = () => {
                 <div className="column is-3">
                   <h3 className="title is-5">Strategic Sponsor:</h3>
                   <br />
-                  <figure className="image is-256x256">
+                  <figure className="image is-128x128">
                     <img src="/images/ruban.png" />
                   </figure>
                 </div>

@@ -357,7 +357,7 @@ class Profile extends Component {
             <div className="hero-body">
               <div className="container">
                 <div className="columns">
-                  <div className="column">
+                  <div className="column is-6">
                     <h1 className="title is-4">Hi, {this.state.fullName}</h1>
                     <h2 className="title is-5">
                       ACE Id : {this.state.username}
