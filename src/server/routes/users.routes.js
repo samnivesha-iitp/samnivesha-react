@@ -142,7 +142,6 @@ router.route("/add/workshop").post(async (req, res) => {
   const { userId, payload } = req.body;
   await workshopRegistration(userId, payload)
     .then(response => {
-      console.log(response);
       if (response === true) {
         res.json({ message: "Ok" });
       } else {

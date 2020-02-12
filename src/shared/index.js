@@ -35,10 +35,6 @@ const Home = props => {
   });
   useEffect(() => {
     setEveData(arrayFinder("eventData", store));
-
-    return () => {
-      clearTimeout(modalTimer);
-    };
   }, []);
   const scrollhandler = () => {
     setScrollTop(window.scrollY);
@@ -278,7 +274,7 @@ const Home = props => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    <br/>
+                    <br />
                     18 years Industrial Experience in Design & Engineering{" "}
                     <br />
                     <br />
@@ -301,7 +297,7 @@ const Home = props => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    <br/>
+                    <br />
                     15 years Industrial Experience in Design & Engineering
                     <br />
                     <br /> Presently associated with Tata Steel Ltd. Previously
