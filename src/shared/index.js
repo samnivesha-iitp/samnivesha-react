@@ -2,18 +2,21 @@ import React, { useEffect, useState, useContext } from "react";
 import Layout from "./components/layout";
 import { Helmet } from "react-helmet";
 import "./css/events.css";
-import PropTypes from "prop-types";
+import "./css/notification-bar.css";
 import { AuthContext } from "./components/authContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { faUserAltSlash } from "@fortawesome/free-solid-svg-icons";
 const arrayFinder = require("../../utils/findArray");
 import axios from "axios";
 const getUserData = require("../../utils/getUserData");
 import Notification from "./components/notification";
-
+import { Fab } from "@material-ui/core";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import CloseIcon from "@material-ui/icons/Close";
+import { createGenerateClassName } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Card from "./components/elevation-card";
 const Home = props => {
-  // const { data } = props;
   const {
     isAuthenticated,
     setIsAuthenticated,
@@ -26,6 +29,7 @@ const Home = props => {
   const [msg, setMsg] = useState({ message: "", status: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const [notificationBar, setNotificationBar] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", scrollhandler);
     return () => {
@@ -149,6 +153,12 @@ const Home = props => {
   const successMsg = msg.status ? msg.message : null;
   const errMsg = !msg.status ? msg.message : null;
   const loadingStatus = isLoading ? "is-loading" : "";
+
+  const muiBaseTheme = createMuiTheme();
+
+  const generateClassName = createGenerateClassName({
+    dangerouslyUseGlobalCSS: true
+  });
   return (
     <>
       <Helmet>
@@ -728,71 +738,41 @@ const Home = props => {
           <a href="#"></a>
         </div>
       </Layout>
-      {/* <div
-        id="single-image-modal"
-        className={`image-modal modal ${currentEventModalCSS}`}
-      >
-        <div className="modal-background scaleInCircle"></div>
-        <div className="modal-content scaleIn">
-          <div className="image-grid">
-            <figure className="image is-4by3 cornered">
-              <img
-                src="/images/Lensart.webp"
-                alt=""
-                data-demo-src="/images/Lensart.webp"
+      <div className="notification-bar">
+        {notificationBar && (
+          <MuiThemeProvider
+            theme={createMuiTheme({
+              typography: {
+                useNextVariants: true
+              },
+              overrides: Card.getTheme(muiBaseTheme)
+            })}
+          >
+            <Card />
+          </MuiThemeProvider>
+        )}
+        <Fab color="primary" area-label="chat">
+          {notificationBar ? (
+            <>
+              <CloseIcon
+                onClick={() => {
+                  setNotificationBar(false);
+                }}
               />
-              <figcaption>
-                <h2>Lensart</h2>
-                <p>Current Going On Event</p>
-                <a href="/pdf/l.pdf">View more</a>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-        <button
-          className="modal-close is-large"
-          aria-label="close"
-          onClick={() => {
-            setIsModal(false);
-          }}
-        ></button>
-      </div> */}
+            </>
+          ) : (
+            <ChatBubbleIcon
+              onClick={() => {
+                setNotificationBar(true);
+              }}
+            />
+          )}
+        </Fab>
+      </div>
+
       <Notification status={status} successMsg={successMsg} errorMsg={errMsg} />
     </>
   );
 };
-const Card = props => {
-  const { eventName, tagline, description, poster, _id } = props.event;
-  return (
-    <div className="column is-4">
-      <div className="event-card is-wavy">
-        <div className="img-container">
-          <img src={`${poster}`} alt="" data-demo-src={`${poster}`} />
-        </div>
-        <div className="card-text">
-          <div className="text text-container">
-            <div className="text text-header">
-              <h2 className="text text-title">{eventName}</h2>
-              <p className="text text-subtitle">{tagline}</p>
-            </div>
-            <div className="text text-details">
-              <p className="text text-description">{description}</p>
-              <a
-                href="#"
-                className={`button btn-align btn-more is-link color-accent mt-10 mb-10 ${loadingStatus}`}
-              >
-                Event details
-                <i className="sl sl-icon-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
-Home.propTypes = {
-  data: PropTypes.array
-};
 export default withRouter(Home);
