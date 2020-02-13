@@ -93,8 +93,7 @@ const Header = props => {
               className="navbar-item has-text-weight-semibold"
               onClick={hideMenu}
             >
-              <span>Blog</span>
-              <span className="tag is-success m-l-5">NEW</span>
+              Blog
             </Link>
             <div className="navbar-item has-dropdown is-hoverable">
               <HashLink
@@ -122,9 +121,15 @@ const Header = props => {
                 </HashLink>
               </div>
             </div>
-            {/* <Link href="/schedule">
-              <a className="navbar-item has-text-weight-semibold">Schedule</a>
-            </Link> */}
+            <Link
+              to="/schedule"
+              prefetch={Prefetch}
+              onClick={hideMenu}
+              className="navbar-item has-text-weight-semibold"
+            >
+              <span>Schedule</span>
+              <span className="tag is-success m-l-5">NEW</span>
+            </Link>
             {!isAuthenticated && (
               <>
                 <Link

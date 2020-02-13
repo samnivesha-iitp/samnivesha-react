@@ -6,8 +6,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import CardHeader from "@material-ui/core/CardHeader";
 import TableBody from "@material-ui/core/TableBody";
+import { TableFooter } from "@material-ui/core";
 import TableCell from "@material-ui/core/TableCell";
 import purple from "@material-ui/core/colors/purple";
+import { NavLink } from "react-router-dom";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 let id = 0;
 function createData(name, place, time) {
@@ -24,51 +27,73 @@ const rows = [
   createData("AutoCAD", "Block-9/R104", "12 pm")
 ];
 
-const ElevatedCardHeader01 = () => (
-  <Card className={"MuiElevatedCard--01"}>
-    <CardHeader
-      className={"MuiCardHeader-root"}
-      title={"Timetable"}
-      subheader={"Day 1"}
-      classes={{
-        title: "MuiCardHeader-title",
-        subheader: "MuiCardHeader-subheader"
-      }}
-    />
-    <CardContent className={"MuiCardContent-root"}>
-      <div className={"MuiCardContent-inner"}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Event</TableCell>
-              <TableCell align="right">Place</TableCell>
-              <TableCell align="right">Time</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{ padding: "6px" }}
-                >
-                  {row.name}
-                </TableCell>
-                <TableCell align="right" style={{ padding: "6px" }}>
-                  {row.place}
-                </TableCell>
-                <TableCell align="right" style={{ padding: "6px" }}>
-                  {row.time}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </CardContent>
-  </Card>
-);
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.background.default
+    }
+  }
+}))(TableRow);
+const useStyles = makeStyles({
+  table: {
+    minWidth: 300
+  }
+});
+const ElevatedCardHeader01 = () => {
+  const classes = useStyles();
+  return (
+    <Card className={"MuiElevatedCard--01"}>
+      <CardHeader
+        className={"MuiCardHeader-root"}
+        title={"Timetable"}
+        subheader={"Day 1"}
+        classes={{
+          title: "MuiCardHeader-title",
+          subheader: "MuiCardHeader-subheader"
+        }}
+      />
+      <CardContent className={"MuiCardContent-root"}>
+        <div className={"MuiCardContent-inner"}>
+          <Table className={classes.table}>
+            <TableHead>
+              <StyledTableRow>
+                <TableCell>Event</TableCell>
+                <TableCell align="right">Place</TableCell>
+                <TableCell align="right">Time</TableCell>
+              </StyledTableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <StyledTableRow key={row.id}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    style={{ padding: "6px" }}
+                  >
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right" style={{ padding: "6px" }}>
+                    {row.place}
+                  </TableCell>
+                  <TableCell align="right" style={{ padding: "6px" }}>
+                    {row.time}
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <div className="content" style={{paddingTop:'10px'}}>
+                <NavLink className="button is-link is-small" style={{backgroundColor:'#3273dc'}} to="/schedule">
+                  View More
+                </NavLink>
+              </div>
+            </TableFooter>
+          </Table>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 ElevatedCardHeader01.getTheme = muiBaseTheme => {
   const offset = 40;
@@ -121,11 +146,6 @@ ElevatedCardHeader01.getTheme = muiBaseTheme => {
       }
     }
   };
-};
-
-ElevatedCardHeader01.metadata = {
-  name: "Elevated Card Header I",
-  description: "Wonderful elevated card header"
 };
 
 export default ElevatedCardHeader01;

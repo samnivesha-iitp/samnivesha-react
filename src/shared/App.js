@@ -14,9 +14,10 @@ import {
   ProtectedAdmin,
   ProtectedAdminLogin
 } from "./components/protected.routes";
-import AuthAdmin from '../../utils/adminApi'
+import AuthAdmin from "../../utils/adminApi";
 import loadable from "@loadable/component";
 import Forgotpassword from "./forgotpassword";
+import Schedule from "./schedule";
 
 const Admin = loadable(() => import("./admin"));
 const AdminLogin = loadable(() => import("./adminLogin"));
@@ -117,6 +118,11 @@ const App = props => {
             <Route
               path="/team"
               component={Team}
+              fallback={<div>loading...</div>}
+            />
+            <Route
+              path="/schedule"
+              component={Schedule}
               fallback={<div>loading...</div>}
             />
             <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
