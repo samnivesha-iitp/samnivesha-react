@@ -19,12 +19,8 @@ function createData(name, place, time) {
 }
 
 const rows = [
-  createData("Guest Lecture-1", "Senate Hall", "10:45pm"),
-  createData("Bridge-it", "Block-9/R502", "12 pm"),
-  createData("CiviQ", "Block-9/R109", "3 pm"),
-  createData("House Of Card", "Block-9/R107", "3 pm"),
-  createData("SAP2000", "Block-9/R102", "12 pm"),
-  createData("AutoCAD", "Block-9/R104", "12 pm")
+  createData("SAP2000", "Block-9/R102", "10:30 am"),
+  createData("AutoCAD", "Block-9/R104", "10:30 am")
 ];
 
 const StyledTableRow = withStyles(theme => ({
@@ -46,7 +42,7 @@ const ElevatedCardHeader01 = () => {
       <CardHeader
         className={"MuiCardHeader-root"}
         title={"Timetable"}
-        subheader={"Day 1"}
+        subheader={"Day 0 - 14 Feb."}
         classes={{
           title: "MuiCardHeader-title",
           subheader: "MuiCardHeader-subheader"
