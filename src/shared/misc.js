@@ -30,6 +30,16 @@ const Misc = () => {
                 >
                   View steps
                 </a>
+                <br/>
+                <br/>
+                <h3 className="title is-5">Bus Schedule:</h3>
+                <a
+                  href="/images/bus.jpg"
+                  className="button is-info is-outlined "
+                  target="_blank"
+                >
+                  Get Schedule
+                </a>
               </div>
               <div className="column is-half">
                 <h3 className="title is-5">Price guide Samnivesha’20</h3>

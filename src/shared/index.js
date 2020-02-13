@@ -161,8 +161,10 @@ const Home = props => {
   });
   const styles = {
     marquee: {
-      position: "relative",
+      position: "absolute",
       zIndex: 10000,
+      bottom:'80px',
+      fontSize:'20px',
       fontWeight: "bold",
       backgroundColor: "white"
     }
