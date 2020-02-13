@@ -159,6 +159,14 @@ const Home = props => {
   const generateClassName = createGenerateClassName({
     dangerouslyUseGlobalCSS: true
   });
+  const styles = {
+    marquee: {
+      position: "relative",
+      zIndex: 10000,
+      fontWeight: "bold",
+      backgroundColor: "white"
+    }
+  };
   return (
     <>
       <Helmet>
@@ -185,10 +193,24 @@ const Home = props => {
         />
       </Helmet>
       <Layout>
-        <section
-          className="hero1 is-fullheight1 is-light"
-          style={{ backgroundColor: "#edf5e1" }}
-        >
+        <marquee scrolldelay="200" behaviour="alternate" style={styles.marquee}>
+          <span>
+            <p>
+              <span style={{ color: "#008000" }}>
+                Bus Schedule has been uploaded. &nbsp;
+                <a href="/images/bus.jpg" target="_blank">
+                  Check out here
+                </a>
+              </span>
+              &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span style={{ color: "#ff0000" }}>
+                Registration has been closed. Further registration can be done
+                at registration desk only.
+              </span>
+            </p>
+          </span>
+        </marquee>
+        <section className="hero1 is-fullheight1 is-light">
           <div id="main">
             <div
               id="logo"
