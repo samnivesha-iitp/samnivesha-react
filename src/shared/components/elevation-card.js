@@ -42,7 +42,7 @@ const ElevatedCardHeader01 = () => {
       <CardHeader
         className={"MuiCardHeader-root"}
         title={"Timetable"}
-        subheader={"Day 0 - 14 Feb."}
+        subheader={"Day 0 - 14 February"}
         classes={{
           title: "MuiCardHeader-title",
           subheader: "MuiCardHeader-subheader"
