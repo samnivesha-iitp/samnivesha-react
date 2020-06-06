@@ -13,7 +13,7 @@ class Contact extends Component {
       msg: "",
       errorMsg: "",
       successMsg: "",
-      isloading: false
+      isloading: false,
     };
     this.handleName = this.handleName.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -46,14 +46,14 @@ class Contact extends Component {
 
     axios
       .post("/mail", { sendTo, subject, body })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200 && res.data === true) {
           this.setState({
             successMsg: "Successfully submitted",
             isloading: false,
             name: "",
             email: "",
-            msg: ""
+            msg: "",
           });
           setTimeout(this.removeMsg, 5000);
         } else {
@@ -62,18 +62,18 @@ class Contact extends Component {
             name: "",
             email: "",
             msg: "",
-            isloading: false
+            isloading: false,
           });
           setTimeout(this.removeMsg, 5000);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
           errorMsg: "An Error Occured.",
           name: "",
           email: "",
           msg: "",
-          isloading: false
+          isloading: false,
         });
         setTimeout(this.removeMsg, 5000);
       });
@@ -98,16 +98,12 @@ class Contact extends Component {
                   </h2>
                   <p className="is-size-5">
                     <b>Yash Rawal </b>
-                    <span className="span  is-size-6">
-                      : yash.ce17@iitp.ac.in - 9166062338
-                    </span>
+                    <span className="span  is-size-6">: yash.ce17@iitp.ac.in - 9166062338</span>
                   </p>
 
                   <p className="is-size-5">
                     <b>Rakesh Raushan </b>
-                    <span className="span  is-size-6">
-                      : rakesh.ce17@iitp.ac.in - 7261038443
-                    </span>
+                    <span className="span  is-size-6">: rakesh.ce17@iitp.ac.in - 7261038443</span>
                   </p>
                 </div>
                 <div className="column is-one-third has-text-left">

@@ -12,7 +12,7 @@ import {
   ProtectedSignup,
   ProtectedResetPassword,
   ProtectedAdmin,
-  ProtectedAdminLogin
+  ProtectedAdminLogin,
 } from "./components/protected.routes";
 import AuthAdmin from "../../utils/adminApi";
 import loadable from "@loadable/component";
@@ -31,7 +31,7 @@ const Contact = loadable(() => import("./contact"));
 const Login = loadable(() => import("./login"));
 const Signup = loadable(() => import("./signup"));
 
-const App = props => {
+const App = (props) => {
   const admin = new AuthAdmin();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState("");
@@ -41,7 +41,7 @@ const App = props => {
   useEffect(() => {
     admin
       .isLogin()
-      .then(res => {
+      .then((res) => {
         setIsAdmin(res);
       })
       .catch(() => {});
@@ -61,9 +61,7 @@ const App = props => {
   return (
     <>
       <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
-        <AuthContext.Provider
-          value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}
-        >
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}>
           <Helmet>
             <link rel="stylesheet" href="/css/index/pageloader.css" />
           </Helmet>
@@ -71,60 +69,21 @@ const App = props => {
           <div className={`infraloader ${loader}`}></div>
           <Switch>
             <Route exact path="/" render={() => <Home data={store} />} />
-            <Route
-              path="/contact"
-              component={Contact}
-              fallback={<div>loading...</div>}
-            />
-            <Route
-              path="/blog"
-              component={Blog}
-              fallback={<div>loading...</div>}
-            />
-            <Route
-              path="/misc"
-              component={Misc}
-              fallback={<div>loading...</div>}
-            />
+            <Route path="/contact" component={Contact} fallback={<div>loading...</div>} />
+            <Route path="/blog" component={Blog} fallback={<div>loading...</div>} />
+            <Route path="/misc" component={Misc} fallback={<div>loading...</div>} />
             <Route
               path="/reset/:resetToken"
               component={ResetPassword}
               fallback={<div>loading...</div>}
             />
-            <ProtectedProfile
-              path="/profile"
-              component={Profile}
-              data={store}
-            />
-            <ProtectedSignup
-              path="/signup"
-              component={Signup}
-              fallback={<div>loading...</div>}
-            />
-            <ProtectedLogin
-              path="/login"
-              component={Login}
-              fallback={<div>loading...</div>}
-            />
-            <ProtectedResetPassword
-              path="/forgotpassword"
-              component={Forgotpassword}
-            />
-            <Route
-              path="/sponsors"
-              component={Sponsors}
-              fallback={<div>loading...</div>}
-            />
-            <Route
-              path="/team"
-              component={Team}
-              fallback={<div>loading...</div>}
-            />
-            <Route
-              path="/schedule"
-              component={Schedule}
-              fallback={<div>loading...</div>}
-            />
+            <ProtectedProfile path="/profile" component={Profile} data={store} />
+            <ProtectedSignup path="/signup" component={Signup} fallback={<div>loading...</div>} />
+            <ProtectedLogin path="/login" component={Login} fallback={<div>loading...</div>} />
+            <ProtectedResetPassword path="/forgotpassword" component={Forgotpassword} />
+            <Route path="/sponsors" component={Sponsors} fallback={<div>loading...</div>} />
+            <Route path="/team" component={Team} fallback={<div>loading...</div>} />
+            <Route path="/schedule" component={Schedule} fallback={<div>loading...</div>} />
             <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
             <ProtectedAdmin path="/admin" component={Admin} />
             <Route component={NotFound} fallback={<div>loading...</div>} />

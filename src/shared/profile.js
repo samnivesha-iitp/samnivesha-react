@@ -13,7 +13,7 @@ import {
   filterGroupEvent,
   findCurrentDetails,
   groupEventId,
-  grpEveIdToRegister
+  grpEveIdToRegister,
 } from "../../utils/profileFunction";
 
 class Profile extends Component {
@@ -43,7 +43,7 @@ class Profile extends Component {
       passresetbuttonloading: false,
       _id: "",
       passLength: 0,
-      workshop: ""
+      workshop: "",
     };
     this.optionRef = React.createRef();
     this.showModal = this.showModal.bind(this);
@@ -61,16 +61,7 @@ class Profile extends Component {
   }
   componentDidMount() {
     const { user, setUser, store } = this.context;
-    const {
-      username,
-      firstName,
-      lastName,
-      college,
-      email,
-      events,
-      _id,
-      workshop
-    } = user;
+    const { username, firstName, lastName, college, email, events, _id, workshop } = user;
     const { eventData } = arrayFinder("eventData", store);
     // getting Each group event id
     const event = groupEventId(filterGroupEvent(eventData));
@@ -83,8 +74,7 @@ class Profile extends Component {
       grpEvent = {
         groupEventsToRegister,
         currentSelectedEvent: groupEventsToRegister[0],
-        maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0]
-          .maxMembersAllowed
+        maxMembers: findCurrentDetails(groupEventsToRegister[0], eventData)[0].maxMembersAllowed,
       };
     }
     this.setState({
@@ -97,7 +87,7 @@ class Profile extends Component {
       eventData: eventData,
       _id,
       workshop,
-      ...grpEvent
+      ...grpEvent,
     });
   }
   componentDidUpdate() {
@@ -111,27 +101,24 @@ class Profile extends Component {
     //     ? this.findEventFromId(groupEventsToRegister[0])[0].maxMembersAllowed
     //     : 0;
     // const prevMember = this.state.maxMembers;
-    if (
-      this.state.groupEventsToRegister.length !== groupEventsToRegister.length
-    ) {
+    if (this.state.groupEventsToRegister.length !== groupEventsToRegister.length) {
       const grpEvent =
         grpEveIdToRegister(event, userEvent).length == 1
           ? {
               groupEventsToRegister,
               currentSelectedEvent: groupEventsToRegister[0],
-              maxMembers: this.findEventFromId(groupEventsToRegister[0])[0]
-                .maxMembersAllowed
+              maxMembers: this.findEventFromId(groupEventsToRegister[0])[0].maxMembersAllowed,
             }
           : grpEveIdToRegister(event, userEvent).length == 0
           ? {
               groupEventsToRegister: [],
               currentSelectedEvent: "",
-              maxMembers: 0
+              maxMembers: 0,
             }
           : null;
       if (grpEvent !== null) {
         this.setState({
-          ...grpEvent
+          ...grpEvent,
         });
       } else {
         this.setState({ groupEventsToRegister });
@@ -147,7 +134,7 @@ class Profile extends Component {
   handleNewPass(e) {
     this.setState({
       newPass: e.target.value,
-      passLength: e.target.value.length
+      passLength: e.target.value.length,
     });
   }
 
@@ -161,7 +148,7 @@ class Profile extends Component {
       this.setState({ passresetbuttonloading: true });
       axios
         .post(`/resetpassword/wt/${_id}`, { newPass: newPass })
-        .then(res => {
+        .then((res) => {
           switch (res.status) {
             case 200:
               this.setState({ successMsg: "Password has been reset." });
@@ -175,7 +162,7 @@ class Profile extends Component {
             newPass: "",
             confPass: "",
             passresetbuttonloading: false,
-            isModal: false
+            isModal: false,
           });
         })
         .catch(() => {
@@ -184,13 +171,13 @@ class Profile extends Component {
           this.setState({
             newPass: "",
             confPass: "",
-            passresetbuttonloading: false
+            passresetbuttonloading: false,
           });
         });
     } else {
       this.setState({
         errorMsg: "Password Don't match",
-        passresetbuttonloading: false
+        passresetbuttonloading: false,
       });
       setTimeout(this.removeMsg, 2000);
     }
@@ -204,18 +191,15 @@ class Profile extends Component {
       if (this.state.groupMembers.length + 1 < this.state.maxMembers) {
         this.setState({ addbuttonloading: true });
         axios
-          .post(
-            `/users/validateuserforevent/${this.state.currentSelectedEvent}`,
-            {
-              username: curr
-            }
-          )
-          .then(res => {
+          .post(`/users/validateuserforevent/${this.state.currentSelectedEvent}`, {
+            username: curr,
+          })
+          .then((res) => {
             if (res.data.message == false) {
               this.setState({
                 addbuttonloading: false,
                 errorMsg: "Already Registered.",
-                currentMember: ""
+                currentMember: "",
               });
               setTimeout(this.removeMsg, 1500);
             }
@@ -223,7 +207,7 @@ class Profile extends Component {
               this.setState({
                 addbuttonloading: false,
                 errorMsg: "Invalid Id.",
-                currentMember: ""
+                currentMember: "",
               });
               setTimeout(this.removeMsg, 1500);
             }
@@ -232,7 +216,7 @@ class Profile extends Component {
               this.setState({
                 addbuttonloading: false,
                 groupMembers: newMember,
-                currentMember: ""
+                currentMember: "",
               });
             }
           })
@@ -240,14 +224,14 @@ class Profile extends Component {
             this.setState({
               addbuttonloading: false,
               errorMsg: "Internal Server Error",
-              currentMember: ""
+              currentMember: "",
             });
             setTimeout(this.removeMsg, 1500);
           });
       } else {
         this.setState({
           errorMsg: "Maximum Members Reached.",
-          currentMember: ""
+          currentMember: "",
         });
         setTimeout(this.removeMsg, 1500);
       }
@@ -263,7 +247,7 @@ class Profile extends Component {
     this.setState({ currentMember: e.target.value });
   }
   removeGroupMembers(member) {
-    const newMember = this.state.groupMembers.filter(mem => {
+    const newMember = this.state.groupMembers.filter((mem) => {
       return mem !== member;
     });
     this.setState({ groupMembers: newMember });
@@ -274,11 +258,11 @@ class Profile extends Component {
     this.setState({
       maxMembers: event.maxMembersAllowed,
       groupMembers: [],
-      currentMember: ""
+      currentMember: "",
     });
   }
-  findEventFromId = eventId => {
-    return this.state.eventData.filter(eve => {
+  findEventFromId = (eventId) => {
+    return this.state.eventData.filter((eve) => {
       if (eve._id == eventId) {
         return eve;
       }
@@ -292,14 +276,14 @@ class Profile extends Component {
     axios
       .post(`/event/${currentSelectedEvent}/group/add`, {
         groupleader: groupLeader,
-        groupmembers: groupMembers
+        groupmembers: groupMembers,
       })
-      .then(res => {
+      .then((res) => {
         if (res.status == 500) {
           this.setState({
             submitbuttonloading: false,
             errorMsg: res.data.message,
-            groupMembers: []
+            groupMembers: [],
           });
           setTimeout(this.removeMsg, 3000);
         }
@@ -307,25 +291,25 @@ class Profile extends Component {
           this.setState({
             submitbuttonloading: false,
             successMsg: " Group Registered.",
-            groupMembers: []
+            groupMembers: [],
           });
           getUserData(this.state._id)
-            .then(response => {
+            .then((response) => {
               setUser(response.userData);
               this.setState({ eventRegistered: response.userData.events });
             })
-            .catch(err => {
+            .catch((err) => {
               console.log("Error while updating State", err);
             });
           setTimeout(this.removeMsg, 3000);
         }
       })
 
-      .catch(err => {
+      .catch((err) => {
         this.setState({
           submitbuttonloading: false,
           errorMsg: "Internal Error",
-          groupMembers: []
+          groupMembers: [],
         });
         setTimeout(this.removeMsg, 3000);
       });
@@ -340,12 +324,8 @@ class Profile extends Component {
       ? "is-warning"
       : "is-hidden";
     const addButtonCSS = this.state.addbuttonloading ? "is-loading" : null;
-    const submitButtonCSS = this.state.submitbuttonloading
-      ? "is-loading"
-      : null;
-    const passresetcss = this.state.passresetbuttonloading
-      ? "is-loading"
-      : null;
+    const submitButtonCSS = this.state.submitbuttonloading ? "is-loading" : null;
+    const passresetcss = this.state.passresetbuttonloading ? "is-loading" : null;
     const disablebtn = this.state.passLength >= 6 ? false : true;
     return (
       <Layout>
@@ -359,23 +339,14 @@ class Profile extends Component {
                 <div className="columns">
                   <div className="column is-6">
                     <h1 className="title is-4">Hi, {this.state.fullName}</h1>
-                    <h2 className="title is-5">
-                      ACE Id : {this.state.username}
-                    </h2>
-                    <h2 className="title is-5">
-                      College : {this.state.college}
-                    </h2>
-                    <h2 className="title is-5 is-capitalized">
-                      Workshop : {this.state.workshop}
-                    </h2>
+                    <h2 className="title is-5">ACE Id : {this.state.username}</h2>
+                    <h2 className="title is-5">College : {this.state.college}</h2>
+                    <h2 className="title is-5 is-capitalized">Workshop : {this.state.workshop}</h2>
                     <h2 className="title is-5">Email: {this.state.email}</h2>
                     <button className="button is-info" onClick={this.showModal}>
                       Change Password
                     </button>
-                    <h1
-                      className="title is-5 has-text-centered "
-                      style={{ paddingTop: "45px" }}
-                    >
+                    <h1 className="title is-5 has-text-centered " style={{ paddingTop: "45px" }}>
                       <u>Enrolled In</u>
                     </h1>
                     <table className="table">
@@ -423,10 +394,7 @@ class Profile extends Component {
                           </h3>
 
                           <div className="field is-horizontal">
-                            <div
-                              className="field-label is-normal"
-                              style={{ textAlign: "left" }}
-                            >
+                            <div className="field-label is-normal" style={{ textAlign: "left" }}>
                               <label className="label">Event</label>
                             </div>
                             <div className="field-body">
@@ -438,18 +406,13 @@ class Profile extends Component {
                                       value={this.state.currentSelectedEvent}
                                       required
                                     >
-                                      {this.state.groupEventsToRegister.map(
-                                        eve => {
-                                          return (
-                                            <option value={eve} key={eve}>
-                                              {
-                                                this.findEventFromId(eve)[0]
-                                                  .eventName
-                                              }
-                                            </option>
-                                          );
-                                        }
-                                      )}
+                                      {this.state.groupEventsToRegister.map((eve) => {
+                                        return (
+                                          <option value={eve} key={eve}>
+                                            {this.findEventFromId(eve)[0].eventName}
+                                          </option>
+                                        );
+                                      })}
                                     </select>
                                   </div>
                                 </div>
@@ -460,7 +423,7 @@ class Profile extends Component {
                             <div className="field-label"></div>
                             <div className="field-body">
                               <div className="field is-grouped is-grouped-multiline">
-                                {this.state.groupMembers.map(member => {
+                                {this.state.groupMembers.map((member) => {
                                   return (
                                     <Tag
                                       key={member}
@@ -509,10 +472,7 @@ class Profile extends Component {
                             </div>
                           </div>
                           <div className="field is-horizontal">
-                            <label
-                              className="label"
-                              style={{ paddingRight: "20px" }}
-                            >
+                            <label className="label" style={{ paddingRight: "20px" }}>
                               Are you group leader?
                             </label>
 
@@ -612,10 +572,7 @@ class Profile extends Component {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button
-                      className={`button is-info ${passresetcss}`}
-                      disabled={disablebtn}
-                    >
+                    <button className={`button is-info ${passresetcss}`} disabled={disablebtn}>
                       Submit
                     </button>
                   </div>

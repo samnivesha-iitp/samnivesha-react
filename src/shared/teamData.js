@@ -6,7 +6,7 @@ const teamMembers = {
       field: "OverAll Fest Coordinator",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Rakesh", lastName: "Raushan" },
@@ -14,7 +14,7 @@ const teamMembers = {
       field: "Media and PR Coordinator",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Yash", lastName: "Rawal" },
@@ -22,7 +22,7 @@ const teamMembers = {
       field: "Sponsorship Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Kaushal", lastName: "Jangir" },
@@ -30,7 +30,7 @@ const teamMembers = {
       field: "Event Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Gopi", lastName: "Krishnan" },
@@ -38,7 +38,7 @@ const teamMembers = {
       field: "Logistic Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Shivam", lastName: "Prakash" },
@@ -46,7 +46,7 @@ const teamMembers = {
       field: "Creatives and Design Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Ajay", lastName: "" },
@@ -54,7 +54,7 @@ const teamMembers = {
       field: "Event Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
+      twitterLink: "",
     },
     {
       name: { firstName: "Aman ", lastName: "Kumar" },
@@ -62,8 +62,8 @@ const teamMembers = {
       field: "Technical Head",
       facebookLink: "",
       linkedinLink: "",
-      twitterLink: ""
-    }
-  ]
+      twitterLink: "",
+    },
+  ],
 };
 export default teamMembers;

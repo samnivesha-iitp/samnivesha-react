@@ -1,6 +1,6 @@
-const AdminDataApi = data => {
+const AdminDataApi = (data) => {
   const mockdata = data;
-  mockdata.map(user => {
+  mockdata.map((user) => {
     user.fullName = user.firstName + " " + user.lastName;
     delete user.firstName;
     delete user.lastName;
@@ -23,9 +23,9 @@ const AdminDataApi = data => {
   });
   return mockdata;
 };
-export const FilterGroupEvent = data => {
+export const FilterGroupEvent = (data) => {
   const mockData = data;
-  mockData.map(user => {
+  mockData.map((user) => {
     delete user.event;
     delete user.__v;
     delete user.createdAt;
@@ -49,7 +49,7 @@ export const FilterGroupEvent = data => {
 };
 export const FilterSoloEvent = (data, id) => {
   let mockData = data;
-  mockData = mockData.filter(user => {
+  mockData = mockData.filter((user) => {
     user.fullName = user.firstName + " " + user.lastName;
     delete user.firstName;
     delete user.lastName;
@@ -61,15 +61,15 @@ export const FilterSoloEvent = (data, id) => {
     delete user.email;
     if (user.events.length > 0) {
       for (let i = 0; i < user.events.length; i++) {
-      if(user.events[i]._id == id){
-        return user;
-      }
+        if (user.events[i]._id == id) {
+          return user;
+        }
       }
       delete user.events;
     } else {
       delete user.events;
     }
   });
-  return mockData
+  return mockData;
 };
 export default AdminDataApi;

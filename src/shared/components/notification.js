@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/notification.css";
-const Notification = props => {
+const Notification = (props) => {
   return (
     <>
       <article className={`message  ${props.status} `}>

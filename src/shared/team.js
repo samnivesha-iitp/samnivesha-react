@@ -10,8 +10,8 @@ const Team = () => {
     nav: {
       backgroundColor: "unset",
       position: "absolute",
-      width: "100%"
-    }
+      width: "100%",
+    },
   };
   return (
     <>
@@ -23,9 +23,7 @@ const Team = () => {
         <div className="container">
           <div className="navbar-brand">
             <Link to={"/"} className="navbar-item">
-              <button className="button is-primary is-rounded">
-                Back to Home
-              </button>
+              <button className="button is-primary is-rounded">Back to Home</button>
             </Link>
           </div>
         </div>

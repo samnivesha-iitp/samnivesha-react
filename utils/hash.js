@@ -7,7 +7,7 @@ const hash = () => {
       JSON.stringify({
         username: process.env.ADMIN,
         pwd: process.env.ADMIN_PWD,
-        secret: process.env.ADMIN_SECRET
+        secret: process.env.ADMIN_SECRET,
       })
     );
   })();

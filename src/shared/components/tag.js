@@ -1,6 +1,6 @@
 import React from "react";
 
-const Tag = props => {
+const Tag = (props) => {
   return (
     <div className="control">
       <div className="tags has-addons">

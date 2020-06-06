@@ -1,6 +1,6 @@
 const options = {
   user: process.env.email,
-  pass: process.env.pass
+  pass: process.env.pass,
 };
 
 const send = require("gmail-send")(options);

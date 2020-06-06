@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "./components/layout";
-import {Helmet} from 'react-helmet'
+import { Helmet } from "react-helmet";
 
 class About extends Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class About extends Component {
     return (
       <>
         <Helmet>
-          <link rel="preload"   href="/css/bootstrap.min.css" as="style" type="text/css"></link>
-          <link rel="stylesheet"   href="/css/bootstrap.min.css"  type="text/css"></link>
+          <link rel="preload" href="/css/bootstrap.min.css" as="style" type="text/css"></link>
+          <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"></link>
         </Helmet>
         <Layout title="About Us">
           <div className="bg-light">
@@ -21,19 +21,15 @@ class About extends Component {
               <div className="row h-100 align-items-center py-5">
                 <div className="col-lg-6">
                   <h1 className="display-4">About us</h1>
-                  <p className="lead text-muted mb-0">
-                    Association of Civil Engineers
-                  </p>
+                  <p className="lead text-muted mb-0">Association of Civil Engineers</p>
                   <p className="lead text-muted" id="1">
-                    Samnivesha is the annual technical fest of the Department of
-                    Civil and Environmental Engineering (DCEE) with a myriad of
-                    events revolving around the exciting areas of Civil and
-                    Environmental engineering. India needs better engineers for
-                    its infrastructural and economic growth. With this vision in
-                    our mind the DCEE annually conducts its very own technical
-                    fest to attract engineers from all over the country and
-                    provide them plethora of events to compete for and win
-                    exciting rewards.
+                    Samnivesha is the annual technical fest of the Department of Civil and
+                    Environmental Engineering (DCEE) with a myriad of events revolving around the
+                    exciting areas of Civil and Environmental engineering. India needs better
+                    engineers for its infrastructural and economic growth. With this vision in our
+                    mind the DCEE annually conducts its very own technical fest to attract engineers
+                    from all over the country and provide them plethora of events to compete for and
+                    win exciting rewards.
                     {/* <br /> The technical extravaganza is conducted by the
                     Association of Civil Engineers (ACE), the official
                     departmental Club of DCEE. Samnivesha will be a pioneer, a
@@ -45,12 +41,10 @@ class About extends Component {
                     knowledge and application in the constructionWorld! */}
                     <br />
                     <br /> Now ACE is back with another edition of Samnivesha.
-                    <br /> <br /> We envisage this edition of Samnivesha to be a
-                    grand success in not only Bihar but also the Eastern India.
-                    It will restore the glory of Bihar as the greatest centre of
-                    education for which it was once known for and ultimately
-                    serve the purpose of producing better engineers for a better
-                    tomorrow.
+                    <br /> <br /> We envisage this edition of Samnivesha to be a grand success in
+                    not only Bihar but also the Eastern India. It will restore the glory of Bihar as
+                    the greatest centre of education for which it was once known for and ultimately
+                    serve the purpose of producing better engineers for a better tomorrow.
                   </p>
                 </div>
                 <div className="col-lg-6 d-none d-lg-block">

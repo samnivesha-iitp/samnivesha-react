@@ -6,11 +6,11 @@ function session(uid, config, MongoStore, db) {
       httpOnly: true,
       maxAge: 86400 * 1000,
       sameSite: true,
-      secure: !config.environment
+      secure: !config.environment,
     },
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: db })
+    store: new MongoStore({ mongooseConnection: db }),
   };
   return sessionConfig;
 }

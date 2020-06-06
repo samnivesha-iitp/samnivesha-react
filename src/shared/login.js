@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";  
+import axios from "axios";
 import Layout from "./components/layout";
 import { backgroundImage } from "../../archieve/collections";
-import {AuthContext} from "./components/authContext";
+import { AuthContext } from "./components/authContext";
 import Cookies from "js-cookie";
 const getUserData = require("../../utils/getUserData");
 import Helmet from "react-helmet";
 
 const config = {
-  environment: Boolean(process.env.NODE_ENV !== "production")
+  environment: Boolean(process.env.NODE_ENV !== "production"),
 };
 
 class Login extends Component {
@@ -21,7 +21,7 @@ class Login extends Component {
       password: "",
       isEmailExists: null,
       innerWidth: "",
-      msg: ""
+      msg: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -30,7 +30,7 @@ class Login extends Component {
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
     // axios.post("/users/findByEmail", { email: e.target.value }).then(res => {
     //   if (res.status == 200) {
@@ -40,7 +40,7 @@ class Login extends Component {
   }
   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
     });
   }
 
@@ -49,27 +49,26 @@ class Login extends Component {
     e.preventDefault();
     axios
       .post("/auth", this.state)
-      .then(res => {
+      .then((res) => {
         if (res.status == 200) {
           // setIsAuthenticated(true);
           const uid = Cookies.get("uid");
           getUserData(uid)
-            .then(res => {
+            .then((res) => {
               setUser(res.userData);
               setIsAuthenticated(true);
               this.props.history.push("/profile");
               // console.log(this.context)
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         } else {
           this.setState({ msg: "incorrect email or password.", password: "" });
         }
       })
       .catch(() => {
         this.setState({
-          msg:
-            "That email/username and password combination didn't work. Try again.",
-          password: ""
+          msg: "That email/username and password combination didn't work. Try again.",
+          password: "",
         });
       });
   }
@@ -88,7 +87,7 @@ class Login extends Component {
           <section
             className="hero is-fullheight background-image"
             style={{
-              backgroundImage: `url(${backgroundImage[4]}&w=${this.state.innerWidth})`
+              backgroundImage: `url(${backgroundImage[4]}&w=${this.state.innerWidth})`,
             }}
           >
             <div className="hero-body">
@@ -96,9 +95,7 @@ class Login extends Component {
                 <div className="column is-4 is-offset-4">
                   <h3 className="title has-text-black">Login</h3>
                   <hr className="login-hr" />
-                  <p className="subtitle has-text-black">
-                    Please login to proceed.
-                  </p>
+                  <p className="subtitle has-text-black">Please login to proceed.</p>
                   <div className="box">
                     {this.state.msg && (
                       <div className="notification is-warning is-paddingless">
@@ -120,9 +117,7 @@ class Login extends Component {
                             <FontAwesomeIcon icon="envelope" />
                           </span>
                           <span className="icon is-small is-right">
-                            {this.state.isEmailExists ? (
-                              <FontAwesomeIcon icon="check" />
-                            ) : null}
+                            {this.state.isEmailExists ? <FontAwesomeIcon icon="check" /> : null}
                           </span>
                         </p>
                       </div>
@@ -153,9 +148,7 @@ class Login extends Component {
                     <Link to="/signup" prefetch={Prefetch}>
                       Sign Up
                     </Link>
-                    <Link to="/forgotPassword">
-                      &nbsp;·&nbsp; Forgot Password
-                    </Link>
+                    <Link to="/forgotPassword">&nbsp;·&nbsp; Forgot Password</Link>
                   </p>
                 </div>
               </div>

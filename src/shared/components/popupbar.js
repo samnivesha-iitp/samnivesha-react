@@ -5,15 +5,8 @@ import React from "react";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const Popupbar = props => {
-  const {
-    open,
-    autoHideDuration,
-    anchorOrigin,
-    severity,
-    message,
-    onClose
-  } = props;
+const Popupbar = (props) => {
+  const { open, autoHideDuration, anchorOrigin, severity, message, onClose } = props;
   return (
     <Snackbar
       open={open}

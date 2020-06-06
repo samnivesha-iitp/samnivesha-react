@@ -19,7 +19,7 @@ import AdminDataApi from "../../utils/adminDataApi";
 import Protected from "./components/admin/protected";
 
 const admin = new AuthAdmin();
-const Admin = props => {
+const Admin = (props) => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ const Admin = props => {
   const [blocked, setBlocked] = useState(false);
   useEffect(() => {
     Axios.get("/users")
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
         const mockdata = AdminDataApi(response.data);
         setData(mockdata);
@@ -97,66 +97,42 @@ const Admin = props => {
               <p className="menu-label">General</p>
               <ul className="menu-list">
                 <li>
-                  <NavLink
-                    to={`${match.url}/dashboard`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/dashboard`} activeClassName="is-active">
                     Dashboard
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/user/add`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/user/add`} activeClassName="is-active">
                     Add User
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/user/remove`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/user/remove`} activeClassName="is-active">
                     Remove User
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/user/update`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/user/update`} activeClassName="is-active">
                     Update User
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/paymentstatus`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/paymentstatus`} activeClassName="is-active">
                     Payment Status
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/workshop`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/workshop`} activeClassName="is-active">
                     Workshop
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/groupevent`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/groupevent`} activeClassName="is-active">
                     Group Event
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={`${match.url}/soloevent`}
-                    activeClassName="is-active"
-                  >
+                  <NavLink to={`${match.url}/soloevent`} activeClassName="is-active">
                     Solo Event
                   </NavLink>
                 </li>
@@ -168,9 +144,7 @@ const Admin = props => {
               <div className="hero-body">
                 <div className="container">
                   <h1 className="title">Hello, Admin.</h1>
-                  <h2 className="subtitle">
-                    I hope you are having a great day!
-                  </h2>
+                  <h2 className="subtitle">I hope you are having a great day!</h2>
                 </div>
               </div>
             </section>
@@ -209,7 +183,7 @@ const Admin = props => {
               />
               <Route
                 path={`${match.path}/user/add`}
-                render={() => { 
+                render={() => {
                   return hasPermissionToWrite ? (
                     <AddUser dataHandle={setData} />
                   ) : (

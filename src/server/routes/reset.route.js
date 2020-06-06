@@ -6,7 +6,7 @@ const User = require("../models/user.model");
 router.route("/").post((req, res) => {
   const { resetToken } = req.query;
   const { newPass } = req.body;
-  User.find({ resetPasswordToken: resetToken }, function(err, response) {
+  User.find({ resetPasswordToken: resetToken }, function (err, response) {
     if (err) {
       res.status(500).json({ message: "Error while accessing Database" + err });
     } else {
@@ -14,7 +14,7 @@ router.route("/").post((req, res) => {
         const user = response[0];
         if (user.resetPasswordExpires > Date.now()) {
           const salt_round = 12;
-          bcrypt.hash(newPass, salt_round).then(hashedPassword => {
+          bcrypt.hash(newPass, salt_round).then((hashedPassword) => {
             user.password = hashedPassword;
             user.resetPasswordExpires = null;
             user.resetPasswordToken = null;
@@ -23,10 +23,8 @@ router.route("/").post((req, res) => {
               .then(() => {
                 res.status(200).json({ message: "Password has been reset." });
               })
-              .catch(err => {
-                res
-                  .status(500)
-                  .json({ message: "Error while reseting password" + err });
+              .catch((err) => {
+                res.status(500).json({ message: "Error while reseting password" + err });
               });
           });
         } else {
@@ -41,27 +39,28 @@ router.route("/").post((req, res) => {
 router.route("/wt/:userId").post((req, res) => {
   const { newPass } = req.body;
   const { userId } = req.params;
-  User.find({ _id: userId }, function(err, response) {
+  User.find({ _id: userId }, function (err, response) {
     if (err) {
       res.status(500).json({ message: "Error while accessing Database" + err });
     } else {
       const user = response[0];
       const salt_round = 12;
-      bcrypt.hash(newPass, salt_round).then(hashedPassword => {
-        user.password = hashedPassword;
-        user
-          .save()
-          .then(() => {
-            res.status(200).json({ message: "Password has been reset." });
-          })
-          .catch(() => {
-            res
-              .status(500)
-              .json({ message: "Error while reseting password" + err });
-          });
-      }).catch(()=>{
-        res.status(503).json({message:'Password Hashing Failed.'})
-      })
+      bcrypt
+        .hash(newPass, salt_round)
+        .then((hashedPassword) => {
+          user.password = hashedPassword;
+          user
+            .save()
+            .then(() => {
+              res.status(200).json({ message: "Password has been reset." });
+            })
+            .catch(() => {
+              res.status(500).json({ message: "Error while reseting password" + err });
+            });
+        })
+        .catch(() => {
+          res.status(503).json({ message: "Password Hashing Failed." });
+        });
     }
   });
 });

@@ -20,20 +20,20 @@ function createData(name, place, time) {
 
 const rows = [
   createData("SAP2000", "Block-9/R102", "10:30 am"),
-  createData("AutoCAD", "Block-9/R104", "10:30 am")
+  createData("AutoCAD", "Block-9/R104", "10:30 am"),
 ];
 
-const StyledTableRow = withStyles(theme => ({
+const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.background.default
-    }
-  }
+      backgroundColor: theme.palette.background.default,
+    },
+  },
 }))(TableRow);
 const useStyles = makeStyles({
   table: {
-    minWidth: 300
-  }
+    minWidth: 300,
+  },
 });
 const ElevatedCardHeader01 = () => {
   const classes = useStyles();
@@ -45,7 +45,7 @@ const ElevatedCardHeader01 = () => {
         subheader={"Day 0 - 14 February"}
         classes={{
           title: "MuiCardHeader-title",
-          subheader: "MuiCardHeader-subheader"
+          subheader: "MuiCardHeader-subheader",
         }}
       />
       <CardContent className={"MuiCardContent-root"}>
@@ -59,13 +59,9 @@ const ElevatedCardHeader01 = () => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {rows.map((row) => (
                 <StyledTableRow key={row.id}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{ padding: "6px" }}
-                  >
+                  <TableCell component="th" scope="row" style={{ padding: "6px" }}>
                     {row.name}
                   </TableCell>
                   <TableCell align="right" style={{ padding: "6px" }}>
@@ -78,8 +74,12 @@ const ElevatedCardHeader01 = () => {
               ))}
             </TableBody>
             <TableFooter>
-              <div className="content" style={{paddingTop:'10px'}}>
-                <NavLink className="button is-link is-small" style={{backgroundColor:'#3273dc'}} to="/schedule">
+              <div className="content" style={{ paddingTop: "10px" }}>
+                <NavLink
+                  className="button is-link is-small"
+                  style={{ backgroundColor: "#3273dc" }}
+                  to="/schedule"
+                >
                   View More
                 </NavLink>
               </div>
@@ -91,7 +91,7 @@ const ElevatedCardHeader01 = () => {
   );
 };
 
-ElevatedCardHeader01.getTheme = muiBaseTheme => {
+ElevatedCardHeader01.getTheme = (muiBaseTheme) => {
   const offset = 40;
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
   const headerShadow = "4px 4px 20px 1px rgba(0, 0, 0, 0.2)";
@@ -122,25 +122,25 @@ ElevatedCardHeader01.getTheme = muiBaseTheme => {
             "& .MuiCardHeader-title": {
               color: "#ffffff",
               fontWeight: 900,
-              letterSpacing: 1
+              letterSpacing: 1,
             },
             "& .MuiCardHeader-subheader": {
               color: "#ffffff",
               opacity: 0.87,
               fontWeight: 200,
-              letterSpacing: 0.4
-            }
+              letterSpacing: 0.4,
+            },
           },
           "& .MuiCardContent-root": {
             textAlign: "left",
             "& .MuiCardContent-inner": {
               paddingTop: "15px",
-              overflowX: "auto"
-            }
-          }
-        }
-      }
-    }
+              overflowX: "auto",
+            },
+          },
+        },
+      },
+    },
   };
 };
 

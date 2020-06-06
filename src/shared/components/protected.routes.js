@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext, AdminContext } from "./authContext";
 import { Route, Redirect } from "react-router-dom";
 
-export const ProtectedProfile = props => {
+export const ProtectedProfile = (props) => {
   const { isAuthenticated } = useContext(AuthContext);
   const { component: Component, data, ...rest } = props;
   return isAuthenticated ? (
@@ -17,7 +17,7 @@ export const ProtectedProfile = props => {
   );
 };
 
-export const ProtectedLogin = props => {
+export const ProtectedLogin = (props) => {
   const { isAuthenticated } = useContext(AuthContext);
   const { path, component } = props;
   return !isAuthenticated ? (
@@ -26,7 +26,7 @@ export const ProtectedLogin = props => {
     <Redirect to={{ pathname: "/profile" }} />
   );
 };
-export const ProtectedSignup = props => {
+export const ProtectedSignup = (props) => {
   const { isAuthenticated } = useContext(AuthContext);
   const { path, component } = props;
   return !isAuthenticated ? (
@@ -35,7 +35,7 @@ export const ProtectedSignup = props => {
     <Redirect to={{ pathname: "/profile" }} />
   );
 };
-export const ProtectedResetPassword = props => {
+export const ProtectedResetPassword = (props) => {
   const { isAuthenticated } = useContext(AuthContext);
   const { path, component } = props;
   return !isAuthenticated ? (
@@ -44,16 +44,12 @@ export const ProtectedResetPassword = props => {
     <Redirect to={{ pathname: "/profile" }} />
   );
 };
-export const ProtectedAdmin = props => {
+export const ProtectedAdmin = (props) => {
   const { isAdmin } = useContext(AdminContext);
   const { path, component } = props;
-  return isAdmin ? (
-    <Route path={path} component={component} />
-  ) : (
-    <Redirect to="/admin/login" />
-  );
+  return isAdmin ? <Route path={path} component={component} /> : <Redirect to="/admin/login" />;
 };
-export const ProtectedAdminLogin = props => {
+export const ProtectedAdminLogin = (props) => {
   const { isAdmin } = useContext(AdminContext);
   const { path, component } = props;
   return isAdmin ? (

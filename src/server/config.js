@@ -4,18 +4,18 @@ export const runtimeConfig =
     ? {
         // client
         URL: `${window.location.protocol}://${window.location.origin}`,
-        PAYLOAD: window.env.payload
+        PAYLOAD: window.env.payload,
       }
     : // server
       generatePayload(
         JSON.stringify({
           username: process.env.ADMIN,
           pwd: process.env.ADMIN_PWD,
-          secret: process.env.ADMIN_SECRET
+          secret: process.env.ADMIN_SECRET,
         })
-      ).then(hash => {
+      ).then((hash) => {
         return {
           PAYLOAD: hash,
-          URL: `http://${process.env.HOST}:${process.env.PORT}`
+          URL: `http://${process.env.HOST}:${process.env.PORT}`,
         };
       });

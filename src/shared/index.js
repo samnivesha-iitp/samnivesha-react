@@ -16,14 +16,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { createGenerateClassName } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Card from "./components/elevation-card";
-const Home = props => {
-  const {
-    isAuthenticated,
-    setIsAuthenticated,
-    user,
-    setUser,
-    store
-  } = useContext(AuthContext);
+const Home = (props) => {
+  const { isAuthenticated, setIsAuthenticated, user, setUser, store } = useContext(AuthContext);
   const [evedata, setEveData] = useState("");
   const [isAtTop, setIsAtTop] = useState(true);
   const [msg, setMsg] = useState({ message: "", status: "" });
@@ -51,11 +45,9 @@ const Home = props => {
   const removeMsg = () => {
     setMsg({ message: "", status: "" });
   };
-  const registerHandler = e => {
+  const registerHandler = (e) => {
     e.preventDefault();
-    const id = e.target.href.match(
-      /https:\/\/samnivesha.iitp.ac.in\/event\/(\w+)/
-    );
+    const id = e.target.href.match(/https:\/\/samnivesha.iitp.ac.in\/event\/(\w+)/);
     const eventId = id[1];
     if (!isAuthenticated) {
       props.history.push("/login");
@@ -83,11 +75,11 @@ const Home = props => {
             } else {
               axios
                 .post(`/event/${eventId}/${user._id}`)
-                .then(res => {
+                .then((res) => {
                   if (res.status == 200) {
                     setMsg({ status: true, message: "You are registered." });
                     getUserData(user._id)
-                      .then(user => {
+                      .then((user) => {
                         setUser(user.userData);
                         setTimeout(removeMsg, 3000);
                       })
@@ -108,7 +100,7 @@ const Home = props => {
       }
     }
   };
-  const workshopHandler = async e => {
+  const workshopHandler = async (e) => {
     e.preventDefault();
     const workshopregex = /https:\/\/samnivesha.iitp.ac.in\/add\/workshop\?name=(.*)/;
     const currworkshop = e.target.href.match(workshopregex)[1];
@@ -122,16 +114,16 @@ const Home = props => {
       } else {
         const response = await axios.post("/users/add/workshop", {
           userId: user._id,
-          payload: currworkshop
+          payload: currworkshop,
         });
         if (response.status == 200) {
           setMsg({ status: true, message: "You are registered." });
           getUserData(user._id)
-            .then(user => {
+            .then((user) => {
               setUser(user.userData);
               setTimeout(removeMsg, 3000);
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               setMsg({ message: "Error Detected." });
               setTimeout(removeMsg, 3000);
@@ -145,11 +137,7 @@ const Home = props => {
   };
   // const event2 = event.splice(0, 2);
   const backtotop = isAtTop ? "" : "visible";
-  const status = msg.status
-    ? "is-success"
-    : msg.status !== ""
-    ? "is-warning"
-    : "is-hidden";
+  const status = msg.status ? "is-success" : msg.status !== "" ? "is-warning" : "is-hidden";
   const successMsg = msg.status ? msg.message : null;
   const errMsg = !msg.status ? msg.message : null;
   const loadingStatus = isLoading ? "is-loading" : "";
@@ -157,17 +145,17 @@ const Home = props => {
   const muiBaseTheme = createMuiTheme();
 
   const generateClassName = createGenerateClassName({
-    dangerouslyUseGlobalCSS: true
+    dangerouslyUseGlobalCSS: true,
   });
   const styles = {
     marquee: {
       position: "absolute",
       zIndex: 10000,
-      bottom:'80px',
-      fontSize:'20px',
+      bottom: "80px",
+      fontSize: "20px",
       fontWeight: "bold",
-      backgroundColor: "white"
-    }
+      backgroundColor: "white",
+    },
   };
   return (
     <>
@@ -179,9 +167,7 @@ const Home = props => {
           as="style"
           onLoad="this.onload=null;this.rel='stylesheet'"
         />
-        <noscript>
-          {`<link rel="stylesheet" href="/css/index/core.css" />`}
-        </noscript>
+        <noscript>{`<link rel="stylesheet" href="/css/index/core.css" />`}</noscript>
         <link
           rel="preload"
           href="/css/Main.css"
@@ -206,18 +192,15 @@ const Home = props => {
               </span>
               &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <span style={{ color: "#ff0000" }}>
-                Registration has been closed. Further registration can be done
-                at registration desk only.
+                Registration has been closed. Further registration can be done at registration desk
+                only.
               </span>
             </p>
           </span>
         </marquee>
         <section className="hero1 is-fullheight1 is-light">
           <div id="main">
-            <div
-              id="logo"
-              style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}
-            >
+            <div id="logo" style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}>
               <img
                 src="/images/small.webp"
                 srcSet="/images/small.webp 1000w, /images/bg.webp 1300w, "
@@ -226,38 +209,29 @@ const Home = props => {
             </div>
           </div>
         </section>
-        <section
-          className="section section-feature-grey is-fullheight"
-          id="about"
-        >
+        <section className="section section-feature-grey is-fullheight" id="about">
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">About Us</h2>
               {/* <p className="is-1">Association of Civil Engineers</p> */}
               <p className="is-2" style={{ fontSize: "19px" }}>
-                Samnivesha is the annual technical fest of the Department of
-                Civil and Environmental Engineering (DCEE) with a myriad of
-                events revolving around the exciting areas of Civil and
-                Environmental engineering. India needs better engineers for its
-                infrastructural and economic growth. With this vision in our
-                mind the DCEE annually conducts its very own technical fest to
-                attract engineers from all over the country and provide them
-                plethora of events to compete for and win exciting rewards.
+                Samnivesha is the annual technical fest of the Department of Civil and Environmental
+                Engineering (DCEE) with a myriad of events revolving around the exciting areas of
+                Civil and Environmental engineering. India needs better engineers for its
+                infrastructural and economic growth. With this vision in our mind the DCEE annually
+                conducts its very own technical fest to attract engineers from all over the country
+                and provide them plethora of events to compete for and win exciting rewards.
                 <br />
                 <br /> Now ACE is back with another edition of Samnivesha.
-                <br /> <br /> We envisage this edition of Samnivesha to be a
-                grand success in not only Bihar but also the Eastern India. It
-                will restore the glory of Bihar as the greatest centre of
-                education for which it was once known for and ultimately serve
+                <br /> <br /> We envisage this edition of Samnivesha to be a grand success in not
+                only Bihar but also the Eastern India. It will restore the glory of Bihar as the
+                greatest centre of education for which it was once known for and ultimately serve
                 the purpose of producing better engineers for a better tomorrow.
               </p>
             </div>
           </div>
         </section>
-        <section
-          className="section section-feature-grey is-fullheight"
-          id="guestLecture"
-        >
+        <section className="section section-feature-grey is-fullheight" id="guestLecture">
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">Guest Lecture</h2>
@@ -278,17 +252,15 @@ const Home = props => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    Prof. Deepankar Choudhury is Institute Chair Professor of
-                    Civil Engineering department at Indian Institute of
-                    Technology (IIT) Bombay, Mumbai, India and Adjunct Professor
-                    of Academy of Scientific and Innovative Research (AcSIR) of
+                    Prof. Deepankar Choudhury is Institute Chair Professor of Civil Engineering
+                    department at Indian Institute of Technology (IIT) Bombay, Mumbai, India and
+                    Adjunct Professor of Academy of Scientific and Innovative Research (AcSIR) of
                     CSIR laboratories (connected to CSIR-CBRI Roorkee) of India.
                     <br />
                     <br />
-                    Prof. Choudhury is the only Geotechnical Engineer of India
-                    who is an elected Fellow (FNASc) of the oldest Science
-                    Academy of India, viz. The National Academy of Sciences,
-                    India.
+                    Prof. Choudhury is the only Geotechnical Engineer of India who is an elected
+                    Fellow (FNASc) of the oldest Science Academy of India, viz. The National Academy
+                    of Sciences, India.
                   </span>
                   {/* <div className="pt-10 pb-10">
                     <a
@@ -309,12 +281,11 @@ const Home = props => {
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
                     <br />
-                    18 years Industrial Experience in Design & Engineering{" "}
+                    18 years Industrial Experience in Design & Engineering <br />
                     <br />
-                    <br />
-                    Presently associated with Tata Steel Ltd. Previously engaged
-                    with Tata Consulting Engineers (TCE), Consulting Engineers
-                    Ltd. & L&T Ramboll Consulting Engineers Ltd.
+                    Presently associated with Tata Steel Ltd. Previously engaged with Tata
+                    Consulting Engineers (TCE), Consulting Engineers Ltd. & L&T Ramboll Consulting
+                    Engineers Ltd.
                   </span>
                 </div>
                 <div className="column is-4 is-offset-1">
@@ -334,8 +305,8 @@ const Home = props => {
                     <br />
                     15 years Industrial Experience in Design & Engineering
                     <br />
-                    <br /> Presently associated with Tata Steel Ltd. Previously
-                    engaged with Tata Consulting Engineers (TCE)
+                    <br /> Presently associated with Tata Steel Ltd. Previously engaged with Tata
+                    Consulting Engineers (TCE)
                   </span>
                 </div>
               </div>
@@ -343,10 +314,7 @@ const Home = props => {
           </div>
         </section>
 
-        <section
-          className="section section-feature-grey is-fullheight"
-          id="workshop"
-        >
+        <section className="section section-feature-grey is-fullheight" id="workshop">
           <div className="container">
             <div className="section-title-wrapper has-text-centered">
               <h2 className="section-title-landing">Workshop</h2>
@@ -362,13 +330,11 @@ const Home = props => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    AutoCAD is computer-aided design (CAD) software that
-                    architects, engineers and construction professionals rely on
-                    to create precise 2D and 3D drawings. It helps us in
-                    drafting and editing 2D geometry and 3D models with solids,
-                    surfaces and mesh objects.The industry expects the
-                    candidates to be familiar with the latest skills and
-                    techniques related to any type of designing.
+                    AutoCAD is computer-aided design (CAD) software that architects, engineers and
+                    construction professionals rely on to create precise 2D and 3D drawings. It
+                    helps us in drafting and editing 2D geometry and 3D models with solids, surfaces
+                    and mesh objects.The industry expects the candidates to be familiar with the
+                    latest skills and techniques related to any type of designing.
                   </span>
                   <div className="pt-10 pb-10">
                     <a
@@ -411,16 +377,14 @@ const Home = props => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    From its 3D object based graphical modeling environment to
-                    the wide variety of analysis and design options completely
-                    integrated across one powerful user interface, SAP2000 has
-                    proven to be the most integrated, productive and practical
-                    general purpose structural program on the market today.
-                    Complex Models can be generated and meshed with powerful
-                    built in templates. We'll keep you up with the pace of
-                    industry standards and you will learn along the way how it's
-                    easy to generate complex model in a very simple,easy and
-                    intutive way with the help of SAP2000.
+                    From its 3D object based graphical modeling environment to the wide variety of
+                    analysis and design options completely integrated across one powerful user
+                    interface, SAP2000 has proven to be the most integrated, productive and
+                    practical general purpose structural program on the market today. Complex Models
+                    can be generated and meshed with powerful built in templates. We'll keep you up
+                    with the pace of industry standards and you will learn along the way how it's
+                    easy to generate complex model in a very simple,easy and intutive way with the
+                    help of SAP2000.
                   </span>
                   <div className="pt-10 pb-10">
                     <a
@@ -458,10 +422,7 @@ const Home = props => {
               style={{ paddingBottom: "40px" }}
             >
               <h2 className="section-title-landing">Events</h2>
-              <h4>
-                Showcase your technical brilliance at unparalleled multitude of
-                events.
-              </h4>
+              <h4>Showcase your technical brilliance at unparalleled multitude of events.</h4>
             </div>
 
             <div className="content-wrapper">
@@ -469,25 +430,18 @@ const Home = props => {
                 <div className="column is-4">
                   <div className="event-card is-wavy">
                     <div className="img-container">
-                      <img
-                        src="/images/b.webp"
-                        alt=""
-                        data-demo-src="/images/b.webp"
-                      />
+                      <img src="/images/b.webp" alt="" data-demo-src="/images/b.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
                         <div className="text text-header">
                           <h2 className="text text-title">Bridge it</h2>
-                          <p className="text text-subtitle">
-                            Model Bridge Design
-                          </p>
+                          <p className="text text-subtitle">Model Bridge Design</p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            The objective of this event is to design, construct
-                            and test the most efficient bridge built in
-                            accordance with the specifications.
+                            The objective of this event is to design, construct and test the most
+                            efficient bridge built in accordance with the specifications.
                           </p>
                           <a
                             href="/pdf/b.pdf"
@@ -519,26 +473,19 @@ const Home = props => {
                       </div>
                     </div> */}
                     <div className="img-container">
-                      <img
-                        src="/images/g.webp"
-                        alt=""
-                        data-demo-src="/images/g.webp"
-                      />
+                      <img src="/images/g.webp" alt="" data-demo-src="/images/g.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
                         <div className="text text-header">
                           <h2 className="text text-title">Geo-manji</h2>
-                          <p className="text text-subtitle">
-                            Treasure Hunt Event
-                          </p>
+                          <p className="text text-subtitle">Treasure Hunt Event</p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            The event requires participation in team and it
-                            involves reaching various checkpoints with help of
-                            clues collected during your journey and completing
-                            the tasks allotted.
+                            The event requires participation in team and it involves reaching
+                            various checkpoints with help of clues collected during your journey and
+                            completing the tasks allotted.
                           </p>
                           <a
                             href="/pdf/g.pdf"
@@ -564,11 +511,7 @@ const Home = props => {
                 <div className="column is-4">
                   <div className="event-card is-wavy">
                     <div className="img-container">
-                      <img
-                        src="/images/h.webp"
-                        alt=""
-                        data-demo-src="/images/h.webp"
-                      />
+                      <img src="/images/h.webp" alt="" data-demo-src="/images/h.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
@@ -578,9 +521,8 @@ const Home = props => {
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            Chance of showing your engineering skills with cards
-                            and passion! So, get innovative and build your own
-                            house with CARDS.
+                            Chance of showing your engineering skills with cards and passion! So,
+                            get innovative and build your own house with CARDS.
                           </p>
                           <a
                             href="/pdf/h.pdf"
@@ -614,27 +556,18 @@ const Home = props => {
                       </div>
                     </div> */}
                     <div className="img-container">
-                      <img
-                        src="/images/e.webp"
-                        alt=""
-                        data-demo-src="/images/e.webp"
-                      />
+                      <img src="/images/e.webp" alt="" data-demo-src="/images/e.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
                         <div className="text text-header">
-                          <h2 className="text text-title">
-                            Engineers Conclave
-                          </h2>
-                          <p className="text text-subtitle">
-                            Present Your Research
-                          </p>
+                          <h2 className="text text-title">Engineers Conclave</h2>
+                          <p className="text text-subtitle">Present Your Research</p>
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            The conclave will act as a platform for aspiring
-                            engineers and researchers to present their research
-                            prospects which will be reviewed.
+                            The conclave will act as a platform for aspiring engineers and
+                            researchers to present their research prospects which will be reviewed.
                           </p>
                           <a
                             href="/pdf/e.pdf"
@@ -666,11 +599,7 @@ const Home = props => {
                       </div>
                     </div> */}
                     <div className="img-container">
-                      <img
-                        src="/images/c.webp"
-                        alt=""
-                        data-demo-src="/images/c.webp"
-                      />
+                      <img src="/images/c.webp" alt="" data-demo-src="/images/c.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
@@ -680,9 +609,8 @@ const Home = props => {
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            CiviQ is a quizzing event which will provide you
-                            with an opportunity to test your technical knowledge
-                            and acumen of Civil Engineering.
+                            CiviQ is a quizzing event which will provide you with an opportunity to
+                            test your technical knowledge and acumen of Civil Engineering.
                           </p>
                           <a
                             href="/pdf/c.pdf"
@@ -714,11 +642,7 @@ const Home = props => {
                       </div>
                     </div> */}
                     <div className="img-container">
-                      <img
-                        src="/images/l.webp"
-                        alt=""
-                        data-demo-src="/images/l.webp"
-                      />
+                      <img src="/images/l.webp" alt="" data-demo-src="/images/l.webp" />
                     </div>
                     <div className="card-text">
                       <div className="text text-container">
@@ -728,9 +652,9 @@ const Home = props => {
                         </div>
                         <div className="text text-details">
                           <p className="text text-description">
-                            Photography is a tool by which we can freeze the
-                            time and have a look back in the past. ACE brings
-                            you a chance of showing your photography skills!
+                            Photography is a tool by which we can freeze the time and have a look
+                            back in the past. ACE brings you a chance of showing your photography
+                            skills!
                           </p>
                           <a
                             href="/pdf/l.pdf"
@@ -767,9 +691,9 @@ const Home = props => {
           <MuiThemeProvider
             theme={createMuiTheme({
               typography: {
-                useNextVariants: true
+                useNextVariants: true,
               },
-              overrides: Card.getTheme(muiBaseTheme)
+              overrides: Card.getTheme(muiBaseTheme),
             })}
           >
             <Card />

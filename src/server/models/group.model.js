@@ -6,7 +6,7 @@ const groupSchema = new Schema(
   {
     groupleader: { type: ObjectId, ref: "User" },
     groupmembers: [{ type: String }],
-    event: { type: ObjectId, ref: "Event" }
+    event: { type: ObjectId, ref: "Event" },
   },
   { timestamps: true }
 );

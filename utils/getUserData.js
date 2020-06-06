@@ -7,9 +7,7 @@ async function getUserData(uid) {
     const data = await response.json();
     return { userData: data };
   } else {
-    const response = await fetch(
-      `http://${process.env.HOST}:${process.env.PORT}/users/${uid}`
-    );
+    const response = await fetch(`http://${process.env.HOST}:${process.env.PORT}/users/${uid}`);
     const data = await response.json();
     return { userData: data };
   }

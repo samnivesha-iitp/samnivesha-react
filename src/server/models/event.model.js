@@ -6,17 +6,17 @@ const eventSchema = new Schema(
   {
     eventName: {
       type: String,
-      required: true
+      required: true,
     },
     organiser: [{ type: String }],
     place: {
       type: String,
-      default: "Tutorial Block"
+      default: "Tutorial Block",
     },
     date: {
       type: Date,
       default: Date.now,
-      required: false
+      required: false,
     },
     timing: { type: String, default: "will be updated" },
     rulebook: String,
@@ -26,7 +26,7 @@ const eventSchema = new Schema(
     description: String,
     groups: [{ type: ObjectId, ref: "Group", default: [] }],
     maxMembersAllowed: Number,
-    contact: { type: Number, default: 8090206021 }
+    contact: { type: Number, default: 8090206021 },
   },
   { timestamps: true }
 );

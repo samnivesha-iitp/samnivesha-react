@@ -22,15 +22,16 @@ const path = require("path");
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 import adminRouter from "./routes/admin.route";
-import userRouter from "./routes/users.routes";
+import userRouter from "./routes/users.route";
 import { runtimeConfig } from "./config";
-const eventRouter = require("./routes/event.routes");
-import mailRouter  from "./routes/mail.routes";
+const eventRouter = require("./routes/event.route");
+import mailRouter from "./routes/mail.route";
 const loginRouter = require("./routes/login.route");
 const passwordForgotRouter = require("./routes/forgot.route");
 const passwordResetRouter = require("./routes/reset.route");
+const logger = require("./routes/requestLogger");
 const config = {
-  environment: process.env.NODE_ENV !== "production"
+  environment: process.env.NODE_ENV !== "production",
 };
 const sessionConfig = require("../../utils/sessionconfig")(
   uid,
@@ -39,12 +40,14 @@ const sessionConfig = require("../../utils/sessionconfig")(
   mongoose.connection
 );
 const server = express();
-const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/samnivesha?useUnifiedTopology=true&useNewUrlParser=true';
+const uri =
+  process.env.MONGO_URI ||
+  "mongodb://localhost:27017/samnivesha?useUnifiedTopology=true&useNewUrlParser=true";
 const csrfprotection = csurf({ cookie: false });
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.once("open", () => {
@@ -53,6 +56,7 @@ db.once("open", () => {
 db.on("error", console.error.bind(console, "MongoDB Connection Error"));
 server
   .disable("x-powered-by")
+  .use(logger)
   .use(compression())
   .use(helmet())
   .use(bodyParser.json())
@@ -68,7 +72,7 @@ server
   .use("/forgot", passwordForgotRouter)
   .use("/resetpassword", passwordResetRouter)
   .post("/logout", (req, res) => {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         res.json("failed");
       }
@@ -84,11 +88,11 @@ server
       promises.push(getUserData(userId));
     }
     promises.push(getEventsData());
-    Promise.all(promises).then(data => {
+    Promise.all(promises).then((data) => {
       state = state.concat(JSON.stringify(data));
       const extractor = new ChunkExtractor({
         statsFile: path.resolve("build/loadable-stats.json"),
-        entrypoints: ["client"]
+        entrypoints: ["client"],
       });
       const markup = renderToString(
         <ChunkExtractorManager extractor={extractor}>
@@ -111,9 +115,7 @@ server
           <meta name="description" content="Samnivesha is the annual Technical fest of the Department of Civil and Environmental Engineering (DCEE) at IIT Patna.">
           <meta name="author" content="Samnivesha '19">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="google-site-verification" content=${
-            process.env.GOOGLE_VERIFICATION_LINK
-          }>
+          <meta name="google-site-verification" content=${process.env.GOOGLE_VERIFICATION_LINK}>
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"/>
           <link rel="icon" href="/favicon.ico">
           <meta property="og:image" content="/favicon.ico">
@@ -123,11 +125,7 @@ server
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
           ${helmet.link.toString()}
-          ${
-            assets.client.css
-              ? `<link rel="stylesheet" href="${assets.client.css}">`
-              : ""
-          }
+          ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ""}
           ${
             process.env.NODE_ENV === "production"
               ? `<script src="${assets.client.js}" defer></script>`

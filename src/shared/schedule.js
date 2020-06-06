@@ -6,10 +6,10 @@ const Schedule = () => {
   const styles = {
     span: {
       fontWeight: "300",
-      fontSize: "16px"
+      fontSize: "16px",
     },
     image: { maxWidth: "1000px", margin: "0px auto" },
-    hr: { backgroundColor: "blue" }
+    hr: { backgroundColor: "blue" },
   };
   return (
     <Layout>
@@ -28,11 +28,7 @@ const Schedule = () => {
                 <span style={styles.span}>( 14 February ) </span>
               </h3>
               <figure className="image">
-                <img
-                  className="is-2by1"
-                  style={styles.image}
-                  src="/images/day0.jpeg"
-                />
+                <img className="is-2by1" style={styles.image} src="/images/day0.jpeg" />
               </figure>
             </div>
             <hr style={styles.hr} />

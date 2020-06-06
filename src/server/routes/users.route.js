@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const axios = require("axios");
 const Users = require("../models/user.model");
 require("dotenv").config();
 const { workshopRegistration } = require("../extras/user");
@@ -9,9 +8,7 @@ import sendEmail from "../../../utils/sendHTML";
 
 router.route("/").get(async (req, res) => {
   try {
-    const docs = await Users.find({})
-      .populate({ path: "events", select: "eventName" })
-      .exec();
+    const docs = await Users.find({}).populate({ path: "events", select: "eventName" }).exec();
     res.status(200).json(docs);
   } catch (err) {
     res.status(200).json({ message: "Error Ocurred." });
@@ -26,7 +23,7 @@ router.route("/add").post(async (req, res) => {
     password,
     college,
     mobileNumber,
-    referralId
+    referralId,
   } = req.body;
   const BCRYPT_SALT_ROUND = 12;
 
@@ -40,17 +37,14 @@ router.route("/add").post(async (req, res) => {
       college,
       password: hashedPassword,
       mobileNumber,
-      referralId
+      referralId,
     });
     await newUser.save();
     const sendTo = email;
     const subject = "Thanks for registering.";
     const html = oneLineTrim(htmlTemplate`<html>
-  <head>
-  <title>Thanks for registering with Samnivesha</title>
-  </head>
-  <body>
-  <h2>Hi, ${firstName} ${lastName}</h2><br>
+  <head><title>Thanks for registering with Samnivesha</title></head>
+  <body><h2>Hi, ${firstName} ${lastName}</h2><br>
   <h3>Thanks for registering with Samnivesha. Please note your Samnivesha Id </h3><h1>${username}</h1> <h3>for further instructions.</h3><br>
   <br><br><br>
   <p>Team Samnivesha</p>
@@ -59,7 +53,7 @@ router.route("/add").post(async (req, res) => {
     const config = {
       sendTo,
       subject,
-      html
+      html,
     };
     const response = await sendEmail(config);
     if (response === true) {
@@ -73,7 +67,7 @@ router.route("/:id").get((req, res) => {
   Users.findById(req.params.id)
     .populate({
       path: "events",
-      select: "eventName contact timing place isgroupallowed"
+      select: "eventName contact timing place isgroupallowed",
     })
     .exec((err, docs) => {
       if (err) {
@@ -98,7 +92,7 @@ router.route("/:id/update").post(async (req, res) => {
 });
 router.route("/findByUsername").post((req, res) => {
   const { username } = req.body;
-  Users.findOne({ username: username }, function(err, user) {
+  Users.findOne({ username: username }, function (err, user) {
     if (err) throw err;
     if (user) {
       res.json(true);
@@ -109,7 +103,7 @@ router.route("/findByUsername").post((req, res) => {
 });
 router.route("/findByEmail").post((req, res) => {
   const { email } = req.body;
-  Users.findOne({ email: email }, function(err, user) {
+  Users.findOne({ email: email }, function (err, user) {
     if (err) throw err;
     if (user) {
       res.json(true);
@@ -121,7 +115,7 @@ router.route("/findByEmail").post((req, res) => {
 router.route("/validateuserforevent/:eventId").post((req, res) => {
   const { eventId } = req.params;
   const { username } = req.body;
-  Users.find({ username: username }, function(err, response) {
+  Users.find({ username: username }, function (err, response) {
     if (err) {
       res.status(500).json({ message: err });
     } else {
@@ -141,7 +135,7 @@ router.route("/validateuserforevent/:eventId").post((req, res) => {
 router.route("/add/workshop").post(async (req, res) => {
   const { userId, payload } = req.body;
   await workshopRegistration(userId, payload)
-    .then(response => {
+    .then((response) => {
       if (response === true) {
         res.json({ message: "Ok" });
       } else {

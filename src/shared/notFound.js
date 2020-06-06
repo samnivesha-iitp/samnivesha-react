@@ -19,10 +19,7 @@ const NotFound = () => {
                 <img src={errorSvg} alt="" />
                 <div className="error-caption">
                   <h2>Oops, We couldn't find that page.</h2>
-                  <p>
-                    Please try again or contact the website administrator to get
-                    some help.
-                  </p>
+                  <p>Please try again or contact the website administrator to get some help.</p>
                   <div className="button-wrap">
                     <Link
                       to="/"

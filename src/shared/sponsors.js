@@ -24,10 +24,7 @@ const Sponsors = () => {
           </ul> */}
           <div className="hero-body" style={{ alignItems: "unset" }}>
             <div className="container">
-              <h2
-                className="title is-4 has-text-centered"
-                style={{ paddingTop: "70px" }}
-              >
+              <h2 className="title is-4 has-text-centered" style={{ paddingTop: "70px" }}>
                 Our Sponsors
               </h2>
               <div className="columns ">
@@ -39,7 +36,7 @@ const Sponsors = () => {
                       <figure className="image is-256x256">
                         <img src="/images/bsbccl.png" />
                       </figure>
-                    </div>  
+                    </div>
                     <div className="column is-3">
                       <figure className="image is-256x256">
                         <img src="/images/buildco.png" />

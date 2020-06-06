@@ -7,7 +7,7 @@ const axios = require("axios");
 import Notification from "./components/notification";
 import Helmet from "react-helmet";
 
-const Forgotpassword = props => {
+const Forgotpassword = (props) => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
@@ -21,13 +21,13 @@ const Forgotpassword = props => {
       clearTimeout(removeMsg);
     };
   });
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     // setSuccessMsg('SuccessFully submitted.')
     axios
       .post("/forgot", { email })
-      .then(res => {
+      .then((res) => {
         if (res.status == 200) {
           setSuccessMsg(res.data.message);
         }
@@ -38,7 +38,7 @@ const Forgotpassword = props => {
         setEmail("");
         setTimeout(removeMsg, 5000);
       })
-      .catch(err => {
+      .catch((err) => {
         if (err) {
           setErrorMsg("Invalid Email");
         }
@@ -48,11 +48,7 @@ const Forgotpassword = props => {
       });
   };
   const loadingStatus = isLoading ? "is-loading" : "";
-  const status = successMsg
-    ? "is-success"
-    : errorMsg
-    ? "is-warning"
-    : "is-hidden";
+  const status = successMsg ? "is-success" : errorMsg ? "is-warning" : "is-hidden";
   return (
     <Layout>
       <main className="main">
@@ -75,7 +71,7 @@ const Forgotpassword = props => {
                           placeholder="Email"
                           name="email"
                           value={email}
-                          onChange={e => {
+                          onChange={(e) => {
                             setEmail(e.target.value);
                           }}
                         />
@@ -86,9 +82,7 @@ const Forgotpassword = props => {
                     </div>
                     <div className="field">
                       <p className="control">
-                        <button className={`button is-link ${loadingStatus}`}>
-                          Send email
-                        </button>
+                        <button className={`button is-link ${loadingStatus}`}>Send email</button>
                       </p>
                     </div>
                   </form>
@@ -98,11 +92,7 @@ const Forgotpassword = props => {
           </div>
         </section>
       </main>
-      <Notification
-        status={status}
-        successMsg={successMsg}
-        errorMsg={errorMsg}
-      />
+      <Notification status={status} successMsg={successMsg} errorMsg={errorMsg} />
     </Layout>
   );
 };

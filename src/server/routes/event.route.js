@@ -7,13 +7,13 @@ const mongoose = require("mongoose");
 // All event
 router.route("/").get((req, res) => {
   Event.find()
-    .then(event => res.json(event))
-    .catch(err => res.json("Error Occured", err));
+    .then((event) => res.json(event))
+    .catch((err) => res.json("Error Occured", err));
 });
 // Indivisual event
 router.route("/:id").get((req, res) => {
   Event.findById(req.params.id)
-    .then(event => res.json(event))
+    .then((event) => res.json(event))
     .catch(() => res.json({ message: "Error Occured" }));
 });
 // Add event
@@ -27,7 +27,7 @@ router.route("/add").post((req, res) => {
     date,
     rulebook,
     poster,
-    isgroupallowed
+    isgroupallowed,
   } = req.body;
   const newEvent = new Event({
     eventName,
@@ -38,17 +38,17 @@ router.route("/add").post((req, res) => {
     date,
     rulebook,
     poster,
-    isgroupallowed
+    isgroupallowed,
   });
   newEvent
     .save()
     .then(() => res.json("Event Added"))
-    .catch(err => res.json("Error", err));
+    .catch((err) => res.json("Error", err));
 });
 // delete event
 router.route("/delete/:id").delete((req, res) => {
   const id = req.params.id;
-  Event.findByIdAndDelete(id, err => {
+  Event.findByIdAndDelete(id, (err) => {
     if (err) {
       res.json("Error" + err);
     } else {
@@ -60,7 +60,7 @@ router.route("/delete/:id").delete((req, res) => {
 router.route("/update/:id").post((req, res) => {
   const id = req.params.id;
   Event.findById(id)
-    .then(event => {
+    .then((event) => {
       const {
         description,
         tagline,
@@ -69,7 +69,7 @@ router.route("/update/:id").post((req, res) => {
         date,
         rulebook,
         poster,
-        isgroupallowed
+        isgroupallowed,
       } = req.body;
       event.description = description;
       event.tagline = tagline;
@@ -83,9 +83,9 @@ router.route("/update/:id").post((req, res) => {
       event
         .save()
         .then(() => res.json("Event Updated"))
-        .catch(err => res.status(400).json("Error" + err));
+        .catch((err) => res.status(400).json("Error" + err));
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json("Error" + err);
     });
 });
@@ -95,10 +95,10 @@ router.route("/:id/group").get((req, res) => {
   Group.find({ event: eveId })
     .populate({
       path: "groupleader",
-      select: "firstName lastName username mobileNumber -_id "
+      select: "firstName lastName username mobileNumber -_id ",
     })
     .populate({ path: "event", select: "eventName -_id" })
-    .exec(function(err, group) {
+    .exec(function (err, group) {
       if (err) throw err;
       res.json(group);
     });
@@ -109,59 +109,59 @@ router.route("/:id/group/add").post((req, res) => {
   let { groupleader, groupmembers } = req.body;
   // groupmembers = groupmembers.map(member => mongoose.Types.ObjectId(member));
   // Check if already registered for that event
-  Users.find(
-    { $or: [{ _id: groupleader }, { username: { $in: groupmembers } }] },
-    function(err, response) {
-      if (err) {
-        res.status(500).json({ messge: "Internal Server Error" + err });
-      } else {
-        let count = 0;
-        for (let i = 0; i < response.length; i++) {
-          if (response[i].events.indexOf(id) !== -1) {
-            // member already exist
-            res.status(500).json({ message: "Already Registered." });
-            count++;
-            break;
-          }
-        }
-        if (count == 0) {
-          // new group register
-          const newGroup = new Group({
-            event: id,
-            groupleader,
-            groupmembers
-          });
-          newGroup
-            .save()
-            .then(group => {
-              let promises = [];
-              response.forEach(user => {
-                user.events.push(group.event);
-                promises.push(user.save());
-              });
-              Event.find({ _id: group.event }, function(err, eventArray) {
-                eventArray[0].groups.push(group._id);
-                promises.push(eventArray[0].save());
-              });
-              Promise.all(promises)
-                .then(() => {
-                  res.status(200).json({ message: "Group Added" });
-                })
-                .catch(() => {
-                  res.status(500).json({ message: "Internal Error" + err });
-                });
-            })
-            .catch(err => {
-              res.json({ message: "Error while saving " + err });
-            });
+  Users.find({ $or: [{ _id: groupleader }, { username: { $in: groupmembers } }] }, function (
+    err,
+    response
+  ) {
+    if (err) {
+      res.status(500).json({ messge: "Internal Server Error" + err });
+    } else {
+      let count = 0;
+      for (let i = 0; i < response.length; i++) {
+        if (response[i].events.indexOf(id) !== -1) {
+          // member already exist
+          res.status(500).json({ message: "Already Registered." });
+          count++;
+          break;
         }
       }
+      if (count == 0) {
+        // new group register
+        const newGroup = new Group({
+          event: id,
+          groupleader,
+          groupmembers,
+        });
+        newGroup
+          .save()
+          .then((group) => {
+            let promises = [];
+            response.forEach((user) => {
+              user.events.push(group.event);
+              promises.push(user.save());
+            });
+            Event.find({ _id: group.event }, function (err, eventArray) {
+              eventArray[0].groups.push(group._id);
+              promises.push(eventArray[0].save());
+            });
+            Promise.all(promises)
+              .then(() => {
+                res.status(200).json({ message: "Group Added" });
+              })
+              .catch(() => {
+                res.status(500).json({ message: "Internal Error" + err });
+              });
+          })
+          .catch((err) => {
+            res.json({ message: "Error while saving " + err });
+          });
+      }
     }
-  );
+  });
 });
 // delete group
 router.route("/group/delete/:id").delete((req, res) => {
-  Group.findByIdAndDelete(req.params.id, err => {
+  Group.findByIdAndDelete(req.params.id, (err) => {
     if (err) {
       res.json("Deletion Failed");
     } else {
@@ -172,7 +172,7 @@ router.route("/group/delete/:id").delete((req, res) => {
 // solo event registration
 router.route("/:eventId/:userId").post((req, res) => {
   const { eventId, userId } = req.params;
-  Users.find({ _id: userId }, function(err, response) {
+  Users.find({ _id: userId }, function (err, response) {
     if (err) {
       res.status(500).json({ message: "Internal Server Error" });
     } else {
@@ -183,7 +183,7 @@ router.route("/:eventId/:userId").post((req, res) => {
         .then(() => {
           res.status(200).json({ message: "OK" });
         })
-        .catch(err => {
+        .catch((err) => {
           res.json({ message: err });
         });
     }

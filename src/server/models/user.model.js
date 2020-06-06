@@ -10,32 +10,32 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      minlength: 4
+      minlength: 4,
     },
     firstName: {
       type: String,
       required: true,
-      minlength: 3
+      minlength: 3,
     },
     lastName: {
       type: String,
       required: false,
-      minlength: 3
+      minlength: 3,
     },
     email: {
       type: String,
       required: true,
-      minlength: 5
+      minlength: 5,
     },
     password: {
       type: String,
       required: true,
       minlength: 5,
-      select: false
+      select: false,
     },
     college: {
       type: String,
-      required: true
+      required: true,
     },
     haspaid: { type: Boolean, default: false },
     workshop: { type: String, default: "" },
@@ -43,10 +43,10 @@ const userSchema = new Schema(
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     mobileNumber: { type: Number, required: true },
-    events: [{ type: ObjectId, ref: "Event" }]
+    events: [{ type: ObjectId, ref: "Event" }],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 userSchema.virtual("fullName").get(() => {

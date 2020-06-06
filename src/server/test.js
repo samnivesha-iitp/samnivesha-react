@@ -5,7 +5,7 @@ const subject = "Password Reset link";
 const body = `Please click on this link ${link} to reset your password.`;
 axios
   .post("http://localhost:3000/mail", { sendTo, subject, body })
-  .then(response => {
+  .then((response) => {
     if (response.status == 200) {
       // res.send(200).json({ message: "Reset Mail sent." });
       console.log("Reset Mail sent.");

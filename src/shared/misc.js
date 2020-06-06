@@ -20,8 +20,7 @@ const Misc = () => {
                 <h3 className="title is-5">Registration Steps:</h3>
                 <br />
                 <h3 className="subtitle">
-                  Please GO through Registration steps before proceeding for
-                  Registration.
+                  Please GO through Registration steps before proceeding for Registration.
                 </h3>
                 <a
                   href="https://docs.google.com/document/d/1wq3WS4sv67mdtRF-2mP8PP37cxEy5gcVP-CORD3GL-k/edit"
@@ -30,14 +29,10 @@ const Misc = () => {
                 >
                   View steps
                 </a>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <h3 className="title is-5">Bus Schedule:</h3>
-                <a
-                  href="/images/bus.jpg"
-                  className="button is-info is-outlined "
-                  target="_blank"
-                >
+                <a href="/images/bus.jpg" className="button is-info is-outlined " target="_blank">
                   Get Schedule
                 </a>
               </div>

@@ -6,7 +6,7 @@ import Helmet from "react-helmet";
 import Popupbar from "./components/popupbar";
 import AuthAdmin from "../../utils/adminApi";
 
-const AdminLogin = props => {
+const AdminLogin = (props) => {
   const admin = new AuthAdmin();
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
@@ -14,11 +14,11 @@ const AdminLogin = props => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     admin
       .login(email, password)
-      .then(res => {
+      .then((res) => {
         if (res) {
           setIsAdmin(true);
           props.history.push("/admin");
@@ -30,7 +30,7 @@ const AdminLogin = props => {
           setPassword("");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -49,9 +49,7 @@ const AdminLogin = props => {
               <div className="column is-4 is-offset-4">
                 <h3 className="title has-text-black">Login</h3>
                 <hr className="login-hr" />
-                <p className="subtitle has-text-black">
-                  Hint: Say My Name and I'll let you in
-                </p>
+                <p className="subtitle has-text-black">Hint: Say My Name and I'll let you in</p>
                 <div className="box">
                   <form onSubmit={handleSubmit}>
                     <div className="field">
@@ -62,7 +60,7 @@ const AdminLogin = props => {
                           placeholder="username"
                           name="email"
                           value={email}
-                          onChange={e => {
+                          onChange={(e) => {
                             setEmail(e.target.value);
                           }}
                         />
@@ -79,7 +77,7 @@ const AdminLogin = props => {
                           type="password"
                           name="password"
                           placeholder="Password"
-                          onChange={e => {
+                          onChange={(e) => {
                             setPassword(e.target.value);
                           }}
                           value={password}

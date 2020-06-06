@@ -6,7 +6,7 @@ class Events extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      innerWidth: ""
+      innerWidth: "",
     };
   }
   componentDidMount() {
@@ -23,18 +23,14 @@ class Events extends Component {
               backgroundImage: `url(
               ${unsplashUrl}&w=${this.state.innerWidth}
             )`,
-              backgroundRepeat: "repeat-y"
+              backgroundRepeat: "repeat-y",
             }}
           >
-            <div
-              className="hero-body"
-              style={{ backgroundColor: "#9E9E9E", opacity: "0.5" }}
-            >
+            <div className="hero-body" style={{ backgroundColor: "#9E9E9E", opacity: "0.5" }}>
               <div className="container has-text-centered">
                 <h1 className="title is-size-1 has-text-white">Coming Soon</h1>
                 <h2 className="subtitle has-text-white">
-                  We're currently working on creating something fantastic. We'll
-                  be here soon.
+                  We're currently working on creating something fantastic. We'll be here soon.
                 </h2>
               </div>
             </div>

@@ -10,13 +10,11 @@ const styles = {
   nav: {
     backgroundColor: "unset",
     position: "absolute",
-    width: "100%"
-  }
+    width: "100%",
+  },
 };
-const Header = props => {
-  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(
-    AuthContext
-  );
+const Header = (props) => {
+  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(AuthContext);
   const [isMobile, setIsMobile] = useState("");
   const hideMenu = () => {
     setIsMobile("");
@@ -30,12 +28,12 @@ const Header = props => {
     setUser("");
     axios
       .post("/logout")
-      .then(res => {
+      .then((res) => {
         if (res.data == "success") {
           this.props.history.push("/");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -50,12 +48,7 @@ const Header = props => {
       <div className="container">
         <div className="navbar-brand">
           <Link to="/" prefetch={Prefetch} className="navbar-item">
-            <img
-              src="/images/samnivesha.png"
-              alt="Bulma Rent"
-              width="20"
-              height="34"
-            />
+            <img src="/images/samnivesha.png" alt="Bulma Rent" width="20" height="34" />
           </Link>
 
           <a
@@ -190,7 +183,7 @@ const Header = props => {
                   to="/logout"
                   prefetch={Prefetch}
                   className="button is-warning"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     hideMenu();
                     logout();

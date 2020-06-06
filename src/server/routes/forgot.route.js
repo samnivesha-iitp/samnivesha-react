@@ -7,7 +7,7 @@ const User = require("../models/user.model");
 router.post("/", (req, res) => {
   const { email } = req.body;
   User.findOne({ email: email })
-    .then(user => {
+    .then((user) => {
       const token = crypto.randomBytes(30).toString("hex");
       user.resetPasswordToken = token;
       user.resetPasswordExpires = Date.now() + 86400 * 1000;
@@ -17,11 +17,6 @@ router.post("/", (req, res) => {
           const sendTo = email;
           let host;
           host = "https://samnivesha.iitp.ac.in";
-          // if (req.protocol == "https") {
-          //   host = "samnivesha.iitp.ac.in";
-          // } else {
-          //   host = req.get("Host");
-          // }
           const link = `${host}/reset/${token}`;
           const subject = "Password Reset link";
           const body = `Please click on this link ${link} to reset your password.`;
@@ -29,14 +24,14 @@ router.post("/", (req, res) => {
             .post(`http://${process.env.HOST}:${process.env.PORT}/mail`, {
               sendTo,
               subject,
-              body
+              body,
             })
-            .then(response => {
+            .then((response) => {
               if (response.status == 200) {
                 res.status(200).json({ message: "Reset Mail sent." });
               }
             })
-            .catch(err => {
+            .catch((err) => {
               res.status(404).json("Mail Error");
             });
         })

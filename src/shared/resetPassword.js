@@ -3,10 +3,10 @@ import Layout from "./components/layout";
 import "./css/forgot.css";
 const axios = require("axios");
 import Notification from "./components/notification";
-import { useParams,useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Helmet from "react-helmet";
 
-const ResetPassword = props => {
+const ResetPassword = (props) => {
   const { resetToken } = useParams();
   let history = useHistory();
   const [newPass, setNewPass] = useState("");
@@ -24,48 +24,43 @@ const ResetPassword = props => {
       clearTimeout(removeMsg);
     };
   });
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (newPass == confPass) {
-        setIsLoading(true)
+      setIsLoading(true);
       axios
         .post(`/resetpassword?resetToken=${resetToken}`, { newPass: newPass })
-        .then(res => {
-            setIsLoading(false)
-            setNewPass('')
-            setConfPass('')
-            switch(res.status){
-                case 200:
-                    setSuccessMsg('Password has been Reset')
-                    break;
-                case 401:
-                    setErrorMsg('Unauthorised or Invalid Token')
-                    break
-                case 500:
-                    setErrorMsg('Internal Server Error')
-                    break
-            }
-            setTimeout(removeMsg,2000);
+        .then((res) => {
+          setIsLoading(false);
+          setNewPass("");
+          setConfPass("");
+          switch (res.status) {
+            case 200:
+              setSuccessMsg("Password has been Reset");
+              break;
+            case 401:
+              setErrorMsg("Unauthorised or Invalid Token");
+              break;
+            case 500:
+              setErrorMsg("Internal Server Error");
+              break;
+          }
+          setTimeout(removeMsg, 2000);
         })
-        .catch(err => {
-            setIsLoading(false)
-            setNewPass('')
-            setConfPass('')
-            setErrorMsg('Error Occured.')
-            setTimeout(removeMsg,2000);
+        .catch((err) => {
+          setIsLoading(false);
+          setNewPass("");
+          setConfPass("");
+          setErrorMsg("Error Occured.");
+          setTimeout(removeMsg, 2000);
         });
     } else {
       setErrorMsg("Password Don't match");
     }
   };
   const loadingStatus = isLoading ? "is-loading" : "";
-  const status = successMsg
-    ? "is-success"
-    : errorMsg
-    ? "is-warning"
-    : "is-hidden";
-  const passwordcss =
-    passwordLength >= 6 ? "is-success" : passwordLength == 0 ? "" : "is-danger";
+  const status = successMsg ? "is-success" : errorMsg ? "is-warning" : "is-hidden";
+  const passwordcss = passwordLength >= 6 ? "is-success" : passwordLength == 0 ? "" : "is-danger";
   return (
     <Layout>
       <Helmet>
@@ -88,9 +83,9 @@ const ResetPassword = props => {
                           placeholder=" New password"
                           name="newPassword"
                           value={newPass}
-                          onChange={e => {
+                          onChange={(e) => {
                             setNewPass(e.target.value);
-                            setPasswordLength(e.target.value.length)
+                            setPasswordLength(e.target.value.length);
                           }}
                         />
                       </p>
@@ -103,7 +98,7 @@ const ResetPassword = props => {
                           placeholder="Confirm password"
                           name="confPassword"
                           value={confPass}
-                          onChange={e => {
+                          onChange={(e) => {
                             setConfPass(e.target.value);
                           }}
                         />
@@ -111,9 +106,7 @@ const ResetPassword = props => {
                     </div>
                     <div className="field">
                       <p className="control">
-                        <button className={`button is-link ${loadingStatus}`}>
-                          Submit
-                        </button>
+                        <button className={`button is-link ${loadingStatus}`}>Submit</button>
                       </p>
                     </div>
                   </form>
@@ -123,11 +116,7 @@ const ResetPassword = props => {
           </div>
         </section>
       </main>
-      <Notification
-        status={status}
-        successMsg={successMsg}
-        errorMsg={errorMsg}
-      />
+      <Notification status={status} successMsg={successMsg} errorMsg={errorMsg} />
     </Layout>
   );
 };
