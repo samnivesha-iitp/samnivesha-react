@@ -181,7 +181,11 @@ const Home = (props) => {
         />
       </Helmet>
       <Layout>
-        <marquee scrolldelay="200" behaviour="alternate" style={styles.marquee}>
+        <marquee
+          scrolldelay="200"
+          behaviour="alternate"
+          style={{ ...styles.marquee, display: "none" }}
+        >
           <span>
             <p>
               <span style={{ color: "#008000" }}>
