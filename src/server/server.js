@@ -5,31 +5,35 @@ import express from "express";
 import { renderToString } from "react-dom/server";
 import serialize from "serialize-javascript";
 import { Helmet } from "react-helmet";
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const uid = require("uid-safe");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const compression = require("compression");
-const helmet = require("helmet");
-const csurf = require("csurf");
-require("dotenv").config();
-const getUserData = require("../../utils/getUserData");
-const getEventsData = require("../../utils/getEventsData");
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import uid from "uid-safe";
+import session from "express-session";
+import compression from "compression";
+import helmet from "helmet";
+import csurf from "csurf";
 import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
 import { html as htmlTemplate, oneLineTrim } from "common-tags";
-const path = require("path");
-
+import path from "path";
+const MongoStore = require("connect-mongo")(session);
+require("dotenv").config();
+// utils
+const getUserData = require("../../utils/getUserData");
+const getEventsData = require("../../utils/getEventsData");
+import connectDB  from "./extras/connect";
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+// routers
 import adminRouter from "./routes/admin.route";
 import userRouter from "./routes/users.route";
-import { runtimeConfig } from "./config";
-const eventRouter = require("./routes/event.route");
+import eventRouter from "./routes/event.route";
 import mailRouter from "./routes/mail.route";
-const loginRouter = require("./routes/login.route");
-const passwordForgotRouter = require("./routes/forgot.route");
-const passwordResetRouter = require("./routes/reset.route");
+import loginRouter from "./routes/login.route";
+import passwordForgotRouter from "./routes/forgot.route";
+import passwordResetRouter from "./routes/reset.route";
+//logger
 const logger = require("./routes/requestLogger");
+//config
+import { runtimeConfig } from "./config";
 const config = {
   environment: process.env.NODE_ENV !== "production",
 };
@@ -39,21 +43,9 @@ const sessionConfig = require("../../utils/sessionconfig")(
   MongoStore,
   mongoose.connection
 );
-const server = express();
-const uri =
-  process.env.MONGO_URI ||
-  "mongodb://localhost:27017/samnivesha?useUnifiedTopology=true&useNewUrlParser=true";
 const csrfprotection = csurf({ cookie: false });
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.once("open", () => {
-  console.log("MongoDB database connection established successfully.");
-});
-db.on("error", console.error.bind(console, "MongoDB Connection Error"));
+connectDB()
+const server = express();
 server
   .disable("x-powered-by")
   .use(logger)

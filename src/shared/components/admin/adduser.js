@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import Popupbar from "../popupbar";
-import AdminDataApi from "../../../../utils/adminDataApi";
+import worker from "../../../../utils/webWoker";
 
 const AddUser = ({ dataHandle }) => {
   const [firstName, setFirstName] = useState("");
@@ -13,22 +13,22 @@ const AddUser = ({ dataHandle }) => {
   const [username, setUsername] = useState("");
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
-  const submitFormHandle = async e => {
+  const submitFormHandle = async (e) => {
     e.preventDefault();
     const response = await Axios.post("/admin/user/add", {
       firstName,
       lastName,
       college,
       username,
-      mobileNumber: mobile
+      mobileNumber: mobile,
     });
     if (response.status === 200 && response.data === true) {
       setMsg("user added");
       setMsgType("success");
       setInitialState();
       const user = await Axios.get("/users");
-      const mockdata = AdminDataApi(user.data);
-      dataHandle(mockdata);
+      worker.onmessage = workerMessageHandler;
+      worker.postMessage({ data: user.data, name: "" });
       setOpen(true);
     } else {
       setMsg("Failed");
@@ -47,6 +47,9 @@ const AddUser = ({ dataHandle }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const workerMessageHandler = ({ data }) => {
+    dataHandle(data);
+  };
   return (
     <>
       <div className="columns">
@@ -63,7 +66,7 @@ const AddUser = ({ dataHandle }) => {
                         className="input"
                         type="text"
                         placeholder="First Name"
-                        onChange={e => {
+                        onChange={(e) => {
                           setFirstName(e.target.value);
                         }}
                         value={firstName}
@@ -76,7 +79,7 @@ const AddUser = ({ dataHandle }) => {
                         className="input"
                         type="text"
                         placeholder="Last Name"
-                        onChange={e => {
+                        onChange={(e) => {
                           setLastName(e.target.value);
                         }}
                         value={lastName}
@@ -93,7 +96,7 @@ const AddUser = ({ dataHandle }) => {
                         className="input"
                         type="text"
                         placeholder="UserName"
-                        onChange={e => {
+                        onChange={(e) => {
                           setUsername(e.target.value);
                         }}
                         value={username}
@@ -106,7 +109,7 @@ const AddUser = ({ dataHandle }) => {
                         className="input"
                         type="text"
                         placeholder="college"
-                        onChange={e => {
+                        onChange={(e) => {
                           setCollege(e.target.value);
                         }}
                         value={college}
@@ -124,7 +127,7 @@ const AddUser = ({ dataHandle }) => {
                         className="input"
                         type="number"
                         placeholder="mobile Number"
-                        onChange={e => {
+                        onChange={(e) => {
                           setMobile(e.target.value);
                         }}
                         value={mobile}

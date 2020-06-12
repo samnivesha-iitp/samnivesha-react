@@ -6,17 +6,16 @@ const SearchUser = ({ userHandle }) => {
 
   async function fetchData(aceId) {
     const response = await Axios.post("/users/findByUsername", {
-      username: aceId
+      username: aceId,
     });
     // set the user details obtained from db
     if (response.status === 200 && response.data === true) {
       // get user data
       const user = await Axios.get(`/admin/user/find?username=${aceId}`);
       userHandle(user.data);
-    } else {
     }
   }
-  const handleUsername = e => {
+  const handleUsername = (e) => {
     setUsername(e.target.value);
     fetchData(e.target.value);
   };

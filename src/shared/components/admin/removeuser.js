@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchUser from "./searchuser";
 import Popupbar from "../popupbar";
 import Axios from "axios";
-import AdminDataApi from "../../../../utils/adminDataApi";
+import worker from "../../../../utils/webWoker";
 
 const RemoveUser = ({ dataHandle }) => {
   const [data, setData] = useState("");
@@ -19,8 +19,8 @@ const RemoveUser = ({ dataHandle }) => {
       setMsgType("success");
       setData("");
       const user = await Axios.get("/users");
-      const mockdata = AdminDataApi(user.data);
-      dataHandle(mockdata);
+      worker.onmessage = workerHandler;
+      worker.postMessage({ data: user.data, name: "" });
       setMsg("User Deleted.");
       setOpen(true);
     } else {
@@ -29,6 +29,9 @@ const RemoveUser = ({ dataHandle }) => {
       setOpen(true);
     }
   }
+  const workerHandler = ({ data }) => {
+    dataHandle(data);
+  };
   return (
     <>
       <div className="columns">

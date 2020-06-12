@@ -1,16 +1,17 @@
 import React from "react";
 import Axios from "axios";
-import { FilterSoloEvent } from "../../../../utils/adminDataApi";
+import worker from "../../../../utils/webWoker";
 
 const Button = ({ id, name, color, clickHandle }) => {
-  const handleClick = async e => {
+  const handleClick = async () => {
     const response = await Axios.get("/users");
     if (response.status === 200) {
-
-        const mockeData = FilterSoloEvent(response.data, id);
-        clickHandle(mockeData);
-
+      worker.onmessage = messageHandler;
+      worker.postMessage({ data: response.data, name: "soloEvent", id });
     }
+  };
+  const messageHandler = ({ data }) => {
+    clickHandle(data);
   };
   return (
     <button className={`button ${color} is-capitalized`} onClick={handleClick}>

@@ -6,7 +6,7 @@
   "scripts": {
     "run:format": "prettier --write src/**/*.js src/**/**/*.js utils/*.js --loglevel silent",
     "run:lint": "eslint",
-    "start": "razzle start --type=spa",
+    "start": "razzle start",
     "build": "razzle build --type=spa",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production pm2 start build/server.js -i max"

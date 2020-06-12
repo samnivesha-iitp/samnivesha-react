@@ -15,9 +15,10 @@ import PaymentStatus from "./components/admin/paymentstatus";
 import Workshop from "./components/admin/workshop";
 import GroupEvent from "./components/admin/grpevent";
 import SoloEvent from "./components/admin/soloevent";
-import AdminDataApi from "../../utils/adminDataApi";
 import Protected from "./components/admin/protected";
 
+//workers
+import worker from "../../utils/webWoker";
 const admin = new AuthAdmin();
 const Admin = (props) => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
@@ -32,15 +33,21 @@ const Admin = (props) => {
     Axios.get("/users")
       .then((response) => {
         // console.log(response.data);
-        const mockdata = AdminDataApi(response.data);
-        setData(mockdata);
+        worker.onmessage = messageHandler;
+        worker.postMessage({ data: response.data, name: "" });
       })
       .catch(() => {
         setOpen(true);
         setMsgType("error");
         setMsg("Data Retrieving Error");
       });
+    return () => {
+      worker.removeEventListener("message", messageHandler);
+    };
   }, []);
+  const messageHandler = ({ data }) => {
+    setData(data);
+  };
   const handleClose = () => {
     setOpen(false);
   };

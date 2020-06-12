@@ -2,27 +2,27 @@ import React, { useState } from "react";
 import SearchUser from "./searchuser";
 import Axios from "axios";
 import Popupbar from "../popupbar";
-import AdminDataApi from "../../../../utils/adminDataApi";
+import worker from "../../../../utils/webWoker";
 
 const UpdateUser = ({ dataHandle }) => {
   const [data, setData] = useState("");
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { _id, firstName, lastName, workshop } = data;
     const response = await Axios.post(`/users/${_id}/update`, {
       firstName,
       lastName,
-      workshop
+      workshop,
     });
     if (response.status === 200 && response.data === true) {
       setMsgType("success");
       setData("");
       const user = await Axios.get("/users");
-      const mockdata = AdminDataApi(user.data);
-      dataHandle(mockdata);
+      worker.onmessage = workerHandler;
+      worker.postMessage({ data: user.data, name: "" });
       setMsg("User Updated.");
       setOpen(true);
     } else {
@@ -31,22 +31,25 @@ const UpdateUser = ({ dataHandle }) => {
       setOpen(true);
     }
   };
+  const workerHandler = ({ data }) => {
+    dataHandle(data);
+  };
   const handleClose = () => {
     setOpen(false);
   };
-  const handleFirstName = e => {
+  const handleFirstName = (e) => {
     let { firstName, ...rest } = data;
     firstName = e.target.value;
     const newData = { firstName, ...rest };
     setData(newData);
   };
-  const handleLastName = e => {
+  const handleLastName = (e) => {
     let { lastName, ...rest } = data;
     lastName = e.target.value;
     const newData = { lastName, ...rest };
     setData(newData);
   };
-  const handleWorkshop = e => {
+  const handleWorkshop = (e) => {
     let { workshop, ...rest } = data;
     workshop = e.target.value;
     const newData = { workshop, ...rest };
