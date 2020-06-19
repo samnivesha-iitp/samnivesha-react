@@ -167,14 +167,14 @@ const Home = (props) => {
           as="style"
           onLoad="this.onload=null;this.rel='stylesheet'"
         />
-        <noscript>{`<link rel="stylesheet" href="/css/index/core.css" />`}</noscript>
+        <noscript>{'<link rel="stylesheet" href="/css/index/core.css" />'}</noscript>
         <link
           rel="preload"
           href="/css/Main.css"
           as="style"
           onLoad="this.onload=null;this.rel='stylesheet'"
         />
-        <noscript>{`<link rel="stylesheet" href="/css/Main.css" />`}</noscript>
+        <noscript>{'<link rel="stylesheet" href="/css/Main.css" />'}</noscript>
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -204,7 +204,7 @@ const Home = (props) => {
         </marquee>
         <section className="hero1 is-fullheight1 is-light">
           <div id="main">
-            <div id="logo" style={{ transform: `translate(0px,-${scrollTop / 2}%)` }}>
+            <div id="logo" style={{ transform: `translate(0px,-${scrollTop / 5}%)` }}>
               <img
                 src="/images/small.webp"
                 srcSet="/images/small.webp 1000w, /images/bg.webp 1300w, "
@@ -343,6 +343,7 @@ const Home = (props) => {
                   <div className="pt-10 pb-10">
                     <a
                       href="http://www.ndsworld.in/"
+                      rel="noreferrer"
                       target="_blank"
                       className="button btn-align btn-more is-link color-primary"
                     >
@@ -381,18 +382,19 @@ const Home = (props) => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    From its 3D object based graphical modeling environment to the wide variety of
+                    {`From its 3D object based graphical modeling environment to the wide variety of
                     analysis and design options completely integrated across one powerful user
                     interface, SAP2000 has proven to be the most integrated, productive and
                     practical general purpose structural program on the market today. Complex Models
                     can be generated and meshed with powerful built in templates. We'll keep you up
                     with the pace of industry standards and you will learn along the way how it's
                     easy to generate complex model in a very simple,easy and intutive way with the
-                    help of SAP2000.
+                    help of SAP2000.`}
                   </span>
                   <div className="pt-10 pb-10">
                     <a
                       href="https://www.csiamerica.com/products/sap2000"
+                      rel="noreferrer"
                       target="_blank"
                       className="button btn-align btn-more is-link color-primary"
                     >
@@ -450,7 +452,7 @@ const Home = (props) => {
                           <a
                             href="/pdf/b.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10`}
+                            className={"button btn-align btn-more is-link color-accent mt-10 mb-10"}
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -494,7 +496,9 @@ const Home = (props) => {
                           <a
                             href="/pdf/g.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
+                            className={
+                              "button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            }
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -531,7 +535,9 @@ const Home = (props) => {
                           <a
                             href="/pdf/h.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
+                            className={
+                              "button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            }
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -576,7 +582,9 @@ const Home = (props) => {
                           <a
                             href="/pdf/e.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
+                            className={
+                              "button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            }
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -619,7 +627,9 @@ const Home = (props) => {
                           <a
                             href="/pdf/c.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
+                            className={
+                              "button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            }
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>
@@ -663,7 +673,9 @@ const Home = (props) => {
                           <a
                             href="/pdf/l.pdf"
                             target="_blank"
-                            className={`button btn-align btn-more is-link color-accent mt-10 mb-10 `}
+                            className={
+                              "button btn-align btn-more is-link color-accent mt-10 mb-10 "
+                            }
                           >
                             Event details
                             <i className="sl sl-icon-arrow-right"></i>

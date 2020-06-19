@@ -12,6 +12,11 @@ function connectDB() {
   db.once("open", () => {
     console.log("MongoDB database connection established successfully.");
   });
-  db.on("error", console.error.bind(console, "MongoDB Connection Error"));
+  db.on("error", (err) => {
+    console.error(
+      "[MONGODB]: It looks like you don't have mongodb server running. Please start the server if installed otherwise install it before proceeding further."
+    );
+    console.error(err);
+  });
 }
 export default connectDB;

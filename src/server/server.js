@@ -1,6 +1,6 @@
 import App from "../shared/App";
 import React from "react";
-import { StaticRouter, matchPath } from "react-router-dom";
+import { StaticRouter} from "react-router-dom";
 import express from "express";
 import { renderToString } from "react-dom/server";
 import serialize from "serialize-javascript";
