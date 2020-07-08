@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./index";
+import Home from "./Home";
 import Profile from "./profile";
 import Cookies from "js-cookie";
 import Helmet from "react-helmet";
@@ -18,6 +18,7 @@ import AuthAdmin from "../../utils/adminApi";
 import loadable from "@loadable/component";
 import Forgotpassword from "./forgotpassword";
 import Schedule from "./schedule";
+import "./css/bulma.min.css";
 
 const Admin = loadable(() => import("./admin"));
 const AdminLogin = loadable(() => import("./adminLogin"));

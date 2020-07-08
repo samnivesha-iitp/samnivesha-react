@@ -382,14 +382,14 @@ const Home = (props) => {
                   </div>
                   <div className="title-divider is-small"></div>
                   <span className="section-feature-description">
-                    {`From its 3D object based graphical modeling environment to the wide variety of
+                    From its 3D object based graphical modeling environment to the wide variety of
                     analysis and design options completely integrated across one powerful user
                     interface, SAP2000 has proven to be the most integrated, productive and
                     practical general purpose structural program on the market today. Complex Models
-                    can be generated and meshed with powerful built in templates. We'll keep you up
-                    with the pace of industry standards and you will learn along the way how it's
+                    can be generated and meshed with powerful built in templates. We&apos;ll keep you up
+                    with the pace of industry standards and you will learn along the way how it&apos;s
                     easy to generate complex model in a very simple,easy and intutive way with the
-                    help of SAP2000.`}
+                    help of SAP2000.
                   </span>
                   <div className="pt-10 pb-10">
                     <a
