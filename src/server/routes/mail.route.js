@@ -1,6 +1,6 @@
 const router = require("express").Router();
-import sendMail from "../../../utils/sendmail";
-import sendEmail from "../../../utils/sendHTML";
+import sendMail from "utils/sendmail";
+import sendEmail from "utils/sendHTML";
 
 router.post("/", async (req, res) => {
   try {

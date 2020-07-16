@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchUser from "./searchuser";
 import Axios from "axios";
 import Popupbar from "../popupbar";
-import worker from "../../../../utils/webWoker";
+import worker from "utils/webWoker";
 
 const UpdateUser = ({ dataHandle }) => {
   const [data, setData] = useState("");

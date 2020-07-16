@@ -1,6 +1,6 @@
 import React from "react";
 import Axios from "axios";
-import worker from "../../../../utils/webWoker";
+import worker from "utils/webWoker";
 
 const Button = ({ name, color, clickHandle }) => {
   const handleClick = async () => {

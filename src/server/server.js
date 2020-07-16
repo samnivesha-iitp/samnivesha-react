@@ -1,6 +1,6 @@
 import App from "../shared/App";
 import React from "react";
-import { StaticRouter} from "react-router-dom";
+import { StaticRouter } from "react-router-dom";
 import express from "express";
 import { renderToString } from "react-dom/server";
 import serialize from "serialize-javascript";
@@ -11,17 +11,16 @@ import uid from "uid-safe";
 import session from "express-session";
 import compression from "compression";
 import helmet from "helmet";
-import csurf from "csurf";
 import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
 import { html as htmlTemplate, oneLineTrim } from "common-tags";
-import path from "path";
 const MongoStore = require("connect-mongo")(session);
 require("dotenv").config();
+import path from "path";
+
 // utils
-const getUserData = require("../../utils/getUserData");
-const getEventsData = require("../../utils/getEventsData");
-import connectDB  from "./extras/connect";
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+import getUserData from "utils/getUserData";
+import getEventsData from "utils/getEventsData";
+import connectDB from "./extras/connect";
 // routers
 import adminRouter from "./routes/admin.route";
 import userRouter from "./routes/users.route";
@@ -37,14 +36,8 @@ import { runtimeConfig } from "./config";
 const config = {
   environment: process.env.NODE_ENV !== "production",
 };
-const sessionConfig = require("../../utils/sessionconfig")(
-  uid,
-  config,
-  MongoStore,
-  mongoose.connection
-);
-const csrfprotection = csurf({ cookie: false });
-connectDB()
+const sessionConfig = require("utils/sessionconfig")(uid, config, MongoStore, mongoose.connection);
+connectDB();
 const server = express();
 server
   .disable("x-powered-by")
@@ -115,12 +108,6 @@ server
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
           ${helmet.link.toString()}
-          ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ""}
-          ${
-            process.env.NODE_ENV === "production"
-              ? `<script src="${assets.client.js}" defer></script>`
-              : `<script src="${assets.client.js}" defer crossorigin></script>`
-          }
           ${extractor.getLinkTags()}
           ${extractor.getStyleTags()}
       </head>

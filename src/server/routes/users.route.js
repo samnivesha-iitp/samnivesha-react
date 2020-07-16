@@ -4,7 +4,7 @@ const Users = require("../models/user.model");
 require("dotenv").config();
 const { workshopRegistration } = require("../extras/user");
 import { html as htmlTemplate, oneLineTrim } from "common-tags";
-import sendEmail from "../../../utils/sendHTML";
+import sendEmail from "utils/sendHTML";
 
 router.route("/").get(async (req, res) => {
   try {

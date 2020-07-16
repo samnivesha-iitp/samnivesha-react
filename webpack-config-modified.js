@@ -1,5 +1,8 @@
 const path = require("path");
 const LoadableWebpackPlugin = require("@loadable/webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const Visualizer = require("webpack-visualizer-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   modify: (config, { target, dev }) => {
@@ -14,17 +17,31 @@ module.exports = {
           writeToDisk: { filename },
         }),
       ];
-      appConfig.output.filename = dev ? "static/js/[name].js" : "static/js/[name].[chunkhash:8].js";
-
-      appConfig.node = { fs: "empty" }; // fix "Cannot find module 'fs'" problem.
-
-      appConfig.optimization = Object.assign({}, appConfig.optimization, {
-        runtimeChunk: true,
-        splitChunks: {
-          chunks: "all",
-          name: dev,
-        },
-      });
+    }
+    if (dev) {
+      const sassRules = {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      };
+      appConfig.plugins = [
+        ...appConfig.plugins,
+        new MiniCssExtractPlugin({
+          filename: "[name].css",
+          chunkFilename: "[id].css",
+        }),
+      ];
+      appConfig.module.rules = [...config.module.rules, sassRules];
     }
     if (target === "node" && !dev) {
       const serverEntry = path.resolve(__dirname, "src", "server");
@@ -33,6 +50,18 @@ module.exports = {
     if (target == "web" && !dev) {
       const webEntry = path.resolve(__dirname, "src", "web", "client");
       appConfig.entry.client = webEntry;
+      appConfig.optimization = {
+        splitChunks: {
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+              name: "vendor",
+              chunks: "initial",
+            },
+          },
+        },
+      };
+      // appConfig.plugins = [...appConfig.plugins, new BundleAnalyzerPlugin(), new Visualizer()];
     }
     if (target === "node" && dev) {
       const serverEntry = path.resolve(__dirname, "src", "server");

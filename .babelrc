@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "razzle/babel" // NEEDED
+  ],
+  "plugins": [
+    "@loadable/babel-plugin"
+    // additional plugins
+  ]
+}

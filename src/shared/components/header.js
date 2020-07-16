@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../css/header.css";
+import "shared/css/header.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { AuthContext } from "./authContext";
@@ -154,6 +154,7 @@ const Header = (props) => {
             )}
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLScyCLOB4WXRGooNLU57SOWvWoq-CeVVWS9i346n14CmaJI9dA/viewform"
+              rel="noreferrer"
               target="_blank"
               className="navbar-item has-text-weight-semibold"
             >

@@ -1,14 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
+// css
 import "../css/notification.css";
-const Notification = (props) => {
+
+const Notification = ({ type, msg }) => {
   return (
-    <>
-      <article className={`message  ${props.status} `}>
-        <div className="message-header">
-          <p>{props.successMsg || props.errorMsg}</p>
-        </div>
-      </article>
-    </>
+    type !== "" &&
+    type !== "undefined" && (
+      <>
+        <article className={`message  is-${type} `}>
+          <div className="message-header">
+            <p>{msg}</p>
+          </div>
+        </article>
+      </>
+    )
   );
+};
+Notification.propTypes = {
+  type: PropTypes.string,
+  msg: PropTypes.string,
 };
 export default Notification;

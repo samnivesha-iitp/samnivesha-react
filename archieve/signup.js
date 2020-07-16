@@ -1,15 +1,18 @@
+// external
 import React, { Component } from "react";
-import Layout from "./components/layout";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faCheck, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { backgroundImage } from "../../archieve/collections";
 import Helmet from "react-helmet";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+// component
+import Layout from "./components/layout";
+import { backgroundImage } from "../../archieve/collections";
 
 const config = {
-  environment: Boolean(process.env.NODE_ENV !== "production")
+  environment: Boolean(process.env.NODE_ENV !== "production"),
 };
 
 class Signup extends Component {
@@ -30,7 +33,7 @@ class Signup extends Component {
       mobileNumber: "",
       isLoading: false,
       referralId: "",
-      open: false
+      open: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -48,19 +51,19 @@ class Signup extends Component {
   }
   handleFirstName(e) {
     this.setState({
-      firstName: e.target.value
+      firstName: e.target.value,
     });
   }
   handleLastName(e) {
     this.setState({
-      lastName: e.target.value
+      lastName: e.target.value,
     });
   }
   handleEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
-    axios.post("/users/findByEmail", { email: e.target.value }).then(res => {
+    axios.post("/users/findByEmail", { email: e.target.value }).then((res) => {
       if (res.status == 200) {
         this.setState({ isEmailExists: res.data });
       }
@@ -68,63 +71,58 @@ class Signup extends Component {
   }
   handleCollege(e) {
     this.setState({
-      college: e.target.value
+      college: e.target.value,
     });
   }
   handlePassword(e) {
     this.setState({
       password: e.target.value,
-      passwordClassName:
-        e.target.value.length > 6 ? "input is-success" : "input is-danger"
+      passwordClassName: e.target.value.length > 6 ? "input is-success" : "input is-danger",
     });
   }
   handleUsername() {
-    axios
-      .post("/users/findByUsername", { username: this.state.username })
-      .then(res => {
-        if (res.status == 200 && res.data == true) {
-          this.setState({ username: this.generateId(), isUserExists: true });
-        } else {
-          this.setState({ isUserExists: false });
-        }
-      });
+    axios.post("/users/findByUsername", { username: this.state.username }).then((res) => {
+      if (res.status == 200 && res.data == true) {
+        this.setState({ username: this.generateId(), isUserExists: true });
+      } else {
+        this.setState({ isUserExists: false });
+      }
+    });
   }
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ isLoading: true });
     if (this.state.referralId !== "") {
-      axios
-        .post("/users/findByUsername", { username: this.state.referralId })
-        .then(res => {
-          if (res.status == 200 && res.data == true) {
-            axios
-              .post("/users/add", this.state)
-              .then(res => {
-                if (res.status == 200) {
-                  this.setState({
-                    successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
-                    isLoading: false
-                  });
-                }
-              })
-              .catch(err => {
+      axios.post("/users/findByUsername", { username: this.state.referralId }).then((res) => {
+        if (res.status == 200 && res.data == true) {
+          axios
+            .post("/users/add", this.state)
+            .then((res) => {
+              if (res.status == 200) {
                 this.setState({
-                  errorMsg: "An error occured",
-                  isLoading: false
-                }),
-                  console.log(err);
-              });
-          } else {
-            this.setState({
-              errorMsg: "Invalid Referral Id",
-              isLoading: false
+                  successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
+                  isLoading: false,
+                });
+              }
+            })
+            .catch((err) => {
+              this.setState({
+                errorMsg: "An error occured",
+                isLoading: false,
+              }),
+                console.log(err);
             });
-          }
-        });
+        } else {
+          this.setState({
+            errorMsg: "Invalid Referral Id",
+            isLoading: false,
+          });
+        }
+      });
     } else {
       axios
         .post("/users/add", this.state)
-        .then(res => {
+        .then((res) => {
           if (res.status == 200) {
             this.setState({
               successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`,
@@ -132,9 +130,8 @@ class Signup extends Component {
             });
           }
         })
-        .catch(err => {
-          this.setState({ errorMsg: "An error occured", isLoading: false }),
-            console.log(err);
+        .catch((err) => {
+          this.setState({ errorMsg: "An error occured", isLoading: false }), console.log(err);
         });
     }
   }
@@ -169,17 +166,14 @@ class Signup extends Component {
           <section
             className="hero is-fullheight background-image"
             style={{
-              backgroundImage: `url(${backgroundImage[1]}&w=${this.state.innerWidth})`
+              backgroundImage: `url(${backgroundImage[1]}&w=${this.state.innerWidth})`,
             }}
           >
             <div className="hero-body" style={{ paddingTop: "75px" }}>
               <div className="container ">
                 <div className="columns">
                   <div className="column is-4 is-offset-4">
-                    <h3
-                      className="title has-text-black"
-                      style={{ textAlign: "center" }}
-                    >
+                    <h3 className="title has-text-black" style={{ textAlign: "center" }}>
                       Signup
                     </h3>
                     <div className="box">
@@ -258,20 +252,18 @@ class Signup extends Component {
                               onChange={this.handleEmail}
                             />
                             <span className="icon is-small is-left">
-                              <FontAwesomeIcon icon="envelope" />
+                              <FontAwesomeIcon icon={faEnvelope} />
                             </span>
                             <span className="icon is-small is-right">
                               {this.state.isEmailExists ? (
-                                <FontAwesomeIcon icon="exclamation-triangle" />
+                                <FontAwesomeIcon icon={faExclamationTriangle} />
                               ) : this.state.isEmailExists == null ? null : (
-                                <FontAwesomeIcon icon="check" />
+                                <FontAwesomeIcon icon={faCheck} />
                               )}
                             </span>
                           </div>
                           {this.state.isEmailExists ? (
-                            <p className="help is-danger">
-                              email is already registered
-                            </p>
+                            <p className="help is-danger">email is already registered</p>
                           ) : (
                             <p className="help is-danger"></p>
                           )}
@@ -339,10 +331,7 @@ class Signup extends Component {
                           <div className="control">
                             <button
                               className={`button is-link ${loadingcss}`}
-                              disabled={
-                                this.state.isUserExists ||
-                                this.state.isEmailExists
-                              }
+                              disabled={this.state.isUserExists || this.state.isEmailExists}
                             >
                               Submit
                             </button>

@@ -1,10 +1,10 @@
+// external depedencies
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import Profile from "./profile";
-import Cookies from "js-cookie";
-import Helmet from "react-helmet";
-const arrayFinder = require("../../utils/findArray");
+import loadable from "@loadable/component";
+import PropTypes from "prop-types";
+
+// components
 import { AuthContext, AdminContext } from "./components/authContext";
 import {
   ProtectedProfile,
@@ -13,31 +13,44 @@ import {
   ProtectedResetPassword,
   ProtectedAdmin,
   ProtectedAdminLogin,
-} from "./components/protected.routes";
-import AuthAdmin from "../../utils/adminApi";
-import loadable from "@loadable/component";
-import Forgotpassword from "./forgotpassword";
-import Schedule from "./schedule";
-import "./css/bulma.min.css";
+} from "./components/protectedRoutes";
 
-const Admin = loadable(() => import("./admin"));
-const AdminLogin = loadable(() => import("./adminLogin"));
-const Sponsors = loadable(() => import("./sponsors"));
-const NotFound = loadable(() => import("./notFound"));
-const Misc = loadable(() => import("./misc"));
-const ResetPassword = loadable(() => import("./resetPassword"));
-const Team = loadable(() => import("./team"));
-const Blog = loadable(() => import("./blog"));
-const Contact = loadable(() => import("./contact"));
-const Login = loadable(() => import("./login"));
-const Signup = loadable(() => import("./signup"));
+// css
+import "./sass/bulma.scss";
+import "./css/pageloader.css";
+
+// utils
+const { arrayFinder } = require("utils/findArray");
+import AuthAdmin from "utils/adminApi";
+
+const Home = loadable(() => import(/* webpackChunkName: "Home" */ "./pages/Home"));
+const Admin = loadable(() => import(/* webpackChunkName: "Admin" */ "./pages/admin"));
+const AdminLogin = loadable(() =>
+  import(/* webpackChunkName: "AdminLogin" */ "./pages/adminLogin")
+);
+const Sponsors = loadable(() => import(/* webpackChunkName: "Sponsors" */ "./pages/sponsors"));
+const NotFound = loadable(() => import(/* webpackChunkName: "NotFound" */ "./pages/notFound"));
+const Misc = loadable(() => import(/* webpackChunkName: "Misc" */ "./pages/misc"));
+const ResetPassword = loadable(() =>
+  import(/* webpackChunkName: "ResetPassword" */ "./pages/resetPassword")
+);
+const Team = loadable(() => import(/* webpackChunkName: "Team" */ "./pages/team"));
+const Blog = loadable(() => import(/* webpackChunkName: "Blog" */ "./pages/blog"));
+const Contact = loadable(() => import(/* webpackChunkName: "Contact" */ "./pages/contact"));
+const Login = loadable(() => import(/* webpackChunkName: "Login" */ "./pages/login"));
+const Signup = loadable(() => import(/* webpackChunkName: "Signup" */ "./pages/signup"));
+const Profile = loadable(() => import(/* webpackChunkName: "Profile" */ "./pages/profile"));
+const Schedule = loadable(() => import(/* webpackChunkName: "Schedule" */ "./pages/schedule"));
+const Forgotpassword = loadable(() =>
+  import(/* webpackChunkName: "Forgotpassword" */ "./pages/forgotpassword")
+);
 
 const App = (props) => {
   const admin = new AuthAdmin();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [firstRender, setFirstrender] = useState(true);
+  const [firstRender, setFirstrender] = useState(false);
   const { store } = props;
   useEffect(() => {
     admin
@@ -51,11 +64,11 @@ const App = (props) => {
       setIsAuthenticated(true);
       setUser(data.userData);
     }
-    const timer = setTimeout(() => {
-      setFirstrender(false);
-    }, 3000);
+    // const timer = setTimeout(() => {
+    //   setFirstrender(false);
+    // }, 3000);
     return () => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
     };
   }, []);
   const loader = firstRender ? "is-active" : "";
@@ -63,9 +76,6 @@ const App = (props) => {
     <>
       <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
         <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}>
-          <Helmet>
-            <link rel="stylesheet" href="/css/index/pageloader.css" />
-          </Helmet>
           <div className={`pageloader ${loader}`}></div>
           <div className={`infraloader ${loader}`}></div>
           <Switch>
@@ -94,5 +104,7 @@ const App = (props) => {
     </>
   );
 };
-App.propTypes = {};
+App.propTypes = {
+  store: PropTypes.array,
+};
 export default App;

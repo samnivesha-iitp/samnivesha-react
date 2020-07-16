@@ -1,7 +1,9 @@
+// external
 import React, { useState } from "react";
 import Axios from "axios";
+// component
 import Popupbar from "../popupbar";
-import worker from "../../../../utils/webWoker";
+import worker from "utils/webWoker";
 
 const AddUser = ({ dataHandle }) => {
   const [firstName, setFirstName] = useState("");
@@ -9,7 +11,6 @@ const AddUser = ({ dataHandle }) => {
   const [college, setCollege] = useState("");
   const [mobile, setMobile] = useState("");
   const [open, setOpen] = useState(false);
-  const [referralId, setReferralId] = useState("");
   const [username, setUsername] = useState("");
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");

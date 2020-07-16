@@ -1,4 +1,4 @@
-import generatePayload from "../../utils/generatePayload";
+import generatePayload from "utils/generatePayload";
 export const runtimeConfig =
   typeof window == !undefined
     ? {

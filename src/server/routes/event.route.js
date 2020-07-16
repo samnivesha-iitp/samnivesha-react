@@ -3,7 +3,6 @@ const router = require("express").Router();
 const Event = require("../models/event.model");
 const Group = require("../models/group.model");
 const Users = require("../models/user.model");
-const mongoose = require("mongoose");
 // All event
 router.route("/").get((req, res) => {
   Event.find()

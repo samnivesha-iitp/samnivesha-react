@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchUser from "./searchuser";
 import Popupbar from "../popupbar";
 import Axios from "axios";
-import worker from "../../../../utils/webWoker";
+import worker from "utils/webWoker";
 
 const RemoveUser = ({ dataHandle }) => {
   const [data, setData] = useState("");
