@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import "shared/css/header.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -40,7 +41,7 @@ const Header = (props) => {
   const Prefetch = "true";
   return (
     <nav
-      className="navbar is-transparent is-spaced"
+      className="navbar is-transparent"
       role="navigation"
       aria-label="main navigation"
       style={styles.nav}
@@ -96,20 +97,12 @@ const Header = (props) => {
               >
                 Events
               </HashLink>
-              <div className="navbar-dropdown is-boxed">
-                <HashLink
-                  to={"/#guestLecture"}
-                  className="navbar-item has-text-weight-semibold "
-                  onClick={hideMenu}
-                >
+              <div className="navbar-dropdown">
+                <HashLink to={"/#guestLecture"} className="navbar-item " onClick={hideMenu}>
                   Guest Lecture
                 </HashLink>
                 <hr className="navbar-divider " />
-                <HashLink
-                  to={"/#workshop"}
-                  className="navbar-item has-text-weight-semibold  "
-                  onClick={hideMenu}
-                >
+                <HashLink to={"/#workshop"} className="navbar-item  " onClick={hideMenu}>
                   Workshop
                 </HashLink>
               </div>

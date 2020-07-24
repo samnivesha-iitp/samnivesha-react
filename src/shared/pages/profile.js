@@ -1,7 +1,6 @@
 // external
 import Helmet from "react-helmet";
 import React, { Component } from "react";
-require("isomorphic-fetch");
 import axios from "axios";
 // component
 import Layout from "../components/layout";
@@ -317,11 +316,7 @@ class Profile extends Component {
 
   render() {
     const modalClass = this.state.isModal ? "is-active" : null;
-    const status = this.state.successMsg
-      ? "success"
-      : this.state.errorMsg
-      ? "danger"
-      : "";
+    const status = this.state.successMsg ? "success" : this.state.errorMsg ? "danger" : "";
     const addButtonCSS = this.state.addbuttonloading ? "is-loading" : null;
     const submitButtonCSS = this.state.submitbuttonloading ? "is-loading" : null;
     const passresetcss = this.state.passresetbuttonloading ? "is-loading" : null;
@@ -337,52 +332,58 @@ class Profile extends Component {
               <div className="container">
                 <div className="columns">
                   <div className="column is-6">
-                    <h1 className="title is-4">Hi, {this.state.fullName}</h1>
-                    <h2 className="title is-5">ACE Id : {this.state.username}</h2>
-                    <h2 className="title is-5">College : {this.state.college}</h2>
-                    <h2 className="title is-5 is-capitalized">Workshop : {this.state.workshop}</h2>
-                    <h2 className="title is-5">Email: {this.state.email}</h2>
-                    <button className="button is-info" onClick={this.showModal}>
-                      Change Password
-                    </button>
-                    <h1 className="title is-5 has-text-centered " style={{ paddingTop: "45px" }}>
-                      <u>Enrolled In</u>
-                    </h1>
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th>No.</th>
-                          <th>Event Name</th>
-                          <th>Date</th>
-                          <th>Place</th>
-                          <th>Contact No.</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.eventRegistered !== ""
-                          ? this.state.eventRegistered.map((event, index) => {
-                              if (event.place == null) {
-                                event.place == "Tutorial Block";
-                              }
-                              if (event.timing == null) {
-                                event.timing == "NA";
-                              }
-                              if (event.contact == null) {
-                                event.contact == "NA";
-                              }
-                              return (
-                                <tr key={event._id}>
-                                  <th>{index + 1}</th>
-                                  <th>{event.eventName}</th>
-                                  <th>{event.timing}</th>
-                                  <th>{event.place}</th>
-                                  <th>{event.contact}</th>
-                                </tr>
-                              );
-                            })
-                          : null}
-                      </tbody>
-                    </table>
+                    <div className="box">
+                      <h1 className="title is-4">Hi, {this.state.fullName}</h1>
+                      <h2 className="title is-5">ACE Id : {this.state.username}</h2>
+                      <h2 className="title is-5">College : {this.state.college}</h2>
+                      <h2 className="title is-5 is-capitalized">
+                        Workshop : {this.state.workshop}
+                      </h2>
+                      <h2 className="title is-5">Email: {this.state.email}</h2>
+                      <button className="button is-info" onClick={this.showModal}>
+                        Change Password
+                      </button>
+                    </div>
+                    <div className="box">
+                      <h1 className="title is-5 has-text-centered " style={{ paddingTop: "45px" }}>
+                        <u>Enrolled In</u>
+                      </h1>
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Place</th>
+                            <th>Contact No.</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.eventRegistered !== ""
+                            ? this.state.eventRegistered.map((event, index) => {
+                                if (event.place == null) {
+                                  event.place == "Tutorial Block";
+                                }
+                                if (event.timing == null) {
+                                  event.timing == "NA";
+                                }
+                                if (event.contact == null) {
+                                  event.contact == "NA";
+                                }
+                                return (
+                                  <tr key={event._id}>
+                                    <th>{index + 1}</th>
+                                    <th>{event.eventName}</th>
+                                    <th>{event.timing}</th>
+                                    <th>{event.place}</th>
+                                    <th>{event.contact}</th>
+                                  </tr>
+                                );
+                              })
+                            : null}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   {this.state.groupEventsToRegister.length > 0 && (
                     <div className="column" id="groupregister">
@@ -585,10 +586,7 @@ class Profile extends Component {
             onClick={this.hideModal}
           ></button>
         </div>
-        <Notification
-          msg={this.state.errorMsg || this.state.successMsg}
-          type={status}
-        />
+        <Notification msg={this.state.errorMsg || this.state.successMsg} type={status} />
       </Layout>
     );
   }

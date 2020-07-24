@@ -1,15 +1,11 @@
-const fetch = require("isomorphic-fetch");
-const { runtimeconfig } = require("server/config");
+const axios = require("axios");
 
 async function getUserData(uid) {
-  if (typeof window !== "undefined") {
-    const response = await fetch(`${window.location.origin}/users/${uid}`);
-    const data = await response.json();
-    return { userData: data };
-  } else {
-    const response = await fetch(`http://${process.env.HOST}:${process.env.PORT}/users/${uid}`);
-    const data = await response.json();
-    return { userData: data };
-  }
+  const url =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/users/${uid}`
+      : `http://${process.env.HOST}:${process.env.PORT}/users/${uid}`;
+  const response = await axios.get(url);
+  return { userData: response.data };
 }
 export default getUserData;

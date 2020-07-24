@@ -16,7 +16,7 @@ import {
 } from "./components/protectedRoutes";
 
 // css
-import "./sass/bulma.scss";
+import "./scss/bulma.scss";
 import "./css/pageloader.css";
 
 // utils
@@ -95,8 +95,12 @@ const App = (props) => {
             <Route path="/sponsors" component={Sponsors} fallback={<div>loading...</div>} />
             <Route path="/team" component={Team} fallback={<div>loading...</div>} />
             <Route path="/schedule" component={Schedule} fallback={<div>loading...</div>} />
-            <ProtectedAdminLogin path="/admin/login" component={AdminLogin} />
-            <ProtectedAdmin path="/admin" component={Admin} />
+            <ProtectedAdminLogin
+              path="/admin/login"
+              component={AdminLogin}
+              fallback={<div>loading...</div>}
+            />
+            <ProtectedAdmin path="/admin" component={Admin} fallback={<div>loading...</div>} />
             <Route component={NotFound} fallback={<div>loading...</div>} />
           </Switch>
         </AuthContext.Provider>

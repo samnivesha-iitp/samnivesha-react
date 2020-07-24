@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // data
 import teamMembers from "../../../archieve/data/members";
 // css
-import "../sass/team.scss";
+import "../scss/team.scss";
 // utils
 const { formatArrayIntoGroups } = require("utils/findArray");
 

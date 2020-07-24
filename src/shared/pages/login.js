@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope,faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faCheck } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Helmet from "react-helmet";
 
@@ -38,11 +38,6 @@ class Login extends Component {
     this.setState({
       email: e.target.value,
     });
-    // axios.post("/users/findByEmail", { email: e.target.value }).then(res => {
-    //   if (res.status == 200) {
-    //     this.setState({ isEmailExists: res.data });
-    //   }
-    // });
   }
   onChangePassword(e) {
     this.setState({
@@ -91,7 +86,7 @@ class Login extends Component {
         </Helmet>
         <main className="main">
           <section
-            className="hero is-fullheight background-image"
+            className="hero is-fullheight background-image bg-light-white"
             style={{
               backgroundImage: `url(${backgroundImage[4]}&w=${this.state.innerWidth})`,
             }}

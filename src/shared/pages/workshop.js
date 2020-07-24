@@ -1,12 +1,13 @@
 // external
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Workshop = ({ onClick, isLoading }) => {
   const loadingStatus = isLoading ? "is-loading" : "";
 
   return (
-    <section className="section section-feature-grey is-fullheight" id="workshop">
+    <section className="section section-feature-grey-accent is-fullheight" id="workshop">
       <div className="container">
         <div className="section-title-wrapper has-text-centered">
           <h2 className="section-title-landing">Workshop</h2>
@@ -110,5 +111,10 @@ const Workshop = ({ onClick, isLoading }) => {
       </div>
     </section>
   );
+};
+
+Workshop.propTypes = {
+  isLoading: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 export default Workshop;

@@ -26,6 +26,7 @@ import "../css/admin.css";
 //workers
 import worker from "utils/webWoker";
 const admin = new AuthAdmin();
+
 const Admin = (props) => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
   const [isMobile, setIsMobile] = useState(false);
@@ -59,6 +60,16 @@ const Admin = (props) => {
   };
   let match = useRouteMatch();
   const isMobileCSS = isMobile ? "is-active" : null;
+  const Links = [
+    { name: "Dashboard", pathname: "/dashboard" },
+    { name: "Add user", pathname: "/user/add" },
+    { name: "Remove user", pathname: "/user/remove" },
+    { name: "Update user", pathname: "/user/update" },
+    { name: "Payment Status", pathname: "/paymentstatus" },
+    { name: "Workshop", pathname: "/workshop" },
+    { name: "Group Event", pathname: "/groupevent" },
+    { name: "Solo Event", pathname: "/soloevent" },
+  ];
   return (
     <>
       <Helmet>
@@ -109,46 +120,15 @@ const Admin = (props) => {
             <aside className="menu is-hidden-mobile">
               <p className="menu-label">General</p>
               <ul className="menu-list">
-                <li>
-                  <NavLink to={`${match.url}/dashboard`} activeClassName="is-active">
-                    Dashboard
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/user/add`} activeClassName="is-active">
-                    Add User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/user/remove`} activeClassName="is-active">
-                    Remove User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/user/update`} activeClassName="is-active">
-                    Update User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/paymentstatus`} activeClassName="is-active">
-                    Payment Status
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/workshop`} activeClassName="is-active">
-                    Workshop
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/groupevent`} activeClassName="is-active">
-                    Group Event
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${match.url}/soloevent`} activeClassName="is-active">
-                    Solo Event
-                  </NavLink>
-                </li>
+                {Links.map((link) => {
+                  return (
+                    <li key={link.name}>
+                      <NavLink to={`${match.url}/${link.pathname}`} activeClassName="is-active">
+                        {link.name}
+                      </NavLink>
+                    </li>
+                  );
+                })}
               </ul>
             </aside>
           </div>
@@ -192,7 +172,9 @@ const Admin = (props) => {
             <Switch>
               <Route
                 path={`${match.path}/dashboard`}
-                render={(routerProps) => <Dashboard data={data} {...routerProps} />}
+                render={(routerProps) => {
+                  return <Dashboard data={data} {...routerProps} />;
+                }}
               />
               <Route
                 path={`${match.path}/user/add`}

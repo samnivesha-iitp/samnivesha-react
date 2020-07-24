@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+// @font-face {
+//   font-family: "Source Sans Pro", sans-serif;
+//   src: url(../fonts/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf);
+// }
+// $family-sans-serif: "Source Sans Pro", sans-serif;
+
+@import "~bulma/bulma";
+.bg-white {
+  background-color: #fff;
+}
+.bg-light-white {
+  background-color: #f1f1f1;
+}

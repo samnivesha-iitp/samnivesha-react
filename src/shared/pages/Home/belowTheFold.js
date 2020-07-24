@@ -15,7 +15,7 @@ const BelowTheFold = ({ workshop: workshopHandler, register: registerHandler, is
   return (
     <>
       <About />
-      <section className="section section-feature-grey is-fullheight" id="guestLecture">
+      <section className="section bg-white is-fullheight" id="guestLecture">
         <div className="container">
           <div className="section-title-wrapper has-text-centered">
             <h2 className="section-title-landing">Guest Lecture</h2>

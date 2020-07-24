@@ -17,7 +17,7 @@ const BelowTheFold = loadable(() => import(/* webpackChunkName: "Home.below" */ 
 // css
 import "shared/css/events.css";
 // import "shared/css/notification-bar.css";
-import "shared/css/core.css";
+import "shared/scss/home.scss";
 import "shared/css/Main.css";
 // utilities
 import { arrayFinder } from "utils/findArray";
@@ -51,7 +51,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (msg !== { message: "", type: "" }) {
+    if (msg.type !== "" && msg.message !== "") {
       const timer = setTimeout(() => {
         setMsg({ message: "", type: "" });
       }, 3000);
@@ -159,10 +159,6 @@ const Home = () => {
     <>
       <Helmet>
         <title>Samnivesha | Home</title>
-        <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
       </Helmet>
       <Layout>
         <marquee

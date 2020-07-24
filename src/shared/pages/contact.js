@@ -82,11 +82,7 @@ class Contact extends Component {
       });
   }
   render() {
-    const status = this.state.successMsg
-      ? "is-success"
-      : this.state.errorMsg
-      ? "is-danger"
-      : "is-hidden";
+    const status = this.state.successMsg ? "success" : this.state.errorMsg ? "danger" : "";
     const loadingStatus = this.state.isloading ? "is-loading" : "";
     return (
       <Layout title="Contact Page">
@@ -159,11 +155,7 @@ class Contact extends Component {
             </div>
           </div>
         </section>
-        <Notification
-          status={status}
-          successMsg={this.state.successMsg}
-          errorMsg={this.state.errorMsg}
-        />
+        <Notification type={status} msg={this.state.successMsg || this.state.errorMsg} />
       </Layout>
     );
   }

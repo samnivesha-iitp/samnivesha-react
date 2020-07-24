@@ -11,7 +11,7 @@ const Events = ({ onClick, isLoading }) => {
   const loadingStatus = isLoading ? "is-loading" : "";
 
   return (
-    <section className="section section-feature-grey is-medium" id="event">
+    <section className="section bg-white is-medium" id="event">
       <div className="container">
         <div className="section-title-wrapper has-text-centered" style={{ paddingBottom: "40px" }}>
           <h2 className="section-title-landing">Events</h2>

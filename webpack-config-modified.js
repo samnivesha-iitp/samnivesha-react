@@ -15,10 +15,17 @@ module.exports = {
         new LoadableWebpackPlugin({
           outputAsset: false,
           writeToDisk: { filename },
-        }),
+        })
       ];
+      appConfig.optimization = {
+        ...appConfig.optimization,
+        splitChunks: {
+          chunks: "all",
+          automaticNameDelimiter: "-",
+        },
+      };
     }
-    if (dev) {
+    if (true) {
       const sassRules = {
         test: /\.scss$/,
         use: [
@@ -38,7 +45,7 @@ module.exports = {
         ...appConfig.plugins,
         new MiniCssExtractPlugin({
           filename: "[name].css",
-          chunkFilename: "[id].css",
+          chunkFilename: dev ? "[id].css" : "[id].[hash].css",
         }),
       ];
       appConfig.module.rules = [...config.module.rules, sassRules];

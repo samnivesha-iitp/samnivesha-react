@@ -11,7 +11,7 @@ import Notification from "../components/notification";
 // css
 import "../css/forgot.css";
 
-const Forgotpassword = (props) => {
+const Forgotpassword = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
@@ -52,7 +52,7 @@ const Forgotpassword = (props) => {
       });
   };
   const loadingStatus = isLoading ? "is-loading" : "";
-  const status = successMsg ? "is-success" : errorMsg ? "is-warning" : "is-hidden";
+  const status = successMsg ? "success" : errorMsg ? "warning" : "";
   return (
     <Layout>
       <main className="main">
@@ -96,7 +96,7 @@ const Forgotpassword = (props) => {
           </div>
         </section>
       </main>
-      <Notification status={status} successMsg={successMsg} errorMsg={errorMsg} />
+      <Notification type={status} msg={successMsg || errorMsg} />
     </Layout>
   );
 };

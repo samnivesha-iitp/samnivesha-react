@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 // component
 import Layout from "../components/layout";
 // css
-import "../sass/blog.scss";
+import "../scss/blog.scss";
 
 const Blog = () => {
   const [firstRender, setFirstRender] = useState(true);
