@@ -105,6 +105,7 @@ server
           <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
           <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
           <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+          <link href="/css/index/pageloader.css" rel="stylesheet">
           ${helmet.title.toString()}
           ${helmet.meta.toString()}
           ${helmet.link.toString()}
@@ -112,7 +113,15 @@ server
           ${extractor.getStyleTags()}
       </head>
       <body ${helmet.bodyAttributes.toString()}>
-          <div id="root">${markup}</div>
+      <div class="pageloader is-active"></div>
+      <div class="infraloader is-active"></div>
+          <div id="root" >${markup}</div>
+          <script>
+          window.addEventListener('load',function(){
+            document.querySelector('.pageloader').classList.remove('is-active');
+            document.querySelector('.infraloader').classList.remove('is-active');
+          })
+          </script>
           <script>window.__INITIAL_STATE__=${serialize(state)}</script>
           <script>window.env=${serialize(runtimeConfig)}</script>
           ${extractor.getScriptTags()}          

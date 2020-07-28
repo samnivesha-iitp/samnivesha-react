@@ -17,7 +17,6 @@ import {
 
 // css
 import "./scss/bulma.scss";
-import "./css/pageloader.css";
 
 // utils
 const { arrayFinder } = require("utils/findArray");
@@ -50,7 +49,6 @@ const App = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [firstRender, setFirstrender] = useState(true);
   const { store } = props;
   useEffect(() => {
     admin
@@ -64,20 +62,11 @@ const App = (props) => {
       setIsAuthenticated(true);
       setUser(data.userData);
     }
-    const timer = setTimeout(() => {
-      setFirstrender(false);
-    }, 3000);
-    return () => {
-      clearTimeout(timer);
-    };
   }, []);
-  const loader = firstRender ? "is-active" : "";
   return (
     <>
       <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
         <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, store }}>
-          <div className={`pageloader ${loader}`}></div>
-          <div className={`infraloader ${loader}`}></div>
           <Switch>
             <Route exact path="/" render={() => <Home data={store} />} />
             <Route path="/contact" component={Contact} fallback={<div>loading...</div>} />
