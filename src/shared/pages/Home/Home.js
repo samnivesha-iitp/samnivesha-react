@@ -161,6 +161,7 @@ const Home = () => {
         <title>Samnivesha | Home</title>
       </Helmet>
       <Layout>
+        <script src="/fontawesome.min.js"></script>
         <marquee
           scrolldelay="200"
           behaviour="alternate"

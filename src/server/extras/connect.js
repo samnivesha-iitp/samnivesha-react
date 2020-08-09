@@ -7,16 +7,14 @@ mongoose.connect(uri, {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
-function connectDB() {
-  const db = mongoose.connection;
-  db.once("open", () => {
-    console.log("MongoDB database connection established successfully.");
-  });
-  db.on("error", (err) => {
-    console.error(
-      "[MONGODB]: It looks like you don't have mongodb server running. Please start the server if installed otherwise install it before proceeding further."
-    );
-    console.error(err);
-  });
-}
-export default connectDB;
+const db = mongoose.connection;
+db.once("open", () => {
+  console.log("MongoDB database connection established successfully.");
+});
+db.on("error", (err) => {
+  console.error(
+    "[MONGODB]: It looks like you don't have mongodb server running. Please start the server if installed otherwise install it before proceeding further."
+  );
+  console.error(err);
+});
+export default db;

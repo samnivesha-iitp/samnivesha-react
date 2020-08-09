@@ -3,3 +3,4 @@
 > Code splitting for different parts of sections on Homepage
 > Use React-content-loader to avoid layout break on Home, About, Profile, Blog, Event, Guest Lecture page
 > write tests for every react components
+> switching from global scoped css to local scoped css using CSS Module

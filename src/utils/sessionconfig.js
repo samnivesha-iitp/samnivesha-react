@@ -1,12 +1,9 @@
-function session(uid, config, MongoStore, db) {
+function session(uid, MongoStore, db) {
   const sessionConfig = {
     name: "sid",
     secret: uid.sync(18),
     cookie: {
-      httpOnly: true,
-      maxAge: 86400 * 1000,
-      sameSite: true,
-      secure: !config.environment,
+      maxAge: 86400 * 1000 * 30,
     },
     resave: false,
     saveUninitialized: false,

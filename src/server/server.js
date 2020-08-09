@@ -5,7 +5,6 @@ import express from "express";
 import { renderToString } from "react-dom/server";
 import serialize from "serialize-javascript";
 import { Helmet } from "react-helmet";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import uid from "uid-safe";
 import session from "express-session";
@@ -33,19 +32,17 @@ import passwordResetRouter from "./routes/reset.route";
 const logger = require("./routes/requestLogger");
 //config
 import { runtimeConfig } from "./config";
-const config = {
-  environment: process.env.NODE_ENV !== "production",
-};
-const sessionConfig = require("utils/sessionconfig")(uid, config, MongoStore, mongoose.connection);
-connectDB();
+
+const sessionConfig = require("utils/sessionconfig")(uid, MongoStore, mongoose.connection);
+connectDB;
 const server = express();
 server
   .disable("x-powered-by")
   .use(logger)
   .use(compression())
   .use(helmet())
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
   .use(session(sessionConfig))
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use("/users", userRouter)
