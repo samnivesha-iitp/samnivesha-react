@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // data
 import teamMembers from "../../../archieve/data/members";
 // css
-import "../scss/team.scss";
+import team from "../css/team.module.css";
 // utils
 const { formatArrayIntoGroups } = require("utils/findArray");
 
@@ -22,7 +22,7 @@ const Team = () => {
       <nav className="navbar is-transparent is-spaced" style={style.nav}>
         <div className="container">
           <div className="navbar-brand">
-            <Link to={"/"} className="navbar-item">
+            <Link to="/" className="navbar-item">
               <button className="button is-primary is-rounded">Back to Home</button>
             </Link>
           </div>
@@ -41,9 +41,9 @@ const Team = () => {
       </section>
       <div className="section is-medium section-feature-grey">
         <div className="container">
-          <div className="content-wrapper">
-            <div className="image-grid" style={{ fontSize: "14px" }}>
-              <div className="team-footer">
+          <div className={team["content-wrapper"]}>
+            <div className={team["image-grid"]} style={{ fontSize: "14px" }}>
+              <div className={team["team-footer"]}>
                 <h3 className="title is-3 has-text-centered">Core Committee</h3>
                 <br />
                 <br />
@@ -69,25 +69,25 @@ export default Team;
 export const CoreMember = ({ member }) => {
   return (
     <div className="column is-4" key={member.name.firstName}>
-      <figure className="team-hover">
+      <figure className={team["team-hover"]}>
         <img src={member.avatarURL} alt="" data-demo-src={member.avatarURL} />
         <figcaption>
           <h2>
             {member.name.firstName}
-            <span className="ml-5"> {member.name.lastName} </span>
+            <span className={team["ml-5"]}> {member.name.lastName} </span>
           </h2>
-          <p className="icon-links">
-            <a href="https://bulkitv2.cssninja.io/_components-sections-team.html#">
-              <span className="icon-dribbble"></span>
+          <p className={team["icon-links"]}>
+            <a href="#">
+              <span className={team["icon-dribbble"]}></span>
             </a>
-            <a href="https://bulkitv2.cssninja.io/_components-sections-team.html#">
-              <span className="icon-linkedin"></span>
+            <a href="#">
+              <span className={team["icon-linkedin"]}></span>
             </a>
-            <a href="https://bulkitv2.cssninja.io/_components-sections-team.html#">
-              <span className="icon-twitter"></span>
+            <a href="#">
+              <span className={team["icon-twitter"]}></span>
             </a>
           </p>
-          <p className="description">{member.field}</p>
+          <p className={team["description"]}>{member.field}</p>
         </figcaption>
       </figure>
     </div>

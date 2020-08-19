@@ -17,8 +17,7 @@ const BelowTheFold = loadable(() => import(/* webpackChunkName: "Home.below" */ 
 // css
 import "shared/css/events.css";
 // import "shared/css/notification-bar.css";
-import "shared/scss/home.scss";
-import "shared/css/Main.css";
+import mainCSS from "shared/css/Main.module.css";
 // utilities
 import { arrayFinder } from "utils/findArray";
 import getUserData from "utils/getUserData";
@@ -159,9 +158,9 @@ const Home = () => {
     <>
       <Helmet>
         <title>Samnivesha | Home</title>
+        <script src="/fontawesome.min.js"></script>
       </Helmet>
       <Layout>
-        <script src="/fontawesome.min.js"></script>
         <marquee
           scrolldelay="200"
           behaviour="alternate"
@@ -183,9 +182,13 @@ const Home = () => {
             </p>
           </span>
         </marquee>
-        <section className="hero1 is-fullheight1 is-light">
-          <div id="main">
-            <div id="logo" style={{ transform: `translate(0px,-${scrollTop / 5}%)` }}>
+        <section className={`${mainCSS["hero1"]} ${mainCSS["is-fullheight1"]} is-light`}>
+          <div id="main" className={mainCSS["mainContainer"]}>
+            <div
+              id="logo"
+              style={{ transform: `translate(0px,-${scrollTop / 5}%)` }}
+              className={mainCSS["logo"]}
+            >
               <img
                 src="/images/small.webp"
                 srcSet="/images/small.webp 1000w, /images/bg.webp 1300w, "

@@ -1,14 +1,20 @@
 // external
 import React, { Component } from "react";
 // components
+import coreCSS from "shared/css/core.module.css";
 
 class About extends Component {
   render() {
+    console.log(coreCSS);
+
     return (
-      <section className="section section-feature-grey-accent is-fullheight" id="about">
+      <section
+        className={`section ${coreCSS["section"]} ${coreCSS["section-feature-grey-accent"]} is-fullheight`}
+        id="about"
+      >
         <div className="container">
-          <div className="section-title-wrapper ">
-            <h2 className="section-title-landing has-text-centered">About Us</h2>
+          <div className={coreCSS["section-title-wrapper"]}>
+            <h2 className={`${coreCSS["section-title-landing"]} has-text-centered`}>About Us</h2>
             <p className="is-2" style={{ fontSize: "19px" }}>
               Samnivesha is the annual technical fest of the Department of Civil and Environmental
               Engineering (DCEE) with a myriad of events revolving around the exciting areas of

@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 // component
 import Layout from "../components/layout";
 // css
-import "../scss/blog.scss";
+import blog from "../css/blog.module.css";
 
 const Blog = () => {
   const [firstRender, setFirstRender] = useState(true);
@@ -18,7 +18,7 @@ const Blog = () => {
       </Helmet>
       {!firstRender && (
         <section className="container" style={{ paddingTop: "40px" }}>
-          <div className="intro column is-10 is-offset-1">
+          <div className={`${blog["intro"]} column is-10 is-offset-1`}>
             <h2 className="title">Some Glimpses From Last Year</h2>
             <br />
             <p className="subtitle">
@@ -32,7 +32,7 @@ const Blog = () => {
               conducted by none other than Bentley itself.
             </p>
           </div>
-          <div className="sandbox">
+          <div className={blog["sandbox"]}>
             <div className="tile is-ancestor">
               <div className="tile is-parent is-shady">
                 <img src="/images/1.png" alt="Italian Trulli" />
